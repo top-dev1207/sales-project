@@ -1,0 +1,7 @@
+table#TablaInteligenteDatos.dataTable tbody tr:hover {
+  background-color: rgb(245, 228, 247);
+}
+ 
+table#TablaInteligenteDatos.dataTable tbody tr:hover > .sorting_1 {
+  background-color: rgb(245, 228, 247);
+}

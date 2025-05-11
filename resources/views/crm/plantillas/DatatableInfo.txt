@@ -1,0 +1,12 @@
+Si configuras la propiedad dom de DataTables con el valor 'Blfrtip', esto controla la disposición de los elementos de la tabla. Cada letra representa un elemento diferente:
+B: Botones de exportación (requiere el complemento Buttons)
+
+l: Longitud de la página (muestra un menú desplegable para elegir cuántos registros mostrar por página)
+f: Cuadro de búsqueda (filtro)
+r: Procesamiento (muestra un mensaje mientras se carga la tabla)
+t: Tabla
+i: Información (muestra información sobre los registros que se muestran)
+p: Paginación
+
+https://datatables.net/reference/option/layout
+

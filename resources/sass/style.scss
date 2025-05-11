@@ -1,0 +1,121 @@
+// If you want to override variables do it here
+@import "variables";
+// Paleta cxx
+// $primary: #57bc90;
+// // $secondary-25: #3490dc;
+// $secondary-25:#77c9d4;
+// // $success: #15c4f0;
+// $success: #14d4a5;
+// $info: #a5a5af;
+// $warning: #015249;
+// $danger: #e9c893;
+// // $danger: #e3342f;
+// $light: #bdbebe;
+// $dark: #060607;
+
+/*
+//Paleta pro verde 2
+$primary: #10a9b2;
+// $secondary-25: #3490dc;
+$secondary-25:#c8ced3;
+// $success: #15c4f0;
+$success: #4dbd74;
+$info: #303c54;
+$warning: #ffc107;
+$danger: #f86c6b;
+// $danger: #e3342f;
+$light: #bdbebe;
+$dark: #060607;
+*/
+
+//Pruebas con la Profe Cin
+//Paleta inicial OK!!!
+
+//********************************************************************
+//  COLORES TEMPLE
+//********************************************************************
+/*
+$primary: #c23079;
+// $secondary-25: #3490dc;
+$secondary-25:#6a4062;
+$success: #17b143;
+//$success: #4dbd74;
+$info: #6a7b9e;
+$warning: #86854c;
+//$warning: #e3f44d;
+//$warning: #ffc107;
+$danger: #f86c6b;
+// $danger: #e3342f;
+$light: #d27dd2;
+$dark: #2a082a;
+*/
+//********************************************************************
+
+
+
+// //Paleta pro verde
+// $primary: #08c44f;
+// // $secondary-25: #3490dc;
+// $secondary-25:#c8ced3;
+// // $success: #15c4f0;
+// $success: #4dbd74;
+// $info: #63c2de;
+// $warning: #ffc107;
+// $danger: #f86c6b;
+// // $danger: #e3342f;
+// $light: #bdbebe;
+// $dark: #060607;
+
+
+// //Paleta ok1
+// $primary: #08c44f;
+// // $secondary-25: #3490dc;
+// $secondary-25:#99bc8f;
+// // $success: #15c4f0;
+// $success: #155d06;
+// $info: #cec46b;
+// $warning: #f6993f;
+// $danger: #ab443f;
+// // $danger: #e3342f;
+// $light: #bdbebe;
+// $dark: #060607;
+
+// Paleta verde... esta buena, pero danger no se luce
+// $primary: #08c44f;
+// // $secondary-25: #3490dc;
+// $secondary-25:#cdcdda;
+// // $success: #15c4f0;
+// $success: #14d4a5;
+// $info: #b8eb98;
+// $warning: #546886;
+// $danger: #36475f;
+// // $danger: #e3342f;
+// $light: #bdbebe;
+// $dark: #060607;
+
+$background-color: #000000;
+
+
+//En estudio nuevos colores.  10/04/24
+//********************************************************************
+//  COLORES CERVELAR
+//********************************************************************
+$primary:       #c23f3f;    // Aceptar
+$secondary-25:  #5f3c1f;    // Validar
+$warning:       #a0582f;    // Editar
+$info:          #c95858;    // Ver
+$light:         #da7d65;
+$dark:          #2a082a;
+
+$success:       #17b143;
+$danger:        #e22222;
+//********************************************************************
+
+
+// Import styles
+@import "node_modules/@coreui/coreui/scss/coreui";
+
+// If you want to add something do it here
+$body-bg:    $gray-900;
+$body-color: $gray-600;
+@import "custom";
