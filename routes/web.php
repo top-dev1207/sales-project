@@ -16,6 +16,7 @@ Route::middleware('web')
         //Route::get  ('/',                  'ReclamosController@inicio')                 ->name('inicio');
 
 
+        Route::view('/resumenVer', 'crm.graficos.resumenVer')->name('graficos.resumenVer');
 
         Route::prefix('resultados')
             ->middleware('permission:ver_estadísticas')

@@ -5,8 +5,10 @@ module.exports = {
         module.exports = {
             content: [
                 './resources/**/*.blade.php',
-                './resources/**/*.js',
-                './resources/**/*.jsx',
+                './resources/js/**/*.tsx',
+                './resources/js/**/*.ts', // 혹시 .ts 파일도 사용하는 경우
+                './resources/js/**/*.jsx',
+                './resources/js/**/*.js'
               ],
           }
     ],

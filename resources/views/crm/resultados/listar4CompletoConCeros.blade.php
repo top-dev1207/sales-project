@@ -1033,10 +1033,10 @@
 </div>
 @endsection
 
-@section('scripts')
+{{-- @section('scripts')
   <script src="{{ mix('js/app.js') }}"></script>
 @endsection
 <script>
     window.diasData = @json($r);
     const theadRow = document.getElementById("thead-row");
-</script>
+</script> --}}

@@ -15,7 +15,7 @@
                     </div>
 
                     @yield('seleccionRangoFechas')
-
+                    <a href="/resumenVer">Ver gráficos</a>
                 </div>
         </div>
 

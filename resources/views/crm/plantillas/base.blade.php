@@ -27,9 +27,6 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/locale/es.js"></script>
-    <script>
-        dayjs.locale('es');
-    </script>
 </head>
 
 <body class="c-app">
