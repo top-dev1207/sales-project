@@ -128,7 +128,7 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, label, s
             return (
               <p key={index} style={{ color: entry.color }}>
                 {isDebt ? 'Deuda: ' : 'Pago: '}
-                {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(entry.value)}
+                {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(entry.value)}
               </p>
             );
           }
@@ -158,11 +158,11 @@ const ProveedorDebtPaymentChart: React.FC = () => {
 
   // Format currency
   const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(value);
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 mt-[20px] shadow">
       <h2 className="text-2xl font-bold mb-4 text-center">Histórico de Deuda y Pagos a Proveedores</h2>
 
       {/* Controls */}
@@ -241,8 +241,8 @@ const ProveedorDebtPaymentChart: React.FC = () => {
               />
               <YAxis
                 yAxisId="left"
-                label={{ value: 'Monto (€)', angle: -90, position: 'insideLeft' }}
-                tickFormatter={(value: number) => new Intl.NumberFormat('es', { notation: 'compact' }).format(value)}
+                label={{ value: 'Monto ($)', angle: -90, position: 'insideLeft' }}
+                tickFormatter={(value: number) => new Intl.NumberFormat('en-US', { notation: 'compact' }).format(value)}
               />
               <Tooltip content={<CustomTooltip selectedProvider={selectedProvider} />} />
               <Legend />
@@ -275,7 +275,8 @@ const ProveedorDebtPaymentChart: React.FC = () => {
                 interval={dataType === 'weekly' ? 1 : 0}
               />
               <YAxis
-                tickFormatter={(value: number) => new Intl.NumberFormat('es', { notation: 'compact' }).format(value)}
+                tickFormatter={(value: number) => new Intl.NumberFormat('en-US', { notation: 'compact' }).format(value)}
+                label={{ value: 'Monto ($)', angle: -90, position: 'insideLeft' }}
               />
               <Tooltip content={<CustomTooltip selectedProvider={selectedProvider} />} />
               <Legend />
@@ -304,7 +305,8 @@ const ProveedorDebtPaymentChart: React.FC = () => {
                 interval={dataType === 'weekly' ? 1 : 0}
               />
               <YAxis
-                tickFormatter={(value: number) => new Intl.NumberFormat('es', { notation: 'compact' }).format(value)}
+                tickFormatter={(value: number) => new Intl.NumberFormat('en-US', { notation: 'compact' }).format(value)}
+                label={{ value: 'Monto ($)', angle: -90, position: 'insideLeft' }}
               />
               <Tooltip content={<CustomTooltip selectedProvider={selectedProvider} />} />
               <Legend />
@@ -331,32 +333,11 @@ const ProveedorDebtPaymentChart: React.FC = () => {
         </ResponsiveContainer>
       </div>
 
-      {/* Summary Table based on the image */}
+      {/* Simplified Summary Table - only showing values */}
       <div className="mt-8 mb-4">
-        <h3 className="text-xl font-bold mb-4">Resumen de Deudas y Facturas</h3>
+        <h3 className="text-xl font-bold mb-4">Resumen</h3>
 
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr>
-                <th className="border border-green-600 bg-green-50 p-2 text-left">Concepto</th>
-                <th className="border border-green-600 bg-green-50 p-2 text-left">Descripción</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-gray-300 p-2 font-semibold text-green-700">Deuda total de proveedores a la fecha</td>
-                <td className="border border-gray-300 p-2">Saldo pendiente de pago de facturas ($), agrupa y proveedor, arder y proveedor</td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2 font-semibold text-green-700">Pasivo de facturas actual</td>
-                <td className="border border-gray-300 p-2">Total de $ de facturas cargadas (validadas y no)</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        {/* Current values table */}
+        {/* Current values table (simplified) */}
         <div className="mt-4 overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
@@ -367,11 +348,11 @@ const ProveedorDebtPaymentChart: React.FC = () => {
             </thead>
             <tbody>
               <tr>
-                <td className="border border-gray-300 p-2">Deuda total de proveedores a la fecha</td>
+                <td className="border border-gray-300 p-2">Deuda total de proveedores</td>
                 <td className="border border-gray-300 p-2 font-medium">{formatCurrency(debtSummary.totalDebt)}</td>
               </tr>
               <tr>
-                <td className="border border-gray-300 p-2">Pasivo de facturas actual</td>
+                <td className="border border-gray-300 p-2">Pasivo de facturas</td>
                 <td className="border border-gray-300 p-2 font-medium">{formatCurrency(debtSummary.totalInvoices)}</td>
               </tr>
             </tbody>

@@ -37,7 +37,7 @@ const Header = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <Select
+          {/* <Select
             value={dateRange}
             onValueChange={(value) => setDateRange(value as 'daily' | 'weekly' | 'monthly')}
           >
@@ -49,7 +49,7 @@ const Header = () => {
               <SelectItem value="weekly">Weekly</SelectItem>
               <SelectItem value="monthly">Monthly</SelectItem>
             </SelectContent>
-          </Select>
+          </Select> */}
 
           <Avatar>
             <AvatarImage src="" />

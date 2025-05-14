@@ -146,7 +146,7 @@ const SalesWeatherChart = () => {
         </ResponsiveContainer>
       </div>
 
-      <div className="mt-4 p-3 rounded-md border border-gray-200">
+      {/* <div className="mt-4 p-3 rounded-md border border-gray-200">
         <h3 className="text-lg font-semibold text-gray-700 mb-2">Analysis</h3>
         <p className="text-gray-600">
           {timeFrame === 'monthly'
@@ -155,7 +155,7 @@ const SalesWeatherChart = () => {
               ? 'Weekly sales data indicates higher revenues during weeks with higher temperatures and lower precipitation.'
               : 'Daily sales pattern shows weekend peaks (especially Saturday), with better performance on days with no precipitation.'}
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import SalesWeatherChart from './SalesWeatherChart';
 import ProveedorDebtPaymentChart from './ProveedorDebtPaymentChart';
+import SalaryDashboard from './SalaryDashboard';
 
 const Realizar = () => {
     // Sample data - this would be replaced with real data in a production environment
@@ -288,82 +289,6 @@ const Realizar = () => {
                     </div>
                 </div>
 
-                {/* Daily Sales Trend Card */}
-                {/* <div className="p-4 rounded-lg shadow">
-                        <h2 className="text-lg font-semibold mb-3">Ventas Diarias</h2>
-                        <div className="h-64">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <LineChart
-                                    data={dailySalesTrend}
-                                    margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
-                                >
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="day" />
-                                    <YAxis />
-                                    <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, 'Ventas']} />
-                                    <Line type="monotone" dataKey="sales" stroke="#0088FE" activeDot={{ r: 8 }} />
-                                </LineChart>
-                            </ResponsiveContainer>
-                        </div>
-                    </div> */}
-                {/* Location Comparison Card */}
-                <div className="p-4 rounded-lg shadow col-span-1 md:col-span-2 lg:col-span-1">
-                    <h2 className="text-lg font-semibold mb-3">Comparación por Local</h2>
-                    <div className="h-64">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart
-                                data={locationSalesData}
-                                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                            >
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, 'Ventas']} />
-                                <Legend />
-                                <Bar dataKey="sales" name="Ventas" fill="#0088FE" />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
-                </div>
-
-                {/* Expenses by Location Card */}
-                <div className="p-4 rounded-lg shadow">
-                    <h2 className="text-lg font-semibold mb-3">Gastos por Local</h2>
-                    <div className="h-64">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart
-                                data={locationExpensesData}
-                                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                            >
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, 'Gastos']} />
-                                <Bar dataKey="expenses" name="Gastos" fill="#FF8042" />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
-                </div>
-
-                {/* User Login Time Card */}
-                <div className="p-4 rounded-lg shadow">
-                    <h2 className="text-lg font-semibold mb-3">Tiempo de Login por Usuario</h2>
-                    <div className="h-64">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart
-                                data={loginTimeData}
-                                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                            >
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="user" />
-                                <YAxis />
-                                <Tooltip formatter={(value) => [`${value} min`, 'Tiempo']} />
-                                <Bar dataKey="time" fill="#A28BFF" />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
-                </div>
-
                 {/* Profit Card */}
                 <div className="p-4 rounded-lg shadow">
                     <h2 className="text-lg font-semibold mb-3">Ganancias</h2>
@@ -400,6 +325,7 @@ const Realizar = () => {
                         </ResponsiveContainer>
                     </div>
                 </div>
+                <SalaryDashboard />
                 {/* </div> */}
                 <SalesWeatherChart />
             </div>
