@@ -33,7 +33,6 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <div className="p-6 max-w-7xl mx-auto">
           {children}
         </div>
-        {/* <div></div> */}
       </main>
     </div>
   );
