@@ -20,7 +20,7 @@
 
     <!-- Main styles for this application-->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/coreui-chartjs.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.8.1"></script>
@@ -77,6 +77,7 @@
     {{-- <!-- CoreUI and necessary plugins--> --}}
     <script src="{{ asset('js/coreui.bundle.min.js') }}"></script>
     <script src="{{ asset('js/coreui-utils.js') }}"></script>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
 
 </body>
 

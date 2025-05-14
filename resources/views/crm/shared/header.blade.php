@@ -1,7 +1,7 @@
 
 
     <div class="c-wrapper">
-      <header class="c-header c-header-dark c-header-fixed c-header-with-subheader ">
+      <header class="c-header c-header-dark c-header-with-subheader" style="height: 62px">
           <button class="c-header-toggler c-class-toggler d-lg-none mr-auto"
               type="button" data-target="#sidebar" data-class="c-sidebar-show">
               <span class="c-header-toggler-icon"></span>
