@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\ResumenVerController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,8 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
-/*
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return response()->json([
+//             'success' => true
+//             ]);
+// });
+Route::middleware('auth:api')->group(function () {
+// Route::get('realizar', [ResumenVerController::class, "getRealizarData"] );
 });
-*/
+Route::get('/getRealizarData', [ResumenVerController::class, "getRealizarData"] );

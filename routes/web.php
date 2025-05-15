@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\GraficosController;
 
 
-//Auth::routes();
+Auth::routes();
 require __DIR__ . '/auth.php';
 
 //Route::middleware('web')->middleware('auth')
