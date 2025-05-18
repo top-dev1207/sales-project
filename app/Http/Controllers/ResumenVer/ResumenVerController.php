@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ResumenVer;
 
 
 use Illuminate\Http\Request;
@@ -21,21 +21,25 @@ class ResumenVerController extends Controller
      */
     public function getRealizarData(Request $request)
     {
-        // Ignore input dates and use current month instead
+        // Get request month and year
         $today = Carbon::now();
-        $fechaInicio = $today->startOfMonth()->format('Y-m-d');
-        $fechaFin = $today->endOfMonth()->format('Y-m-d');
-
+        $fechaInicio = $today->startOfMonth()->toDateString();
+        $fechaFin = $today->endOfMonth()->toDateString();
+        
+        if ($request->has("year") && $request->has("month")) {
+            $fechaInicio = Carbon::create($request->year, $request->month, 1)->startOfDay();
+            $fechaFin = Carbon::create($request->year, $request->month, 1)->endOfMonth();
+        }
         // Log the query
         // Log::info(Auth::user()->name . " | API consulta KPIs desde $fechaInicio hasta $fechaFin | ");
 
-        // Get sales data for the current month
+        // Get sales data for the period
         $ventas = $this->obtenerVentas($fechaInicio, $fechaFin);
 
         if (empty($ventas)) {
             return response()->json([
                 'success' => false,
-                'message' => 'No existen datos validados en el mes actual',
+                'message' => 'No existen datos validados en rango de fechas seleccionado',
                 'data' => null
             ], 404);
         }
@@ -46,7 +50,7 @@ class ResumenVerController extends Controller
         // Return response
         return response()->json([
             'success' => true,
-            'message' => 'Consulta generada correctamente para el mes actual',
+            'message' => 'Consulta generada correctamente',
             'data' => $kpis
         ]);
     }
@@ -76,7 +80,6 @@ class ResumenVerController extends Controller
 
         return $ventas;
     }
-    
     /**
      * Calculate sales projections and other KPIs
      * 
@@ -101,7 +104,7 @@ class ResumenVerController extends Controller
 
         // Calculate annual sales projection
         $currentMonth = $today->month;
-        
+
         // For all months including January, use the same formula
         // Get the YTD (Year To Date) sales
         $ventasTotalesAnual = DB::table('ventas')
@@ -109,7 +112,7 @@ class ResumenVerController extends Controller
             ->whereYear('fecha_venta', $today->year)
             ->whereIn('estado_venta', [1, 2]) // Loaded and validated
             ->sum('ingresos');
-        
+
         // Calculate projection based on actual data for all months
         $proyeccionVentasAnual = ($ventasTotalesAnual / $currentMonth) * 12;
 
@@ -137,7 +140,6 @@ class ResumenVerController extends Controller
             ]
         ];
     }
-
     /**
      * Group sales data by day
      * 
@@ -170,5 +172,6 @@ class ResumenVerController extends Controller
         // This would typically come from a settings table or configuration
         // For now, return a placeholder value
         return 100000; // Example objective
+
     }
 }

@@ -18,6 +18,7 @@
 /storage/*.key
 /vendor
 .env
+.cursorignore
 #.env.backup
 .phpunit.result.cache
 Homestead.json

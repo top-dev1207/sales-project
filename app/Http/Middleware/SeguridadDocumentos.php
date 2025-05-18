@@ -233,11 +233,11 @@ class SeguridadDocumentos
                     }
                     //error
                 }
-                break;
+                // break;
 
                 default:
-                    Log::error(Auth::user()->name." | Seguridad Documento - Intento de ver ".$request->path()." - Max id es $idMax | ");
-                    return abort( 401 );        //Mauricio
+                    // Log::error(Auth::user()->name." | Seguridad Documento - Intento de ver ".$request->path()." - Max id es $idMax | ");
+                    // return abort( 401 );        //Mauricio
         }
 
     }

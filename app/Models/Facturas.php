@@ -55,4 +55,9 @@ class Facturas extends Model
     {
         return $this->belongsTo('App\Models\EstadoEntrega', 'estadoEntrega','id');      //(clase a relacionar, columna local, columna dest)
     }
+    
+    public function categoria()
+    {
+        return $this->belongsTo('App\Models\CategoriasGasto', 'categoria_id');
+    }
 }

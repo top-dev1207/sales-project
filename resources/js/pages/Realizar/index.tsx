@@ -3,8 +3,8 @@ import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { useToast } from "@/hooks/use-toast";
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import SalesWeatherChart from './SalesWeatherChart';
-import ProveedorDebtPaymentChart from './ProveedorDebtPaymentChart';
 import SalaryDashboard from './SalaryDashboard';
+import Proveedores from './Proveedores';
 
 const Realizar = () => {
     // Sample data - this would be replaced with real data in a production environment
@@ -58,28 +58,6 @@ const Realizar = () => {
         expensesDistribution: 38
     };
 
-    // Sales by location data
-    const locationSalesData = [
-        { name: 'Local 1', sales: 2750000 },
-        { name: 'Local 2', sales: 2250000 },
-        { name: 'Local 3', sales: 1850000 }
-    ];
-
-    // Expenses by location
-    const locationExpensesData = [
-        { name: 'Local 1', expenses: 1150000 },
-        { name: 'Local 2', expenses: 980000 },
-        { name: 'Local 3', expenses: 860000 }
-    ];
-
-    // Login time data
-    const loginTimeData = [
-        { user: 'Usuario 1', time: 125 },
-        { user: 'Usuario 2', time: 103 },
-        { user: 'Usuario 3', time: 87 },
-        { user: 'Usuario 4', time: 142 },
-        { user: 'Usuario 5', time: 96 }
-    ];
 
     // Sales objective dynamic
     const salesObjectiveData = {
@@ -239,7 +217,7 @@ const Realizar = () => {
                         </div>
                     </div>
                 </div>
-                <ProveedorDebtPaymentChart />
+                {/* <Proveedores /> */}
                 {/* Top Expenses Card */}
                 <div className="p-4 rounded-lg shadow">
                     <h2 className="text-lg font-semibold mb-3">Gastos más Relevantes</h2>

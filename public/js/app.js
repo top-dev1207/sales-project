@@ -145835,433 +145835,6 @@ var Pinta = function Pinta() {
 
 /***/ }),
 
-/***/ "./resources/js/pages/Realizar/ProveedorDebtPaymentChart.tsx":
-/*!*******************************************************************!*\
-  !*** ./resources/js/pages/Realizar/ProveedorDebtPaymentChart.tsx ***!
-  \*******************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/ResponsiveContainer.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/ComposedChart.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/CartesianGrid.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/XAxis.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/YAxis.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Tooltip.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Legend.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Area.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Bar.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/BarChart.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/LineChart.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Line.js");
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-
-
-
-// Sample data - providers
-var proveedores = ["Proveedor A", "Proveedor B", "Proveedor C", "Proveedor D"];
-// Generate sample data for 12 months
-var generateSampleData = function generateSampleData() {
-  var data = [];
-  var _loop = function _loop(month) {
-    var monthData = {
-      name: new Date(2024, month, 1).toLocaleDateString('es', {
-        month: 'short',
-        year: 'numeric'
-      }),
-      date: new Date(2024, month, 1)
-    };
-    // Add debt and payment data for each provider
-    proveedores.forEach(function (proveedor) {
-      // Generate debt that starts higher and tends to decrease
-      var baseDebt = 10000 - month * 500 + Math.random() * 1000;
-      var debt = Math.max(0, baseDebt);
-      // Payments increase over time
-      var payment = 2000 + month * 300 + Math.random() * 500;
-      monthData["deuda_".concat(proveedor)] = Math.round(debt);
-      monthData["pago_".concat(proveedor)] = Math.round(payment);
-    });
-    data.push(monthData);
-  };
-  for (var month = 0; month < 12; month++) {
-    _loop(month);
-  }
-  return data;
-};
-// Weekly data - more detailed
-var generateWeeklyData = function generateWeeklyData() {
-  var data = [];
-  var _loop2 = function _loop2(week) {
-    var date = new Date(2024, 0, 1 + week * 7);
-    var weekData = {
-      name: "Sem ".concat(week + 1),
-      date: date,
-      month: date.toLocaleDateString('es', {
-        month: 'short'
-      })
-    };
-    proveedores.forEach(function (proveedor) {
-      // More fluctuation in weekly data
-      var baseDebt = 10000 - week * 250 + Math.random() * 1500;
-      var debt = Math.max(0, baseDebt);
-      var payment = 1000 + week * 100 + Math.random() * 800;
-      weekData["deuda_".concat(proveedor)] = Math.round(debt);
-      weekData["pago_".concat(proveedor)] = Math.round(payment);
-    });
-    data.push(weekData);
-  };
-  for (var week = 0; week < 24; week++) {
-    _loop2(week);
-  }
-  return data;
-};
-// Calculate summary totals for the debt table
-var calculateDebtSummary = function calculateDebtSummary(data) {
-  // Get the most recent data point (last item in the array)
-  var latestData = data[data.length - 1];
-  // Calculate total debt across all providers
-  var totalDebt = 0;
-  var totalInvoices = 0;
-  proveedores.forEach(function (proveedor) {
-    totalDebt += latestData["deuda_".concat(proveedor)] || 0;
-    // For simplicity, use the payment as a representation of invoices
-    totalInvoices += latestData["pago_".concat(proveedor)] || 0;
-  });
-  return {
-    totalDebt: totalDebt,
-    totalInvoices: totalInvoices
-  };
-};
-var monthlyData = generateSampleData();
-var weeklyData = generateWeeklyData();
-// Custom tooltip to display both debt and payment for the selected provider
-var CustomTooltip = function CustomTooltip(_ref) {
-  var active = _ref.active,
-    payload = _ref.payload,
-    label = _ref.label,
-    selectedProvider = _ref.selectedProvider;
-  if (active && payload && payload.length) {
-    return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "bg-white p-4 shadow-md rounded border border-gray-200",
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-        className: "font-bold",
-        children: label
-      }), payload.map(function (entry, index) {
-        // Only show data for the selected provider
-        if (typeof entry.dataKey === 'string' && entry.dataKey.includes(selectedProvider)) {
-          var isDebt = entry.dataKey.includes('deuda');
-          return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-            style: {
-              color: entry.color
-            },
-            children: [isDebt ? 'Deuda: ' : 'Pago: ', new Intl.NumberFormat('en-US', {
-              style: 'currency',
-              currency: 'USD'
-            }).format(entry.value)]
-          }, index);
-        }
-        return null;
-      })]
-    });
-  }
-  return null;
-};
-var ProveedorDebtPaymentChart = function ProveedorDebtPaymentChart() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('monthly'),
-    _useState2 = _slicedToArray(_useState, 2),
-    dataType = _useState2[0],
-    setDataType = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(proveedores[0]),
-    _useState4 = _slicedToArray(_useState3, 2),
-    selectedProvider = _useState4[0],
-    setSelectedProvider = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('composed'),
-    _useState6 = _slicedToArray(_useState5, 2),
-    chartType = _useState6[0],
-    setChartType = _useState6[1];
-  var data = dataType === 'monthly' ? monthlyData : weeklyData;
-  var debtSummary = calculateDebtSummary(data);
-  // Colors for visualization
-  var debtColor = "#ff6b6b";
-  var paymentColor = "#4ecdc4";
-  // Format currency
-  var formatCurrency = function formatCurrency(value) {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(value);
-  };
-  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "container mx-auto p-4 mt-[20px] shadow",
-    children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-      className: "text-2xl font-bold mb-4 text-center",
-      children: "Hist\xF3rico de Deuda y Pagos a Proveedores"
-    }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "flex flex-wrap gap-4 mb-6 justify-center",
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-          className: "font-medium",
-          children: "Periodo:"
-        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "flex gap-2 mt-1",
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-            onClick: function onClick() {
-              return setDataType('monthly');
-            },
-            className: "px-3 py-1 rounded ".concat(dataType === 'monthly' ? 'bg-blue-600 text-white' : 'bg-gray-200'),
-            children: "Mensual"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-            onClick: function onClick() {
-              return setDataType('weekly');
-            },
-            className: "px-3 py-1 rounded ".concat(dataType === 'weekly' ? 'bg-blue-600 text-white' : 'bg-gray-200'),
-            children: "Semanal"
-          })]
-        })]
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-          className: "font-medium",
-          children: "Proveedor:"
-        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("select", {
-          value: selectedProvider,
-          onChange: function onChange(e) {
-            return setSelectedProvider(e.target.value);
-          },
-          className: "border rounded px-2 py-1 mt-1",
-          children: proveedores.map(function (proveedor) {
-            return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
-              value: proveedor,
-              children: proveedor
-            }, proveedor);
-          })
-        })]
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-          className: "font-medium",
-          children: "Tipo de gr\xE1fico:"
-        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "flex gap-2 mt-1",
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-            onClick: function onClick() {
-              return setChartType('composed');
-            },
-            className: "px-3 py-1 rounded ".concat(chartType === 'composed' ? 'bg-blue-600 text-white' : 'bg-gray-200'),
-            children: "Combinado"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-            onClick: function onClick() {
-              return setChartType('bar');
-            },
-            className: "px-3 py-1 rounded ".concat(chartType === 'bar' ? 'bg-blue-600 text-white' : 'bg-gray-200'),
-            children: "Barras"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-            onClick: function onClick() {
-              return setChartType('line');
-            },
-            className: "px-3 py-1 rounded ".concat(chartType === 'line' ? 'bg-blue-600 text-white' : 'bg-gray-200'),
-            children: "L\xEDneas"
-          })]
-        })]
-      })]
-    }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "h-96 w-full",
-      children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_2__.ResponsiveContainer, {
-        width: "100%",
-        height: "100%",
-        children: chartType === 'composed' ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_3__.ComposedChart, {
-          data: data,
-          margin: {
-            top: 10,
-            right: 30,
-            left: 30,
-            bottom: 40
-          },
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-            strokeDasharray: "3 3"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
-            dataKey: "name",
-            angle: 0,
-            textAnchor: "middle",
-            height: 70,
-            interval: dataType === 'weekly' ? 1 : 0
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {
-            yAxisId: "left",
-            label: {
-              value: 'Monto ($)',
-              angle: -90,
-              position: 'insideLeft'
-            },
-            tickFormatter: function tickFormatter(value) {
-              return new Intl.NumberFormat('en-US', {
-                notation: 'compact'
-              }).format(value);
-            }
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
-            content: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(CustomTooltip, {
-              selectedProvider: selectedProvider
-            })
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Area, {
-            type: "monotone",
-            dataKey: "deuda_".concat(selectedProvider),
-            name: "Deuda ".concat(selectedProvider),
-            fill: debtColor,
-            stroke: debtColor,
-            yAxisId: "left"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_10__.Bar, {
-            dataKey: "pago_".concat(selectedProvider),
-            name: "Pagos ".concat(selectedProvider),
-            fill: paymentColor,
-            yAxisId: "left"
-          })]
-        }) : chartType === 'bar' ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_11__.BarChart, {
-          data: data,
-          margin: {
-            top: 10,
-            right: 30,
-            left: 30,
-            bottom: 40
-          },
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-            strokeDasharray: "3 3"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
-            dataKey: "name",
-            angle: 0,
-            textAnchor: "middle",
-            height: 70,
-            interval: dataType === 'weekly' ? 1 : 0
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {
-            tickFormatter: function tickFormatter(value) {
-              return new Intl.NumberFormat('en-US', {
-                notation: 'compact'
-              }).format(value);
-            },
-            label: {
-              value: 'Monto ($)',
-              angle: -90,
-              position: 'insideLeft'
-            }
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
-            content: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(CustomTooltip, {
-              selectedProvider: selectedProvider
-            })
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_10__.Bar, {
-            dataKey: "deuda_".concat(selectedProvider),
-            name: "Deuda ".concat(selectedProvider),
-            fill: debtColor
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_10__.Bar, {
-            dataKey: "pago_".concat(selectedProvider),
-            name: "Pagos ".concat(selectedProvider),
-            fill: paymentColor
-          })]
-        }) : (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_12__.LineChart, {
-          data: data,
-          margin: {
-            top: 10,
-            right: 30,
-            left: 30,
-            bottom: 40
-          },
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-            strokeDasharray: "3 3"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
-            dataKey: "name",
-            angle: 0,
-            textAnchor: "middle",
-            height: 70,
-            interval: dataType === 'weekly' ? 1 : 0
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {
-            tickFormatter: function tickFormatter(value) {
-              return new Intl.NumberFormat('en-US', {
-                notation: 'compact'
-              }).format(value);
-            },
-            label: {
-              value: 'Monto ($)',
-              angle: -90,
-              position: 'insideLeft'
-            }
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
-            content: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(CustomTooltip, {
-              selectedProvider: selectedProvider
-            })
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_13__.Line, {
-            type: "monotone",
-            dataKey: "deuda_".concat(selectedProvider),
-            name: "Deuda ".concat(selectedProvider),
-            stroke: debtColor,
-            dot: false,
-            activeDot: {
-              r: 8
-            },
-            strokeWidth: 2
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_13__.Line, {
-            type: "monotone",
-            dataKey: "pago_".concat(selectedProvider),
-            name: "Pagos ".concat(selectedProvider),
-            stroke: paymentColor,
-            dot: false,
-            activeDot: {
-              r: 8
-            },
-            strokeWidth: 2
-          })]
-        })
-      })
-    }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "mt-8 mb-4",
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-        className: "text-xl font-bold mb-4",
-        children: "Resumen"
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "mt-4 overflow-x-auto",
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", {
-          className: "w-full border-collapse",
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", {
-            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "border border-blue-600 bg-blue-50 p-2 text-left",
-                children: "M\xE9tricas actuales"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "border border-blue-600 bg-blue-50 p-2 text-left",
-                children: "Valor"
-              })]
-            })
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tbody", {
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                className: "border border-gray-300 p-2",
-                children: "Deuda total de proveedores"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                className: "border border-gray-300 p-2 font-medium",
-                children: formatCurrency(debtSummary.totalDebt)
-              })]
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                className: "border border-gray-300 p-2",
-                children: "Pasivo de facturas"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                className: "border border-gray-300 p-2 font-medium",
-                children: formatCurrency(debtSummary.totalInvoices)
-              })]
-            })]
-          })]
-        })
-      })]
-    })]
-  });
-};
-/* harmony default export */ __webpack_exports__["default"] = (ProveedorDebtPaymentChart);
-
-/***/ }),
-
 /***/ "./resources/js/pages/Realizar/SalaryDashboard.tsx":
 /*!*********************************************************!*\
   !*** ./resources/js/pages/Realizar/SalaryDashboard.tsx ***!
@@ -146977,26 +146550,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _components_dashboard_DashboardLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/dashboard/DashboardLayout */ "./resources/js/components/dashboard/DashboardLayout.tsx");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/ResponsiveContainer.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/BarChart.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/CartesianGrid.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/XAxis.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/YAxis.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Tooltip.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Bar.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Cell.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/PieChart.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/polar/Pie.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/ResponsiveContainer.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/BarChart.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/CartesianGrid.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/XAxis.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/YAxis.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Tooltip.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Bar.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Cell.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/PieChart.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/polar/Pie.js");
 /* harmony import */ var _SalesWeatherChart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SalesWeatherChart */ "./resources/js/pages/Realizar/SalesWeatherChart.tsx");
-/* harmony import */ var _ProveedorDebtPaymentChart__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ProveedorDebtPaymentChart */ "./resources/js/pages/Realizar/ProveedorDebtPaymentChart.tsx");
-/* harmony import */ var _SalaryDashboard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SalaryDashboard */ "./resources/js/pages/Realizar/SalaryDashboard.tsx");
+/* harmony import */ var _SalaryDashboard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SalaryDashboard */ "./resources/js/pages/Realizar/SalaryDashboard.tsx");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-
 
 
 
@@ -147076,45 +146647,6 @@ var Realizar = function Realizar() {
     expensesOverSales: 42,
     expensesDistribution: 38
   };
-  // Sales by location data
-  var locationSalesData = [{
-    name: 'Local 1',
-    sales: 2750000
-  }, {
-    name: 'Local 2',
-    sales: 2250000
-  }, {
-    name: 'Local 3',
-    sales: 1850000
-  }];
-  // Expenses by location
-  var locationExpensesData = [{
-    name: 'Local 1',
-    expenses: 1150000
-  }, {
-    name: 'Local 2',
-    expenses: 980000
-  }, {
-    name: 'Local 3',
-    expenses: 860000
-  }];
-  // Login time data
-  var loginTimeData = [{
-    user: 'Usuario 1',
-    time: 125
-  }, {
-    user: 'Usuario 2',
-    time: 103
-  }, {
-    user: 'Usuario 3',
-    time: 87
-  }, {
-    user: 'Usuario 4',
-    time: 142
-  }, {
-    user: 'Usuario 5',
-    time: 96
-  }];
   // Sales objective dynamic
   var salesObjectiveData = {
     totalObjective: 5000000,
@@ -147358,17 +146890,17 @@ var Realizar = function Realizar() {
             children: [(salesObjectiveData.currentAchieved / salesObjectiveData.totalObjective * 100).toFixed(1), "% completado"]
           })]
         })]
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ProveedorDebtPaymentChart__WEBPACK_IMPORTED_MODULE_4__["default"], {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "p-4 rounded-lg shadow",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
           className: "text-lg font-semibold mb-3",
           children: "Gastos m\xE1s Relevantes"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
           className: "h-64",
-          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.ResponsiveContainer, {
+          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.ResponsiveContainer, {
             width: "100%",
             height: "100%",
-            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_7__.BarChart, {
+            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_6__.BarChart, {
               data: topExpensesData,
               layout: "vertical",
               margin: {
@@ -147377,22 +146909,22 @@ var Realizar = function Realizar() {
                 left: 25,
                 bottom: 5
               },
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.CartesianGrid, {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.CartesianGrid, {
                 strokeDasharray: "3 3"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.XAxis, {
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.XAxis, {
                 type: "number"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_10__.YAxis, {
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.YAxis, {
                 dataKey: "name",
                 type: "category"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Tooltip, {
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_10__.Tooltip, {
                 formatter: function formatter(value) {
                   return ["$".concat(value.toLocaleString()), 'Monto'];
                 }
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_12__.Bar, {
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Bar, {
                 dataKey: "amount",
                 fill: "#8884d8",
                 children: topExpensesData.map(function (entry, index) {
-                  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_13__.Cell, {
+                  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_12__.Cell, {
                     fill: COLORS[index % COLORS.length]
                   }, "cell-".concat(index));
                 })
@@ -147469,11 +147001,11 @@ var Realizar = function Realizar() {
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
           className: "h-40",
-          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.ResponsiveContainer, {
+          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.ResponsiveContainer, {
             width: "100%",
             height: "100%",
-            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_14__.PieChart, {
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_15__.Pie, {
+            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_13__.PieChart, {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_14__.Pie, {
                 data: [{
                   name: 'Ganancia',
                   value: profitData.netProfit
@@ -147493,11 +147025,11 @@ var Realizar = function Realizar() {
                   return "".concat(name, ": ").concat((percent * 100).toFixed(0), "%");
                 },
                 children: [0, 1].map(function (entry, index) {
-                  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_13__.Cell, {
+                  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_12__.Cell, {
                     fill: index === 0 ? '#00C49F' : '#FF8042'
                   }, "cell-".concat(index));
                 })
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Tooltip, {
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_10__.Tooltip, {
                 formatter: function formatter(value) {
                   return ["$".concat(value.toLocaleString())];
                 }
@@ -147505,7 +147037,7 @@ var Realizar = function Realizar() {
             })
           })
         })]
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_SalaryDashboard__WEBPACK_IMPORTED_MODULE_5__["default"], {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_SalesWeatherChart__WEBPACK_IMPORTED_MODULE_3__["default"], {})]
+      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_SalaryDashboard__WEBPACK_IMPORTED_MODULE_4__["default"], {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_SalesWeatherChart__WEBPACK_IMPORTED_MODULE_3__["default"], {})]
     })
   });
 };
