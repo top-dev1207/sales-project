@@ -1,10 +1,17 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\ResumenVer\ResumenVerController;
 use App\Http\Controllers\ResumenVer\SalesObjectiveController;
 use App\Http\Controllers\ResumenVer\ProveedoresDeudaController;
 use App\Http\Controllers\ResumenVer\GastosAnalisisController;
+use App\Http\Controllers\ResumenVer\CostMetricsController;
+use App\Http\Controllers\ResumenVer\SalesProjectionController;
+use App\Http\Controllers\ResumenVer\VentasAnalisisController;
+use App\Http\Controllers\ResumenVer\UserLoginTimeController;
+use App\Http\Controllers\ResumenVer\ExpensesAnalysisController;
+use App\Http\Controllers\ResumenVer\SalesAnalyticsController;
+use App\Http\Controllers\ResumenVer\FormaPagoController;
+use App\Http\Controllers\ResumenVer\FinancialMetricsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,31 +33,84 @@ use App\Http\Controllers\ResumenVer\GastosAnalisisController;
 Route::middleware('auth:api')->group(function () {
     // Route::get('realizar', [ResumenVerController::class, "getRealizarData"] );
 });
-Route::get('/getRealizarData', [ResumenVerController::class, "getRealizarData"]);
-// Rutas para objetivos de ventas
-Route::get('/objetivos/progress', [SalesObjectiveController::class, "getProgress"]);
-Route::post('/objetivos/set', [SalesObjectiveController::class, 'setObjective']);
-Route::get('/objetivos/yearly', [SalesObjectiveController::class, 'getYearlyObjectives']);
-
-// Rutas para el seguimiento de deuda a proveedores
-Route::prefix('proveedores')->group(function () {
-    // Deuda total de proveedores a la fecha
-    Route::get('/deuda-total', [ProveedoresDeudaController::class, 'getDeudaTotal']);
-
-    // Pasivo de facturas actual
-    Route::get('/pasivo-facturas', [ProveedoresDeudaController::class, 'getPasivoFacturas']);
-
-    // Históricos de deuda y pagos (semanales y mensuales)
-    Route::get('/historico-pagos', [ProveedoresDeudaController::class, 'getHistoricoPagos']);
-
-    // Detalle de un proveedor específico
-    Route::get('/detalle/{proveedorId}', [ProveedoresDeudaController::class, 'getDetalleProveedor']);
-});
-
-// Rutas para análisis de gastos
 Route::prefix('gastos-analisis')->group(function () {
     Route::get('/sobre-ventas', [GastosAnalisisController::class, 'gastosSobreVentas']);
     Route::get('/sobre-total', [GastosAnalisisController::class, 'gastosSobreTotalGastos']);
     Route::get('/mas-relevantes', [GastosAnalisisController::class, 'gastosMasRelevantes']);
     Route::get('/dashboard', [GastosAnalisisController::class, 'dashboardGastos']);
 });
+// Rutas para métricas de costos
+Route::prefix('cost-metrics')->group(function () {
+    Route::get('/', [CostMetricsController::class, 'getCostMetrics']);
+    Route::get('/detailed', [CostMetricsController::class, 'getDetailedCostMetrics']);
+});
+Route::prefix('sales-projection')->group(function () {
+    Route::get('/monthly', [SalesProjectionController::class, 'getMonthlyProjection']);
+    Route::get('/annual', [SalesProjectionController::class, 'getAnnualProjection']);
+    Route::get('/dashboard', [SalesProjectionController::class, 'getDashboard']);
+});
+
+// Sales Objective Routes
+Route::prefix('sales-objective')->group(function () {
+    Route::get('/progress', [SalesObjectiveController::class, 'getProgress']);
+    Route::post('/set', [SalesObjectiveController::class, 'setObjective']);
+    Route::get('/yearly', [SalesObjectiveController::class, 'getYearlyObjectives']);
+});
+Route::prefix('proveedores')->group(function () {
+    // Total debt of providers as of current date
+    Route::get('/deuda-total', [ProveedoresDeudaController::class, 'getDeudaTotal']);
+
+    // Current invoice liabilities
+    Route::get('/pasivo-facturas', [ProveedoresDeudaController::class, 'getPasivoFacturas']);
+
+    // Historical debt and payment data (weekly and monthly)
+    Route::get('/historico-pagos', [ProveedoresDeudaController::class, 'getHistoricoPagos']);
+
+    // Details for a specific provider
+    Route::get('/detalle/{proveedorId}', [ProveedoresDeudaController::class, 'getDetalleProveedor']);
+});
+Route::prefix('ventas-analisis')->group(function () {
+    Route::get('/por-local-periodo-clima', [VentasAnalisisController::class, 'getVentasPorLocalPeriodoClima']);
+    Route::get('/climas', [VentasAnalisisController::class, 'getClimas']);
+    Route::get('/correlacion-clima-ventas', [VentasAnalisisController::class, 'getCorrelacionClimaVentas']);
+});
+
+// Route::middleware('auth:sanctum')->group(function () {
+// Rutas para registrar login/logout
+Route::post('/login-time', [UserLoginTimeController::class, 'recordLogin']);
+Route::post('/logout-time', [UserLoginTimeController::class, 'recordLogout']);
+
+// Rutas para obtener estadísticas
+Route::get('/user-login-time/{userId?}', [UserLoginTimeController::class, 'getUserLoginTime']);
+Route::get('/login-stats/daily', [UserLoginTimeController::class, 'getDailyLoginStats']);
+Route::get('/login-stats/weekly', [UserLoginTimeController::class, 'getWeeklyLoginStats']);
+Route::get('/login-stats/monthly', [UserLoginTimeController::class, 'getMonthlyLoginStats']);
+
+// Ruta para informes personalizados
+Route::get('/login-report', [UserLoginTimeController::class, 'getLoginReport']);
+// });
+
+Route::prefix('expenses-analysis')->group(function () {
+    Route::get('/by-incidence', [ExpensesAnalysisController::class, 'getExpensesByIncidence']);
+    Route::get('/compare-periods', [ExpensesAnalysisController::class, 'compareExpensesPeriods']);
+});
+
+Route::prefix('sales-analytics')->group(function () {
+    Route::get('/day', [SalesAnalyticsController::class, 'dailySales']);
+    Route::get('/week', [SalesAnalyticsController::class, 'weeklySales']);
+    Route::get('/month', [SalesAnalyticsController::class, 'monthlySales']);
+    Route::get('/comparison', [SalesAnalyticsController::class, 'salesComparison']);
+    Route::get('/by-category', [SalesAnalyticsController::class, 'salesByCategory']);
+    Route::get('/targets', [SalesAnalyticsController::class, 'salesTargets']);
+    Route::get('/dashboard', [SalesAnalyticsController::class, 'dashboard']);
+});
+
+Route::prefix('formas-pago')->group(function () {
+    Route::get('/', [FormaPagoController::class, 'index']);
+    Route::get('/configuraciones', [FormaPagoController::class, 'getConfiguraciones']);
+    Route::get('/{id}', [FormaPagoController::class, 'show']);
+    Route::post('/', [FormaPagoController::class, 'store']);
+    Route::put('/{id}', [FormaPagoController::class, 'update']);
+    Route::delete('/{id}', [FormaPagoController::class, 'destroy']);
+});
+Route::get('/financial-metrics/yearly', [FinancialMetricsController::class,'getYearlyMetrics']);

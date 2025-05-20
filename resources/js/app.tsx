@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { DashboardProvider } from "./context/DashboardContext";
-import Ventas from "./pages/Ventas";
+import Ventas from "./pages/Vantas";
 import Existentes from "./pages/Existentes";
 import Gastos from "./pages/Gastos";
 import Pinta from "./pages/Pinta";

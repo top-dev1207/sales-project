@@ -13,11 +13,11 @@ mix.ts('resources/js/main.tsx', 'public/js/app.js').react()
    })
 
    .postCss('resources/css/app.css', 'public/css', [
-    //  require('postcss-import'),
+     require('postcss-import'),
      require('tailwindcss'),
      require('autoprefixer'),
    ])
 
-   .sass('resources/scss/app.scss', 'public/css')
-   .sass('resources/sass/style.scss', 'public/css')
-   .sass('resources/sass/app.scss', 'public/css');
+  //  .sass('resources/scss/app.scss', 'public/css')
+  //  .sass('resources/sass/style.scss', 'public/css')
+  //  .sass('resources/sass/app.scss', 'public/css');

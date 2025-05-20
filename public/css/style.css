@@ -268,10 +268,10 @@ button {
   border-radius: 0;
 }
 
-button:focus {
+/* button:focus {
   outline: 1px dotted;
   outline: 5px auto -webkit-focus-ring-color;
-}
+} */
 
 input,
 button,
@@ -3146,10 +3146,10 @@ html:not([dir=rtl]) .c-callout-dark {
   cursor: move;
 }
 
-.card[class^=bg-],
+/* .card[class^=bg-],
 .card[class*=" bg-"] {
   border-color: rgba(0, 0, 0, 0.125);
-}
+} */
 .card[class^=bg-] .card-header,
 .card[class*=" bg-"] .card-header {
   background-color: rgba(0, 0, 0, 0.05);
@@ -12624,9 +12624,9 @@ button.bg-dark:focus {
   background-color: transparent !important;
 }
 
-[class^=bg-] {
+/* [class^=bg-] {
   color: #fff;
-}
+} */
 
 .bg-facebook {
   background-color: #3b5998 !important;

@@ -3,295 +3,514 @@
 namespace App\Http\Controllers\ResumenVer;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\Facturas;
 use App\Models\Proveedores;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class ProveedoresDeudaController extends Controller
 {
     /**
-     * Obtener deuda total de proveedores a la fecha
-     * Saldo pendiente de pago de facturas ($), agrupa y proveedor, order por proveedor
-     *
+     * Get the total debt to providers as of current date
+     * 
      * @return \Illuminate\Http\JsonResponse
      */
     public function getDeudaTotal()
     {
         try {
-            // Obtener últimas facturas por proveedor con saldo pendiente
-            $deudaPorProveedor = Facturas::join('proveedores', 'facturas.proveedor', '=', 'proveedores.nro_proveedor')
-                ->join(
-                    DB::raw('(SELECT nro_documento, MAX(id) as idMax FROM facturas GROUP BY nro_documento) as ultimo_doc'),
+            // Get the latest status of each invoice by using the max id for each invoice number
+            $latestInvoices = DB::table('facturas as f')
+                ->join(DB::raw('(SELECT nro_documento, MAX(id) as max_id FROM facturas GROUP BY nro_documento) as latest'), 
                     function ($join) {
-                        $join->on('facturas.nro_documento', '=', 'ultimo_doc.nro_documento');
-                        $join->on('facturas.id', '=', 'ultimo_doc.idMax');
-                    }
-                )
-                ->select(
-                    'facturas.proveedor',
-                    'proveedores.nombre',
-                    DB::raw('SUM(facturas.saldo) as deuda_total'),
-                    DB::raw('COUNT(facturas.id) as cantidad_facturas')
-                )
-                ->where('facturas.saldo', '>', 0)
-                ->where('facturas.estadoDocumento', '!=', 6) // No borrados
-                ->groupBy('facturas.proveedor', 'proveedores.nombre')
-                ->orderBy('proveedores.nombre')
+                        $join->on('f.nro_documento', '=', 'latest.nro_documento')
+                            ->on('f.id', '=', 'latest.max_id');
+                    })
+                ->where('f.estadoDocumento', '!=', 6) // Not deleted
+                ->where('f.pagado', '=', 0)          // Not paid
+                ->select('f.proveedor', 'f.total')
                 ->get();
 
+            // Group and sum by provider
+            $proveedoresDeuda = [];
+            $deudaTotal = 0;
+
+            foreach ($latestInvoices as $invoice) {
+                $proveedorId = $invoice->proveedor;
+                if (!isset($proveedoresDeuda[$proveedorId])) {
+                    $proveedoresDeuda[$proveedorId] = 0;
+                }
+                $proveedoresDeuda[$proveedorId] += $invoice->total;
+                $deudaTotal += $invoice->total;
+            }
+
+            // Format provider data with names
+            $formattedData = [];
+            foreach ($proveedoresDeuda as $proveedorId => $total) {
+                $proveedor = Proveedores::where('nro_proveedor', $proveedorId)
+                    ->where('estadoInterno', '!=', 6) // Not deleted
+                    ->orderBy('id', 'desc')
+                    ->first();
+                
+                if ($proveedor) {
+                    $formattedData[] = [
+                        'id' => $proveedorId,
+                        'nombre' => $proveedor->nombre,
+                        'deuda' => $total,
+                        'porcentaje' => $deudaTotal > 0 ? round(($total / $deudaTotal) * 100, 2) : 0
+                    ];
+                }
+            }
+
+            // Sort by debt amount (highest first)
+            usort($formattedData, function($a, $b) {
+                return $b['deuda'] <=> $a['deuda'];
+            });
+
             return response()->json([
-                'status' => 'success',
-                'data' => $deudaPorProveedor
+                'success' => true,
+                'deuda_total' => $deudaTotal,
+                'proveedores' => $formattedData,
+                'fecha_consulta' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
+
         } catch (\Exception $e) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'Error al obtener deuda total: ' . $e->getMessage()
+                'success' => false,
+                'message' => $e->getMessage()
             ], 500);
         }
     }
 
     /**
-     * Obtener pasivo de facturas actual
-     * Total de $ de Facturas cargadas (validadas y no)
-     *
+     * Get the current invoice liabilities (validated and not validated)
+     * 
      * @return \Illuminate\Http\JsonResponse
      */
     public function getPasivoFacturas()
     {
         try {
-            // Obtener el total de facturas cargadas (validadas y no validadas)
-            $pasivoFacturas = DB::table('facturas')
-                ->join(
-                    DB::raw('(SELECT nro_documento, MAX(id) as idMax FROM facturas GROUP BY nro_documento) as ultimo_doc'),
+            // Get the latest status of each invoice
+            $invoiceTotals = DB::table('facturas as f')
+                ->join(DB::raw('(SELECT nro_documento, MAX(id) as max_id FROM facturas GROUP BY nro_documento) as latest'), 
                     function ($join) {
-                        $join->on('facturas.nro_documento', '=', 'ultimo_doc.nro_documento');
-                        $join->on('facturas.id', '=', 'ultimo_doc.idMax');
-                    }
-                )
+                        $join->on('f.nro_documento', '=', 'latest.nro_documento')
+                            ->on('f.id', '=', 'latest.max_id');
+                    })
+                ->where('f.estadoDocumento', '!=', 6) // Not deleted
                 ->select(
-                    DB::raw('COALESCE(SUM(facturas.total), 0) as total_pasivo'),
-                    DB::raw('COALESCE(SUM(CASE WHEN facturas.pagado = 1 THEN facturas.total ELSE 0 END), 0) as total_pagado'),
-                    DB::raw('COALESCE(SUM(CASE WHEN facturas.pagado = 0 THEN facturas.total ELSE 0 END), 0) as total_pendiente'),
-                    DB::raw('COUNT(facturas.id) as cantidad_facturas')
+                    DB::raw('SUM(CASE WHEN f.estadoDocumento IN (2, 3) THEN f.total ELSE 0 END) as total_validado'),
+                    DB::raw('SUM(CASE WHEN f.estadoDocumento = 1 THEN f.total ELSE 0 END) as total_por_validar'),
+                    DB::raw('SUM(CASE WHEN f.pagado = 0 THEN f.total ELSE 0 END) as total_pendiente_pago'),
+                    DB::raw('SUM(f.total) as total_general')
                 )
-                ->where('facturas.estadoDocumento', '!=', 6) // No borrados
                 ->first();
 
-            // Ensure we always have proper data format even if query returns no records
-            $result = [
-                'total_pasivo' => $pasivoFacturas->total_pasivo ?? 0,
-                'total_pagado' => $pasivoFacturas->total_pagado ?? 0,
-                'total_pendiente' => $pasivoFacturas->total_pendiente ?? 0,
-                'cantidad_facturas' => $pasivoFacturas->cantidad_facturas ?? 0
-            ];
+            // Get counts by status
+            $invoiceCounts = DB::table('facturas as f')
+                ->join(DB::raw('(SELECT nro_documento, MAX(id) as max_id FROM facturas GROUP BY nro_documento) as latest'), 
+                    function ($join) {
+                        $join->on('f.nro_documento', '=', 'latest.nro_documento')
+                            ->on('f.id', '=', 'latest.max_id');
+                    })
+                ->where('f.estadoDocumento', '!=', 6) // Not deleted
+                ->select(
+                    DB::raw('COUNT(CASE WHEN f.estadoDocumento IN (2, 3) THEN 1 ELSE NULL END) as count_validado'),
+                    DB::raw('COUNT(CASE WHEN f.estadoDocumento = 1 THEN 1 ELSE NULL END) as count_por_validar'),
+                    DB::raw('COUNT(CASE WHEN f.pagado = 0 THEN 1 ELSE NULL END) as count_pendiente_pago'),
+                    DB::raw('COUNT(*) as count_total')
+                )
+                ->first();
 
             return response()->json([
-                'status' => 'success',
-                'data' => $result
+                'success' => true,
+                'totales' => [
+                    'total_validado' => $invoiceTotals->total_validado ?? 0,
+                    'total_por_validar' => $invoiceTotals->total_por_validar ?? 0,
+                    'total_pendiente_pago' => $invoiceTotals->total_pendiente_pago ?? 0,
+                    'total_general' => $invoiceTotals->total_general ?? 0
+                ],
+                'conteo' => [
+                    'facturas_validadas' => $invoiceCounts->count_validado ?? 0,
+                    'facturas_por_validar' => $invoiceCounts->count_por_validar ?? 0,
+                    'facturas_pendientes_pago' => $invoiceCounts->count_pendiente_pago ?? 0,
+                    'facturas_total' => $invoiceCounts->count_total ?? 0
+                ],
+                'fecha_consulta' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
+
         } catch (\Exception $e) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'Error al obtener pasivo de facturas: ' . $e->getMessage()
+                'success' => false,
+                'message' => $e->getMessage()
             ], 500);
         }
     }
 
     /**
-     * Obtener históricos semanales y mensuales de deuda
-     * Históricos Semanales y Mensuales de deuda y pagos, a lo largo del tiempo, para ver cómo se le va pagando a cada proveedor
-     *
-     * @param Request $request
+     * Get historical debt and payment data (weekly and monthly)
+     * 
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getHistoricoPagos(Request $request)
+    public function getHistoricoPagos()
     {
         try {
-            // Validar datos de entrada
-            $request->validate([
-                'proveedor_id' => 'nullable|integer',
-                'periodo' => 'required|in:semanal,mensual',
-                'fecha_inicio' => 'nullable|date',
-                'fecha_fin' => 'nullable|date',
-            ]);
+            // Start date is 6 months ago
+            $startDate = Carbon::now()->subMonths(6)->startOfMonth();
+            $endDate = Carbon::now();
 
-            // Definir fechas de inicio y fin
-            $fechaFin = $request->fecha_fin ? Carbon::parse($request->fecha_fin) : Carbon::now();
-            $fechaInicio = $request->fecha_inicio
-                ? Carbon::parse($request->fecha_inicio)
-                : $request->periodo === 'semanal'
-                ? $fechaFin->copy()->subWeeks(12)
-                : $fechaFin->copy()->subMonths(12);
+            // Get monthly data
+            $monthlyData = $this->getMonthlySummary($startDate, $endDate);
 
-            // Construir query base
-            $query = Facturas::join('proveedores', 'facturas.proveedor', '=', 'proveedores.nro_proveedor')
-                ->whereBetween('facturas.fecha_limite', [$fechaInicio, $fechaFin])
-                ->where('facturas.estadoDocumento', '!=', 6); // No borrados
+            // Get weekly data (for the last 8 weeks)
+            $weeklyStartDate = Carbon::now()->subWeeks(8)->startOfWeek();
+            $weeklyData = $this->getWeeklySummary($weeklyStartDate, $endDate);
 
-            // Filtrar por proveedor si se especifica
-            if ($request->proveedor_id) {
-                $query->where('facturas.proveedor', $request->proveedor_id);
-            }
-
-            // Agrupar por periodo (semanal o mensual)
-            if ($request->periodo === 'semanal') {
-                $query->select(
-                    DB::raw('YEARWEEK(facturas.fecha_limite, 1) as periodo'),
-                    DB::raw('MIN(facturas.fecha_limite) as fecha_inicio_periodo'),
-                    DB::raw('MAX(facturas.fecha_limite) as fecha_fin_periodo'),
-                    'facturas.proveedor',
-                    'proveedores.nombre',
-                    DB::raw('SUM(facturas.total) as monto_total'),
-                    DB::raw('SUM(CASE WHEN facturas.pagado = 1 THEN facturas.total ELSE 0 END) as monto_pagado'),
-                    DB::raw('SUM(CASE WHEN facturas.pagado = 0 THEN facturas.total ELSE 0 END) as monto_pendiente')
-                )
-                    ->groupBy('periodo', 'facturas.proveedor', 'proveedores.nombre')
-                    ->orderBy('periodo')
-                    ->orderBy('proveedores.nombre');
-            } else {
-                $query->select(
-                    DB::raw('DATE_FORMAT(facturas.fecha_limite, "%Y-%m") as periodo'),
-                    DB::raw('MIN(facturas.fecha_limite) as fecha_inicio_periodo'),
-                    DB::raw('MAX(facturas.fecha_limite) as fecha_fin_periodo'),
-                    'facturas.proveedor',
-                    'proveedores.nombre',
-                    DB::raw('SUM(facturas.total) as monto_total'),
-                    DB::raw('SUM(CASE WHEN facturas.pagado = 1 THEN facturas.total ELSE 0 END) as monto_pagado'),
-                    DB::raw('SUM(CASE WHEN facturas.pagado = 0 THEN facturas.total ELSE 0 END) as monto_pendiente')
-                )
-                    ->groupBy('periodo', 'facturas.proveedor', 'proveedores.nombre')
-                    ->orderBy('periodo')
-                    ->orderBy('proveedores.nombre');
-            }
-
-            $historico = $query->get();
-
-            // Procesar resultado para formato adecuado de gráficos
-            $proveedores = [];
-            $periodos = [];
-            $dataset = [];
-
-            foreach ($historico as $item) {
-                if (!in_array($item->periodo, $periodos)) {
-                    $periodos[] = $item->periodo;
-                }
-
-                if (!array_key_exists($item->proveedor, $proveedores)) {
-                    $proveedores[$item->proveedor] = $item->nombre;
-                }
-
-                if (!isset($dataset[$item->proveedor])) {
-                    $dataset[$item->proveedor] = [
-                        'nombre' => $item->nombre,
-                        'total' => [],
-                        'pagado' => [],
-                        'pendiente' => []
-                    ];
-                }
-
-                $dataset[$item->proveedor]['total'][$item->periodo] = $item->monto_total;
-                $dataset[$item->proveedor]['pagado'][$item->periodo] = $item->monto_pagado;
-                $dataset[$item->proveedor]['pendiente'][$item->periodo] = $item->monto_pendiente;
-            }
+            // Get payment trend data (new debts vs. paid amounts)
+            $paymentTrend = $this->getPaymentTrendData($startDate, $endDate);
 
             return response()->json([
-                'status' => 'success',
-                'data' => [
-                    'periodos' => $periodos,
-                    'proveedores' => $proveedores,
-                    'dataset' => $dataset,
-                    'raw' => $historico
-                ]
+                'success' => true,
+                'periodo' => [
+                    'fecha_inicio' => $startDate->format('Y-m-d'),
+                    'fecha_fin' => $endDate->format('Y-m-d')
+                ],
+                'datos_mensuales' => $monthlyData,
+                'datos_semanales' => $weeklyData,
+                'tendencia_pagos' => $paymentTrend,
+                'fecha_consulta' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
+
         } catch (\Exception $e) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'Error al obtener histórico de pagos: ' . $e->getMessage()
+                'success' => false,
+                'message' => $e->getMessage()
             ], 500);
         }
     }
 
     /**
-     * Obtener detalles de deuda de un proveedor específico
-     *
+     * Get details for a specific provider
+     * 
      * @param int $proveedorId
      * @return \Illuminate\Http\JsonResponse
      */
     public function getDetalleProveedor($proveedorId)
     {
         try {
-            // Validar que el proveedor existe
-            $proveedor = Proveedores::where('nro_proveedor', $proveedorId)->first();
+            // Get provider info
+            $proveedor = Proveedores::where('nro_proveedor', $proveedorId)
+                ->where('estadoInterno', '!=', 6)
+                ->orderBy('id', 'desc')
+                ->first();
 
             if (!$proveedor) {
                 return response()->json([
-                    'status' => 'error',
-                    'message' => 'Proveedor no encontrado'
+                    'success' => false,
+                    'message' => 'Provider not found'
                 ], 404);
             }
 
-            // Obtener facturas pendientes del proveedor
-            $facturasPendientes = Facturas::join(
-                DB::raw('(SELECT nro_documento, MAX(id) as idMax FROM facturas GROUP BY nro_documento) as ultimo_doc'),
-                function ($join) {
-                    $join->on('facturas.nro_documento', '=', 'ultimo_doc.nro_documento');
-                    $join->on('facturas.id', '=', 'ultimo_doc.idMax');
-                }
-            )
+            // Get all unpaid invoices for this provider
+            $unpaidInvoices = DB::table('facturas as f')
+                ->join(DB::raw('(SELECT nro_documento, MAX(id) as max_id FROM facturas GROUP BY nro_documento) as latest'), 
+                    function ($join) {
+                        $join->on('f.nro_documento', '=', 'latest.nro_documento')
+                            ->on('f.id', '=', 'latest.max_id');
+                    })
+                ->where('f.estadoDocumento', '!=', 6) // Not deleted
+                ->where('f.pagado', '=', 0)          // Not paid
+                ->where('f.proveedor', '=', $proveedorId)
                 ->select(
-                    'facturas.id',
-                    'facturas.nro_documento',
-                    'facturas.nro_factura',
-                    'facturas.fecha_factura',
-                    'facturas.fecha_limite',
-                    'facturas.total',
-                    'facturas.saldo',
-                    'facturas.pagado',
-                    'facturas.estadoDocumento'
+                    'f.id',
+                    'f.nro_documento',
+                    'f.nro_factura',
+                    'f.fecha_factura',
+                    'f.fecha_limite',
+                    'f.total',
+                    'f.estadoDocumento',
+                    DB::raw('DATEDIFF(NOW(), f.fecha_limite) as dias_vencidos')
                 )
-                ->where('facturas.proveedor', $proveedorId)
-                ->where('facturas.saldo', '>', 0)
-                ->where('facturas.estadoDocumento', '!=', 6) // No borrados
-                ->orderBy('facturas.fecha_limite')
+                ->orderBy('f.fecha_limite', 'asc')
                 ->get();
 
-            // Obtener histórico de pagos
-            $historicoPagos = Facturas::join(
-                DB::raw('(SELECT nro_documento, MAX(id) as idMax FROM facturas GROUP BY nro_documento) as ultimo_doc'),
-                function ($join) {
-                    $join->on('facturas.nro_documento', '=', 'ultimo_doc.nro_documento');
-                    $join->on('facturas.id', '=', 'ultimo_doc.idMax');
-                }
-            )
+            // Payment history (last 10 payments)
+            $paymentHistory = DB::table('facturas as f')
+                ->join(DB::raw('(SELECT nro_documento, MAX(id) as max_id FROM facturas GROUP BY nro_documento) as latest'), 
+                    function ($join) {
+                        $join->on('f.nro_documento', '=', 'latest.nro_documento')
+                            ->on('f.id', '=', 'latest.max_id');
+                    })
+                ->where('f.estadoDocumento', '!=', 6) // Not deleted
+                ->where('f.pagado', '=', 1)          // Paid
+                ->where('f.proveedor', '=', $proveedorId)
                 ->select(
-                    DB::raw('YEAR(facturas.fecha_limite) as anio'),
-                    DB::raw('MONTH(facturas.fecha_limite) as mes'),
-                    DB::raw('SUM(facturas.total) as monto_total'),
-                    DB::raw('SUM(facturas.total - facturas.saldo) as monto_pagado')
+                    'f.id',
+                    'f.nro_documento',
+                    'f.nro_factura',
+                    'f.fecha_factura',
+                    'f.fecha_limite',
+                    'f.total',
+                    'f.updated_at as fecha_pago'
                 )
-                ->where('facturas.proveedor', $proveedorId)
-                ->where('facturas.estadoDocumento', '!=', 6) // No borrados
-                ->groupBy('anio', 'mes')
-                ->orderBy('anio')
-                ->orderBy('mes')
+                ->orderBy('f.updated_at', 'desc')
+                ->limit(10)
                 ->get();
+
+            // Calculate payment statistics
+            $totalDebt = $unpaidInvoices->sum('total');
+            $avgPaymentTime = $paymentHistory->isEmpty() ? 0 : 
+                $paymentHistory->avg(function($item) {
+                    $fechaFactura = Carbon::parse($item->fecha_factura);
+                    $fechaPago = Carbon::parse($item->fecha_pago);
+                    return $fechaPago->diffInDays($fechaFactura);
+                });
+
+            // Group invoices by age
+            $debtByAge = [
+                'current' => 0,
+                '1_30' => 0,
+                '31_60' => 0,
+                '61_90' => 0,
+                'over_90' => 0
+            ];
+
+            foreach ($unpaidInvoices as $invoice) {
+                $diasVencidos = $invoice->dias_vencidos;
+                
+                if ($diasVencidos <= 0) {
+                    $debtByAge['current'] += $invoice->total;
+                } elseif ($diasVencidos <= 30) {
+                    $debtByAge['1_30'] += $invoice->total;
+                } elseif ($diasVencidos <= 60) {
+                    $debtByAge['31_60'] += $invoice->total;
+                } elseif ($diasVencidos <= 90) {
+                    $debtByAge['61_90'] += $invoice->total;
+                } else {
+                    $debtByAge['over_90'] += $invoice->total;
+                }
+            }
 
             return response()->json([
-                'status' => 'success',
-                'data' => [
-                    'proveedor' => $proveedor,
-                    'facturas_pendientes' => $facturasPendientes,
-                    'historico_pagos' => $historicoPagos
-                ]
+                'success' => true,
+                'proveedor' => [
+                    'id' => $proveedor->nro_proveedor,
+                    'nombre' => $proveedor->nombre,
+                    'razon_social' => $proveedor->razonSocial,
+                    'cuit' => $proveedor->cuit,
+                    'dias_credito' => $proveedor->diasCredito ?? 0,
+                    'contacto' => [
+                        'email' => $proveedor->email,
+                        'telefono' => $proveedor->tel
+                    ]
+                ],
+                'deuda_actual' => $totalDebt,
+                'facturas_pendientes' => count($unpaidInvoices),
+                'tiempo_promedio_pago' => round($avgPaymentTime, 1),
+                'deuda_por_antiguedad' => $debtByAge,
+                'facturas_pendientes_detalle' => $unpaidInvoices,
+                'historial_pagos' => $paymentHistory,
+                'fecha_consulta' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
+
         } catch (\Exception $e) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'Error al obtener detalle del proveedor: ' . $e->getMessage()
+                'success' => false,
+                'message' => $e->getMessage()
             ], 500);
         }
+    }
+
+    /**
+     * Generate monthly debt summary
+     * 
+     * @param Carbon $startDate
+     * @param Carbon $endDate
+     * @return array
+     */
+    private function getMonthlySummary(Carbon $startDate, Carbon $endDate)
+    {
+        $result = [];
+        $currentDate = $startDate->copy();
+
+        while ($currentDate->lt($endDate)) {
+            $monthStart = $currentDate->copy()->startOfMonth();
+            $monthEnd = $currentDate->copy()->endOfMonth();
+            $monthEndString = $monthEnd->format('Y-m-d 23:59:59');
+
+            // Get total unpaid invoices at the end of this month
+            $totalDebt = DB::table('facturas as f')
+                ->join(DB::raw("(SELECT nro_documento, MAX(id) as max_id FROM facturas WHERE created_at <= '{$monthEndString}' GROUP BY nro_documento) as latest"), 
+                    function ($join) {
+                        $join->on('f.nro_documento', '=', 'latest.nro_documento')
+                            ->on('f.id', '=', 'latest.max_id');
+                    })
+                ->where('f.estadoDocumento', '!=', 6) // Not deleted
+                ->where('f.pagado', '=', 0)          // Not paid
+                ->where('f.created_at', '<=', $monthEndString)
+                ->sum('f.total');
+
+            // New invoices this month
+            $newDebt = DB::table('facturas as f')
+                ->where('f.estadoDocumento', '!=', 6) // Not deleted
+                ->whereBetween('f.created_at', [
+                    $monthStart->format('Y-m-d 00:00:00'),
+                    $monthEnd->format('Y-m-d 23:59:59')
+                ])
+                ->sum('f.total');
+
+            // Payments made this month
+            $paidAmount = DB::table('facturas as f')
+                ->where('f.estadoDocumento', '!=', 6) // Not deleted
+                ->where('f.pagado', '=', 1)          // Paid
+                ->whereBetween('f.updated_at', [
+                    $monthStart->format('Y-m-d 00:00:00'),
+                    $monthEnd->format('Y-m-d 23:59:59')
+                ])
+                ->sum('f.total');
+
+            $result[] = [
+                'periodo' => $currentDate->format('Y-m'),
+                'etiqueta' => $currentDate->format('M Y'),
+                'deuda_total' => $totalDebt,
+                'nuevas_facturas' => $newDebt,
+                'pagos_realizados' => $paidAmount
+            ];
+
+            $currentDate->addMonth();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Generate weekly debt summary
+     * 
+     * @param Carbon $startDate
+     * @param Carbon $endDate
+     * @return array
+     */
+    private function getWeeklySummary(Carbon $startDate, Carbon $endDate)
+    {
+        $result = [];
+        $currentDate = $startDate->copy();
+
+        while ($currentDate->lt($endDate)) {
+            $weekStart = $currentDate->copy()->startOfWeek();
+            $weekEnd = $currentDate->copy()->endOfWeek();
+            $weekEndString = $weekEnd->format('Y-m-d 23:59:59');
+
+            // Get total unpaid invoices at the end of this week
+            $totalDebt = DB::table('facturas as f')
+                ->join(DB::raw("(SELECT nro_documento, MAX(id) as max_id FROM facturas WHERE created_at <= '{$weekEndString}' GROUP BY nro_documento) as latest"), 
+                    function ($join) {
+                        $join->on('f.nro_documento', '=', 'latest.nro_documento')
+                            ->on('f.id', '=', 'latest.max_id');
+                    })
+                ->where('f.estadoDocumento', '!=', 6) // Not deleted
+                ->where('f.pagado', '=', 0)          // Not paid
+                ->where('f.created_at', '<=', $weekEndString)
+                ->sum('f.total');
+
+            // New invoices this week
+            $newDebt = DB::table('facturas as f')
+                ->where('f.estadoDocumento', '!=', 6) // Not deleted
+                ->whereBetween('f.created_at', [
+                    $weekStart->format('Y-m-d 00:00:00'),
+                    $weekEnd->format('Y-m-d 23:59:59')
+                ])
+                ->sum('f.total');
+
+            // Payments made this week
+            $paidAmount = DB::table('facturas as f')
+                ->where('f.estadoDocumento', '!=', 6) // Not deleted
+                ->where('f.pagado', '=', 1)          // Paid
+                ->whereBetween('f.updated_at', [
+                    $weekStart->format('Y-m-d 00:00:00'),
+                    $weekEnd->format('Y-m-d 23:59:59')
+                ])
+                ->sum('f.total');
+
+            $result[] = [
+                'periodo' => $weekStart->format('Y-m-d') . ' - ' . $weekEnd->format('Y-m-d'),
+                'etiqueta' => 'W' . $weekStart->format('W'),
+                'deuda_total' => $totalDebt,
+                'nuevas_facturas' => $newDebt,
+                'pagos_realizados' => $paidAmount
+            ];
+
+            $currentDate->addWeek();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Generate payment trend data
+     * 
+     * @param Carbon $startDate
+     * @param Carbon $endDate
+     * @return array
+     */
+    private function getPaymentTrendData(Carbon $startDate, Carbon $endDate)
+    {
+        $result = [];
+        $currentDate = $startDate->copy();
+
+        while ($currentDate->lt($endDate)) {
+            $monthStart = $currentDate->copy()->startOfMonth();
+            $monthEnd = $currentDate->copy()->endOfMonth();
+
+            // New invoices this month
+            $newDebt = DB::table('facturas as f')
+                ->where('f.estadoDocumento', '!=', 6) // Not deleted
+                ->whereBetween('f.fecha_factura', [
+                    $monthStart->format('Y-m-d'),
+                    $monthEnd->format('Y-m-d')
+                ])
+                ->sum('f.total');
+
+            // Payments made this month (based on pay date, not invoice date)
+            $paidAmount = DB::table('facturas as f')
+                ->where('f.estadoDocumento', '!=', 6) // Not deleted
+                ->where('f.pagado', '=', 1)          // Paid
+                ->whereBetween('f.updated_at', [
+                    $monthStart->format('Y-m-d 00:00:00'),
+                    $monthEnd->format('Y-m-d 23:59:59')
+                ])
+                ->sum('f.total');
+
+            // Count invoices
+            $newInvoiceCount = DB::table('facturas as f')
+                ->where('f.estadoDocumento', '!=', 6) // Not deleted
+                ->whereBetween('f.fecha_factura', [
+                    $monthStart->format('Y-m-d'),
+                    $monthEnd->format('Y-m-d')
+                ])
+                ->count();
+
+            $paidInvoiceCount = DB::table('facturas as f')
+                ->where('f.estadoDocumento', '!=', 6) // Not deleted
+                ->where('f.pagado', '=', 1)          // Paid
+                ->whereBetween('f.updated_at', [
+                    $monthStart->format('Y-m-d 00:00:00'),
+                    $monthEnd->format('Y-m-d 23:59:59')
+                ])
+                ->count();
+
+            $result[] = [
+                'periodo' => $currentDate->format('Y-m'),
+                'etiqueta' => $currentDate->format('M Y'),
+                'nuevas_facturas_monto' => $newDebt,
+                'nuevas_facturas_cantidad' => $newInvoiceCount,
+                'pagos_realizados_monto' => $paidAmount,
+                'pagos_realizados_cantidad' => $paidInvoiceCount,
+                'balance_mensual' => $paidAmount - $newDebt
+            ];
+
+            $currentDate->addMonth();
+        }
+
+        return $result;
     }
 }
