@@ -143284,7 +143284,7 @@ var FinancialDashboard = function FinancialDashboard() {
   });
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_dashboard_DashboardLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
     children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "container mx-auto p-4 bg-gray-50",
+      className: "bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "bg-white shadow rounded-lg p-6 mb-8",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -145254,303 +145254,641 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/ResponsiveContainer.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/LineChart.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/CartesianGrid.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/XAxis.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/YAxis.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Tooltip.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Legend.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Line.js");
-/* harmony import */ var _components_dashboard_DashboardLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/dashboard/DashboardLayout */ "./resources/js/components/dashboard/DashboardLayout.tsx");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/ResponsiveContainer.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/LineChart.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/CartesianGrid.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/XAxis.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/YAxis.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Tooltip.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Legend.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Line.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/BarChart.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Bar.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return r; }; var t, r = {}, e = Object.prototype, n = e.hasOwnProperty, o = "function" == typeof Symbol ? Symbol : {}, i = o.iterator || "@@iterator", a = o.asyncIterator || "@@asyncIterator", u = o.toStringTag || "@@toStringTag"; function c(t, r, e, n) { return Object.defineProperty(t, r, { value: e, enumerable: !n, configurable: !n, writable: !n }); } try { c({}, ""); } catch (t) { c = function c(t, r, e) { return t[r] = e; }; } function h(r, e, n, o) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype); return c(a, "_invoke", function (r, e, n) { var o = 1; return function (i, a) { if (3 === o) throw Error("Generator is already running"); if (4 === o) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var u = n.delegate; if (u) { var c = d(u, n); if (c) { if (c === f) continue; return c; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (1 === o) throw o = 4, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = 3; var h = s(r, e, n); if ("normal" === h.type) { if (o = n.done ? 4 : 2, h.arg === f) continue; return { value: h.arg, done: n.done }; } "throw" === h.type && (o = 4, n.method = "throw", n.arg = h.arg); } }; }(r, n, new Context(o || [])), !0), a; } function s(t, r, e) { try { return { type: "normal", arg: t.call(r, e) }; } catch (t) { return { type: "throw", arg: t }; } } r.wrap = h; var f = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var l = {}; c(l, i, function () { return this; }); var p = Object.getPrototypeOf, y = p && p(p(x([]))); y && y !== e && n.call(y, i) && (l = y); var v = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(l); function g(t) { ["next", "throw", "return"].forEach(function (r) { c(t, r, function (t) { return this._invoke(r, t); }); }); } function AsyncIterator(t, r) { function e(o, i, a, u) { var c = s(t[o], t, i); if ("throw" !== c.type) { var h = c.arg, f = h.value; return f && "object" == _typeof(f) && n.call(f, "__await") ? r.resolve(f.__await).then(function (t) { e("next", t, a, u); }, function (t) { e("throw", t, a, u); }) : r.resolve(f).then(function (t) { h.value = t, a(h); }, function (t) { return e("throw", t, a, u); }); } u(c.arg); } var o; c(this, "_invoke", function (t, n) { function i() { return new r(function (r, o) { e(t, n, r, o); }); } return o = o ? o.then(i, i) : i(); }, !0); } function d(r, e) { var n = e.method, o = r.i[n]; if (o === t) return e.delegate = null, "throw" === n && r.i["return"] && (e.method = "return", e.arg = t, d(r, e), "throw" === e.method) || "return" !== n && (e.method = "throw", e.arg = new TypeError("The iterator does not provide a '" + n + "' method")), f; var i = s(o, r.i, e.arg); if ("throw" === i.type) return e.method = "throw", e.arg = i.arg, e.delegate = null, f; var a = i.arg; return a ? a.done ? (e[r.r] = a.value, e.next = r.n, "return" !== e.method && (e.method = "next", e.arg = t), e.delegate = null, f) : a : (e.method = "throw", e.arg = new TypeError("iterator result is not an object"), e.delegate = null, f); } function w(t) { this.tryEntries.push(t); } function m(r) { var e = r[4] || {}; e.type = "normal", e.arg = t, r[4] = e; } function Context(t) { this.tryEntries = [[-1]], t.forEach(w, this), this.reset(!0); } function x(r) { if (null != r) { var e = r[i]; if (e) return e.call(r); if ("function" == typeof r.next) return r; if (!isNaN(r.length)) { var o = -1, a = function e() { for (; ++o < r.length;) if (n.call(r, o)) return e.value = r[o], e.done = !1, e; return e.value = t, e.done = !0, e; }; return a.next = a; } } throw new TypeError(_typeof(r) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, c(v, "constructor", GeneratorFunctionPrototype), c(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = c(GeneratorFunctionPrototype, u, "GeneratorFunction"), r.isGeneratorFunction = function (t) { var r = "function" == typeof t && t.constructor; return !!r && (r === GeneratorFunction || "GeneratorFunction" === (r.displayName || r.name)); }, r.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, c(t, u, "GeneratorFunction")), t.prototype = Object.create(v), t; }, r.awrap = function (t) { return { __await: t }; }, g(AsyncIterator.prototype), c(AsyncIterator.prototype, a, function () { return this; }), r.AsyncIterator = AsyncIterator, r.async = function (t, e, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(h(t, e, n, o), i); return r.isGeneratorFunction(e) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, g(v), c(v, u, "Generator"), c(v, i, function () { return this; }), c(v, "toString", function () { return "[object Generator]"; }), r.keys = function (t) { var r = Object(t), e = []; for (var n in r) e.unshift(n); return function t() { for (; e.length;) if ((n = e.pop()) in r) return t.value = n, t.done = !1, t; return t.done = !0, t; }; }, r.values = x, Context.prototype = { constructor: Context, reset: function reset(r) { if (this.prev = this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(m), !r) for (var e in this) "t" === e.charAt(0) && n.call(this, e) && !isNaN(+e.slice(1)) && (this[e] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0][4]; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(r) { if (this.done) throw r; var e = this; function n(t) { a.type = "throw", a.arg = r, e.next = t; } for (var o = e.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i[4], u = this.prev, c = i[1], h = i[2]; if (-1 === i[0]) return n("end"), !1; if (!c && !h) throw Error("try statement without catch or finally"); if (null != i[0] && i[0] <= u) { if (u < c) return this.method = "next", this.arg = t, n(c), !0; if (u < h) return n(h), !1; } } }, abrupt: function abrupt(t, r) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var n = this.tryEntries[e]; if (n[0] > -1 && n[0] <= this.prev && this.prev < n[2]) { var o = n; break; } } o && ("break" === t || "continue" === t) && o[0] <= r && r <= o[2] && (o = null); var i = o ? o[4] : {}; return i.type = t, i.arg = r, o ? (this.method = "next", this.next = o[2], f) : this.complete(i); }, complete: function complete(t, r) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && r && (this.next = r), f; }, finish: function finish(t) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var e = this.tryEntries[r]; if (e[2] === t) return this.complete(e[4], e[3]), m(e), f; } }, "catch": function _catch(t) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var e = this.tryEntries[r]; if (e[0] === t) { var n = e[4]; if ("throw" === n.type) { var o = n.arg; m(e); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(r, e, n) { return this.delegate = { i: x(r), r: e, n: n }, "next" === this.method && (this.arg = t), f; } }, r; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-
-
-
-
-// Sample data for the Pint of Beer (Pinta) Index
-var pintaData = [{
-  month: 'Ene',
-  year: 2020,
-  price: 3.80,
-  volume: 568
-},
-// Standard pint (568ml)
-{
-  month: 'Feb',
-  year: 2020,
-  price: 3.80,
-  volume: 568
-}, {
-  month: 'Mar',
-  year: 2020,
-  price: 3.85,
-  volume: 568
-}, {
-  month: 'Abr',
-  year: 2020,
-  price: 3.85,
-  volume: 568
-}, {
-  month: 'May',
-  year: 2020,
-  price: 3.90,
-  volume: 568
-}, {
-  month: 'Jun',
-  year: 2020,
-  price: 3.90,
-  volume: 568
-}, {
-  month: 'Jul',
-  year: 2020,
-  price: 3.95,
-  volume: 560
-},
-// Slight reduction
-{
-  month: 'Ago',
-  year: 2020,
-  price: 3.95,
-  volume: 560
-}, {
-  month: 'Sep',
-  year: 2020,
-  price: 4.00,
-  volume: 560
-}, {
-  month: 'Oct',
-  year: 2020,
-  price: 4.00,
-  volume: 560
-}, {
-  month: 'Nov',
-  year: 2020,
-  price: 4.05,
-  volume: 560
-}, {
-  month: 'Dic',
-  year: 2020,
-  price: 4.10,
-  volume: 560
-}, {
-  month: 'Ene',
-  year: 2021,
-  price: 4.15,
-  volume: 550
-},
-// Further reduction
-{
-  month: 'Feb',
-  year: 2021,
-  price: 4.20,
-  volume: 550
-}, {
-  month: 'Mar',
-  year: 2021,
-  price: 4.25,
-  volume: 550
-}, {
-  month: 'Abr',
-  year: 2021,
-  price: 4.30,
-  volume: 550
-}, {
-  month: 'May',
-  year: 2021,
-  price: 4.35,
-  volume: 550
-}, {
-  month: 'Jun',
-  year: 2021,
-  price: 4.40,
-  volume: 540
-},
-// Another reduction
-{
-  month: 'Jul',
-  year: 2021,
-  price: 4.45,
-  volume: 540
-}, {
-  month: 'Ago',
-  year: 2021,
-  price: 4.50,
-  volume: 540
-}, {
-  month: 'Sep',
-  year: 2021,
-  price: 4.55,
-  volume: 540
-}, {
-  month: 'Oct',
-  year: 2021,
-  price: 4.60,
-  volume: 540
-}, {
-  month: 'Nov',
-  year: 2021,
-  price: 4.70,
-  volume: 530
-},
-// Holiday season price jump
-{
-  month: 'Dic',
-  year: 2021,
-  price: 4.80,
-  volume: 530
-}, {
-  month: 'Ene',
-  year: 2022,
-  price: 4.85,
-  volume: 530
-}, {
-  month: 'Feb',
-  year: 2022,
-  price: 4.90,
-  volume: 530
-}, {
-  month: 'Mar',
-  year: 2022,
-  price: 5.00,
-  volume: 520
-},
-// Inflation impact
-{
-  month: 'Abr',
-  year: 2022,
-  price: 5.10,
-  volume: 520
-}, {
-  month: 'May',
-  year: 2022,
-  price: 5.15,
-  volume: 520
-}];
-// Calculate the real value index (price per ml)
-var dataWithIndex = pintaData.map(function (item) {
-  return Object.assign(Object.assign({}, item), {
-    index: (item.price / item.volume * 500).toFixed(2),
-    label: "".concat(item.month, " ").concat(item.year),
-    pricePerML: (item.price / item.volume).toFixed(3)
-  });
-});
-var Pinta = function Pinta() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('index'),
-    _useState2 = _slicedToArray(_useState, 2),
-    dataType = _useState2[0],
-    setDataType = _useState2[1];
-  // Chart title and y-axis label based on selected data type
-  var chartConfig = {
-    index: {
-      title: 'Índice Pinta (Precio por 500ml)',
-      yAxisLabel: 'Precio (€/500ml)',
-      color: '#8884d8'
-    },
-    price: {
-      title: 'Precio por Pinta de Cerveza',
-      yAxisLabel: 'Precio (€)',
-      color: '#82ca9d'
-    },
-    volume: {
-      title: 'Volumen de la Pinta',
-      yAxisLabel: 'Volumen (ml)',
-      color: '#ffc658'
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
     }
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+
+
+var Pinta = function Pinta() {
+  var _a, _b;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
+    _useState2 = _slicedToArray(_useState, 2),
+    loading = _useState2[0],
+    setLoading = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+    _useState4 = _slicedToArray(_useState3, 2),
+    error = _useState4[0],
+    setError = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
+      labels: [],
+      datasets: []
+    }),
+    _useState6 = _slicedToArray(_useState5, 2),
+    chartData = _useState6[0],
+    setChartData = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+    _useState8 = _slicedToArray(_useState7, 2),
+    lastUpdate = _useState8[0],
+    setLastUpdate = _useState8[1];
+  // Estado para la pestaña activa: temporal o comparativo
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('temporal'),
+    _useState0 = _slicedToArray(_useState9, 2),
+    activeTab = _useState0[0],
+    setActiveTab = _useState0[1];
+  // Configuración del intervalo de tiempo y agrupación - Gráfico Temporal
+  var defaultTemporalParams = {
+    fecha_inicio: new Date(new Date().setDate(new Date().getDate() - 30)).toISOString().split('T')[0],
+    // 30 días atrás
+    fecha_fin: new Date().toISOString().split('T')[0],
+    // hoy
+    agrupacion: 'dia'
   };
-  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_dashboard_DashboardLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "flex flex-col items-center w-full p-4 bg-white rounded-lg",
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-        className: "text-xl font-bold mb-4",
-        children: chartConfig[dataType].title
+  // Configuración para el gráfico comparativo
+  var defaultComparativoParams = {
+    periodo1_inicio: new Date(new Date().setMonth(new Date().getMonth() - 2)).toISOString().split('T')[0],
+    // 2 meses atrás
+    periodo1_fin: new Date(new Date().setMonth(new Date().getMonth() - 1)).toISOString().split('T')[0],
+    // 1 mes atrás
+    periodo2_inicio: new Date(new Date().setMonth(new Date().getMonth() - 1)).toISOString().split('T')[0],
+    // 1 mes atrás
+    periodo2_fin: new Date().toISOString().split('T')[0],
+    // hoy
+    agrupacion: 'dia'
+  };
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(defaultTemporalParams),
+    _useState10 = _slicedToArray(_useState1, 2),
+    temporalParams = _useState10[0],
+    setTemporalParams = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(defaultComparativoParams),
+    _useState12 = _slicedToArray(_useState11, 2),
+    comparativoParams = _useState12[0],
+    setComparativoParams = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+    _useState14 = _slicedToArray(_useState13, 2),
+    comparativoData = _useState14[0],
+    setComparativoData = _useState14[1];
+  // Función para cargar los datos del índice pinta temporal
+  var fetchTemporalData = function fetchTemporalData() {
+    return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var queryParams, response, data;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            setLoading(true);
+            // Construir URL con parámetros
+            queryParams = new URLSearchParams({
+              fecha_inicio: temporalParams.fecha_inicio,
+              fecha_fin: temporalParams.fecha_fin,
+              agrupacion: temporalParams.agrupacion
+            });
+            _context.next = 5;
+            return fetch("/api/indice-pinta/temporal?".concat(queryParams.toString()));
+          case 5:
+            response = _context.sent;
+            if (response.ok) {
+              _context.next = 8;
+              break;
+            }
+            throw new Error('Error al cargar los datos temporales del índice pinta');
+          case 8:
+            _context.next = 10;
+            return response.json();
+          case 10:
+            data = _context.sent;
+            if (!(data.status === 'success')) {
+              _context.next = 16;
+              break;
+            }
+            setChartData(data.grafico);
+            setLastUpdate(new Date());
+            _context.next = 17;
+            break;
+          case 16:
+            throw new Error(data.message || 'Error desconocido');
+          case 17:
+            setError(null);
+            _context.next = 24;
+            break;
+          case 20:
+            _context.prev = 20;
+            _context.t0 = _context["catch"](0);
+            console.error('Error fetching temporal data:', _context.t0);
+            setError(_context.t0 instanceof Error ? _context.t0.message : 'Error desconocido');
+          case 24:
+            _context.prev = 24;
+            setLoading(false);
+            return _context.finish(24);
+          case 27:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee, null, [[0, 20, 24, 27]]);
+    }));
+  };
+  // Función para cargar los datos comparativos
+  var fetchComparativoData = function fetchComparativoData() {
+    return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      var queryParams, response, data;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            setLoading(true);
+            // Construir URL con parámetros
+            queryParams = new URLSearchParams({
+              periodo1_inicio: comparativoParams.periodo1_inicio,
+              periodo1_fin: comparativoParams.periodo1_fin,
+              periodo2_inicio: comparativoParams.periodo2_inicio,
+              periodo2_fin: comparativoParams.periodo2_fin,
+              agrupacion: comparativoParams.agrupacion
+            });
+            _context2.next = 5;
+            return fetch("/api/indice-pinta/comparativo?".concat(queryParams.toString()));
+          case 5:
+            response = _context2.sent;
+            if (response.ok) {
+              _context2.next = 8;
+              break;
+            }
+            throw new Error('Error al cargar los datos comparativos del índice pinta');
+          case 8:
+            _context2.next = 10;
+            return response.json();
+          case 10:
+            data = _context2.sent;
+            if (!(data.status === 'success')) {
+              _context2.next = 16;
+              break;
+            }
+            setComparativoData(data);
+            setLastUpdate(new Date());
+            _context2.next = 17;
+            break;
+          case 16:
+            throw new Error(data.message || 'Error desconocido');
+          case 17:
+            setError(null);
+            _context2.next = 24;
+            break;
+          case 20:
+            _context2.prev = 20;
+            _context2.t0 = _context2["catch"](0);
+            console.error('Error fetching comparative data:', _context2.t0);
+            setError(_context2.t0 instanceof Error ? _context2.t0.message : 'Error desconocido');
+          case 24:
+            _context2.prev = 24;
+            setLoading(false);
+            return _context2.finish(24);
+          case 27:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2, null, [[0, 20, 24, 27]]);
+    }));
+  };
+  // Función para actualizar los parámetros temporales
+  var handleTemporalParamChange = function handleTemporalParamChange(e) {
+    var _e$target = e.target,
+      name = _e$target.name,
+      value = _e$target.value;
+    setTemporalParams(function (prev) {
+      return Object.assign(Object.assign({}, prev), _defineProperty({}, name, value));
+    });
+  };
+  // Función para actualizar los parámetros comparativos
+  var handleComparativoParamChange = function handleComparativoParamChange(e) {
+    var _e$target2 = e.target,
+      name = _e$target2.name,
+      value = _e$target2.value;
+    setComparativoParams(function (prev) {
+      return Object.assign(Object.assign({}, prev), _defineProperty({}, name, value));
+    });
+  };
+  // Cargar datos iniciales y establecer intervalo
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    if (activeTab === 'temporal') {
+      fetchTemporalData();
+      // Establecer intervalo para actualizar cada 10 segundos solo para la vista temporal
+      var intervalId = setInterval(function () {
+        fetchTemporalData();
+      }, 10000); // 10 segundos
+      // Limpiar intervalo cuando el componente se desmonte o cambie la pestaña
+      return function () {
+        return clearInterval(intervalId);
+      };
+    } else if (activeTab === 'comparativo') {
+      fetchComparativoData();
+    }
+  }, [activeTab, temporalParams, comparativoParams]);
+  // Transformar datos para Recharts - Gráfico Temporal
+  var chartFormattedData = ((_a = chartData.labels) === null || _a === void 0 ? void 0 : _a.map(function (label, index) {
+    var _a;
+    var dataPoint = {
+      fecha: label
+    };
+    (_a = chartData.datasets) === null || _a === void 0 ? void 0 : _a.forEach(function (dataset) {
+      dataPoint[dataset.label] = dataset.data[index];
+    });
+    return dataPoint;
+  })) || [];
+  // Transformar datos para Recharts - Gráfico Comparativo
+  var comparativeChartData = (comparativoData === null || comparativoData === void 0 ? void 0 : comparativoData.grafico.labels.map(function (label, index) {
+    var dataPoint = _defineProperty(_defineProperty({
+      metrica: label
+    }, comparativoData.grafico.datasets[0].label, comparativoData.grafico.datasets[0].data[index]), comparativoData.grafico.datasets[1].label, comparativoData.grafico.datasets[1].data[index]);
+    return dataPoint;
+  })) || [];
+  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+    className: "bg-white p-6 rounded-lg shadow-md",
+    children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
+      className: "text-3xl font-bold mb-6",
+      children: "Dashboard \xCDndice Pinta"
+    }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+      className: "flex border-b border-gray-200 mb-6",
+      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
+        className: "mr-4 py-2 px-4 font-medium ".concat(activeTab === 'temporal' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'),
+        onClick: function onClick() {
+          return setActiveTab('temporal');
+        },
+        children: "Evoluci\xF3n Temporal"
+      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
+        className: "mr-4 py-2 px-4 font-medium ".concat(activeTab === 'comparativo' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'),
+        onClick: function onClick() {
+          return setActiveTab('comparativo');
+        },
+        children: "Comparativo"
+      })]
+    }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+      className: "text-gray-600 mb-4",
+      children: [lastUpdate ? "\xDAltima actualizaci\xF3n: ".concat(lastUpdate.toLocaleTimeString()) : 'Cargando datos...', activeTab === 'temporal' && ' (actualización automática cada 10 segundos)']
+    }), activeTab === 'temporal' && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+      className: "grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 bg-gray-50 p-4 rounded-md",
+      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+          className: "block text-sm font-medium text-gray-700 mb-1",
+          children: "Fecha Inicio"
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+          type: "date",
+          name: "fecha_inicio",
+          value: temporalParams.fecha_inicio,
+          onChange: handleTemporalParamChange,
+          className: "w-full rounded-md border-gray-300 shadow-sm p-2 border"
+        })]
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "flex mb-4 space-x-2",
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-          className: "px-3 py-1 rounded ".concat(dataType === 'index' ? 'bg-blue-600 text-white' : 'bg-gray-200'),
-          onClick: function onClick() {
-            return setDataType('index');
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+          className: "block text-sm font-medium text-gray-700 mb-1",
+          children: "Fecha Fin"
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+          type: "date",
+          name: "fecha_fin",
+          value: temporalParams.fecha_fin,
+          onChange: handleTemporalParamChange,
+          className: "w-full rounded-md border-gray-300 shadow-sm p-2 border"
+        })]
+      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+          className: "block text-sm font-medium text-gray-700 mb-1",
+          children: "Agrupaci\xF3n"
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
+          name: "agrupacion",
+          value: temporalParams.agrupacion,
+          onChange: handleTemporalParamChange,
+          className: "w-full rounded-md border-gray-300 shadow-sm p-2 border",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
+            value: "dia",
+            children: "Diaria"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
+            value: "semana",
+            children: "Semanal"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
+            value: "mes",
+            children: "Mensual"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
+            value: "anio",
+            children: "Anual"
+          })]
+        })]
+      })]
+    }), activeTab === 'comparativo' && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+      className: "grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 bg-gray-50 p-4 rounded-md",
+      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        className: "border-r border-gray-200 pr-4",
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
+          className: "font-semibold mb-2 text-blue-600",
+          children: "Per\xEDodo 1"
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          className: "grid grid-cols-1 md:grid-cols-2 gap-4",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+              className: "block text-sm font-medium text-gray-700 mb-1",
+              children: "Fecha Inicio"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+              type: "date",
+              name: "periodo1_inicio",
+              value: comparativoParams.periodo1_inicio,
+              onChange: handleComparativoParamChange,
+              className: "w-full rounded-md border-gray-300 shadow-sm p-2 border"
+            })]
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+              className: "block text-sm font-medium text-gray-700 mb-1",
+              children: "Fecha Fin"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+              type: "date",
+              name: "periodo1_fin",
+              value: comparativoParams.periodo1_fin,
+              onChange: handleComparativoParamChange,
+              className: "w-full rounded-md border-gray-300 shadow-sm p-2 border"
+            })]
+          })]
+        })]
+      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        className: "pl-4",
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
+          className: "font-semibold mb-2 text-green-600",
+          children: "Per\xEDodo 2"
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          className: "grid grid-cols-1 md:grid-cols-2 gap-4",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+              className: "block text-sm font-medium text-gray-700 mb-1",
+              children: "Fecha Inicio"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+              type: "date",
+              name: "periodo2_inicio",
+              value: comparativoParams.periodo2_inicio,
+              onChange: handleComparativoParamChange,
+              className: "w-full rounded-md border-gray-300 shadow-sm p-2 border"
+            })]
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+              className: "block text-sm font-medium text-gray-700 mb-1",
+              children: "Fecha Fin"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+              type: "date",
+              name: "periodo2_fin",
+              value: comparativoParams.periodo2_fin,
+              onChange: handleComparativoParamChange,
+              className: "w-full rounded-md border-gray-300 shadow-sm p-2 border"
+            })]
+          })]
+        })]
+      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        className: "col-span-1 md:col-span-2",
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+          className: "block text-sm font-medium text-gray-700 mb-1",
+          children: "Agrupaci\xF3n"
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
+          name: "agrupacion",
+          value: comparativoParams.agrupacion,
+          onChange: handleComparativoParamChange,
+          className: "w-full md:w-1/3 rounded-md border-gray-300 shadow-sm p-2 border",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
+            value: "dia",
+            children: "Diaria"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
+            value: "semana",
+            children: "Semanal"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
+            value: "mes",
+            children: "Mensual"
+          })]
+        })]
+      })]
+    }), loading && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+      className: "flex justify-center items-center h-12 mb-4",
+      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+        className: "animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"
+      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+        className: "ml-2 text-blue-500",
+        children: "Cargando datos..."
+      })]
+    }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+      className: "bg-red-100 p-4 rounded-md mb-4",
+      children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+        className: "text-red-700",
+        children: ["Error: ", error]
+      })
+    }), activeTab === 'temporal' && !loading && chartFormattedData.length > 0 && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+      className: "h-96 mb-6",
+      children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_2__.ResponsiveContainer, {
+        width: "100%",
+        height: "100%",
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_3__.LineChart, {
+          data: chartFormattedData,
+          margin: {
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5
           },
-          children: "\xCDndice Pinta"
-        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-          className: "px-3 py-1 rounded ".concat(dataType === 'price' ? 'bg-green-600 text-white' : 'bg-gray-200'),
-          onClick: function onClick() {
-            return setDataType('price');
-          },
-          children: "Precio"
-        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-          className: "px-3 py-1 rounded ".concat(dataType === 'volume' ? 'bg-yellow-600 text-white' : 'bg-gray-200'),
-          onClick: function onClick() {
-            return setDataType('volume');
-          },
-          children: "Volumen"
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
+            strokeDasharray: "3 3"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
+            dataKey: "fecha"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (_b = chartData.datasets) === null || _b === void 0 ? void 0 : _b.map(function (dataset, index) {
+            return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, {
+              type: "monotone",
+              dataKey: dataset.label,
+              stroke: dataset.borderColor,
+              fill: dataset.backgroundColor,
+              activeDot: {
+                r: 8
+              }
+            }, index);
+          })]
+        })
+      })
+    }), activeTab === 'comparativo' && !loading && comparativoData && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        className: "grid grid-cols-1 md:grid-cols-2 gap-6 mb-6",
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          className: "bg-blue-50 p-4 rounded-lg",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
+            className: "text-lg font-semibold mb-2 text-blue-600",
+            children: "Per\xEDodo 1"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+            className: "text-sm text-gray-500 mb-2",
+            children: [comparativoData.periodo1.fecha_inicio, " al ", comparativoData.periodo1.fecha_fin]
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            className: "grid grid-cols-2 gap-4",
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                className: "text-sm text-gray-600",
+                children: "Total:"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                className: "text-xl font-bold",
+                children: comparativoData.periodo1.total.toFixed(2)
+              })]
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                className: "text-sm text-gray-600",
+                children: "Promedio:"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                className: "text-xl font-bold",
+                children: comparativoData.periodo1.promedio.toFixed(2)
+              })]
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                className: "text-sm text-gray-600",
+                children: "M\xEDnimo:"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                className: "text-lg",
+                children: comparativoData.periodo1.minimo.toFixed(2)
+              })]
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                className: "text-sm text-gray-600",
+                children: "M\xE1ximo:"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                className: "text-lg",
+                children: comparativoData.periodo1.maximo.toFixed(2)
+              })]
+            })]
+          })]
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          className: "bg-green-50 p-4 rounded-lg",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
+            className: "text-lg font-semibold mb-2 text-green-600",
+            children: "Per\xEDodo 2"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+            className: "text-sm text-gray-500 mb-2",
+            children: [comparativoData.periodo2.fecha_inicio, " al ", comparativoData.periodo2.fecha_fin]
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            className: "grid grid-cols-2 gap-4",
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                className: "text-sm text-gray-600",
+                children: "Total:"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                className: "text-xl font-bold",
+                children: comparativoData.periodo2.total.toFixed(2)
+              })]
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                className: "text-sm text-gray-600",
+                children: "Promedio:"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                className: "text-xl font-bold",
+                children: comparativoData.periodo2.promedio.toFixed(2)
+              })]
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                className: "text-sm text-gray-600",
+                children: "M\xEDnimo:"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                className: "text-lg",
+                children: comparativoData.periodo2.minimo.toFixed(2)
+              })]
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                className: "text-sm text-gray-600",
+                children: "M\xE1ximo:"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                className: "text-lg",
+                children: comparativoData.periodo2.maximo.toFixed(2)
+              })]
+            })]
+          })]
+        })]
+      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        className: "bg-gray-50 p-4 rounded-lg mb-6",
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
+          className: "text-lg font-semibold mb-4",
+          children: "Variaci\xF3n entre per\xEDodos"
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          className: "grid grid-cols-1 md:grid-cols-2 gap-6",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            className: "flex items-center",
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              className: "text-3xl font-bold ".concat(comparativoData.comparacion.variacion_total >= 0 ? 'text-green-600' : 'text-red-600', " mr-2"),
+              children: [comparativoData.comparacion.variacion_total >= 0 ? '+' : '', comparativoData.comparacion.variacion_total, "%"]
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+              className: "text-gray-600",
+              children: "Variaci\xF3n total"
+            })]
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            className: "flex items-center",
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              className: "text-3xl font-bold ".concat(comparativoData.comparacion.variacion_promedio >= 0 ? 'text-green-600' : 'text-red-600', " mr-2"),
+              children: [comparativoData.comparacion.variacion_promedio >= 0 ? '+' : '', comparativoData.comparacion.variacion_promedio, "%"]
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+              className: "text-gray-600",
+              children: "Variaci\xF3n promedio"
+            })]
+          })]
         })]
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "w-full h-64",
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_3__.ResponsiveContainer, {
+        className: "h-96",
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_2__.ResponsiveContainer, {
           width: "100%",
           height: "100%",
-          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_4__.LineChart, {
-            data: dataWithIndex,
+          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_10__.BarChart, {
+            data: comparativeChartData,
             margin: {
               top: 5,
               right: 30,
               left: 20,
               bottom: 5
             },
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.CartesianGrid, {
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
               strokeDasharray: "3 3"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.XAxis, {
-              dataKey: "label",
-              tick: {
-                fontSize: 12
-              },
-              interval: 3
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.YAxis, {
-              label: {
-                value: chartConfig[dataType].yAxisLabel,
-                angle: -90,
-                position: 'insideLeft',
-                style: {
-                  textAnchor: 'middle'
-                }
-              },
-              domain: dataType === 'volume' ? [500, 580] : ['auto', 'auto']
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Tooltip, {
-              formatter: function formatter(value) {
-                return ["".concat(value, " ").concat(dataType === 'price' ? '€' : dataType === 'volume' ? 'ml' : '€/500ml')];
-              },
-              labelFormatter: function labelFormatter(label) {
-                return "".concat(label);
-              }
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_10__.Line, {
-              type: "monotone",
-              dataKey: dataType,
-              name: chartConfig[dataType].title,
-              stroke: chartConfig[dataType].color,
-              activeDot: {
-                r: 8
-              },
-              strokeWidth: 2
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
+              dataKey: "metrica"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Bar, {
+              dataKey: comparativoData.grafico.datasets[0].label,
+              fill: "rgba(59, 130, 246, 0.7)"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Bar, {
+              dataKey: comparativoData.grafico.datasets[1].label,
+              fill: "rgba(16, 185, 129, 0.7)"
             })]
           })
         })
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "mt-4 text-sm text-gray-600",
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-          children: "El \xCDndice Pinta muestra la relaci\xF3n entre el precio y el volumen de cerveza a lo largo del tiempo."
-        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-          children: "Un valor m\xE1s alto del \xEDndice indica menos valor por dinero (precio m\xE1s alto o menor volumen)."
-        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-          children: "Una pinta est\xE1ndar deber\xEDa tener 568ml, pero el volumen ha ido disminuyendo con el tiempo."
-        })]
       })]
-    })
+    }), !loading && (activeTab === 'temporal' && chartFormattedData.length === 0 || activeTab === 'comparativo' && !comparativoData) && !error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+      className: "flex justify-center items-center h-64 bg-gray-50 rounded-lg",
+      children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+        className: "text-lg text-gray-500",
+        children: "No hay datos disponibles para los par\xE1metros seleccionados"
+      })
+    })]
   });
 };
 /* harmony default export */ __webpack_exports__["default"] = (Pinta);
@@ -150291,12 +150629,12 @@ var PanelVentas = function PanelVentas() {
   // Componente de navegación
   var Navigation = function Navigation() {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "bg-gray-800 text-white p-4",
+      className: "bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
         className: "text-2xl font-bold mb-4",
         children: "Panel Anal\xEDtico de Ventas"
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "flex flex-wrap gap-4",
+        className: "flex flex-wrap gap-4 text-white",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
           onClick: function onClick() {
             return handleViewChange('dashboard');
@@ -150799,7 +151137,7 @@ var PanelVentas = function PanelVentas() {
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
     className: "min-h-screen bg-gray-50",
     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(Navigation, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "p-4 md:p-6",
+      className: "p-4 bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in mt-[50px]",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(Filters, {}), loading ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "flex justify-center items-center py-12",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {

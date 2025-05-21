@@ -196,12 +196,12 @@ a {
   background-color: transparent;
   color: #c23f3f;
 }
-@media (hover: hover), (-ms-high-contrast: none) {
+/* @media (hover: hover), (-ms-high-contrast: none) {
   a:hover {
     text-decoration: underline;
     color: #c23f3f;
   }
-}
+} */
 
 a:not([href]) {
   color: inherit;

@@ -12,6 +12,8 @@ use App\Http\Controllers\ResumenVer\ExpensesAnalysisController;
 use App\Http\Controllers\ResumenVer\SalesAnalyticsController;
 use App\Http\Controllers\ResumenVer\FormaPagoController;
 use App\Http\Controllers\ResumenVer\FinancialMetricsController;
+use App\Http\Controllers\ResumenVer\IndicePintaController;
+//      * Almacena una nueva forma de pago
 
 /*
 |--------------------------------------------------------------------------
@@ -113,4 +115,12 @@ Route::prefix('formas-pago')->group(function () {
     Route::put('/{id}', [FormaPagoController::class, 'update']);
     Route::delete('/{id}', [FormaPagoController::class, 'destroy']);
 });
-Route::get('/financial-metrics/yearly', [FinancialMetricsController::class,'getYearlyMetrics']);
+Route::get('/financial-metrics/yearly', [FinancialMetricsController::class, 'getYearlyMetrics']);
+
+Route::prefix('indice-pinta')->group(function () {
+    // Gráfico temporal del índice pinta
+    Route::get('/temporal', [IndicePintaController::class, 'getIndicePintaTemporal']);
+
+    // Comparativo entre períodos 
+    Route::get('/comparativo', [IndicePintaController::class, 'getComparativoIndicePinta']);
+});

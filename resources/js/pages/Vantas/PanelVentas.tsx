@@ -254,9 +254,9 @@ const PanelVentas: React.FC = () => {
 
   // Componente de navegación
   const Navigation = () => (
-    <div className="bg-gray-800 text-white p-4">
+    <div className="bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in">
       <h1 className="text-2xl font-bold mb-4">Panel Analítico de Ventas</h1>
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap gap-4 text-white">
         <button 
           onClick={() => handleViewChange('dashboard')}
           className={`px-4 py-2 rounded ${view === 'dashboard' ? 'bg-blue-600' : 'bg-gray-700'}`}
@@ -635,7 +635,7 @@ const PanelVentas: React.FC = () => {
     <div className="min-h-screen bg-gray-50">
       <Navigation />
       
-      <div className="p-4 md:p-6">
+      <div className="p-4 bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in mt-[50px]" >
         <Filters />
         
         {loading ? (
