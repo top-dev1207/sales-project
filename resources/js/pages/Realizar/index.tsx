@@ -13,7 +13,7 @@ import CostMetricsPanel from './CostMetricsPanel';
 const Realizar = () => {
     return (
         <DashboardLayout>
-            <div className="flex flex-col p-4 bg-gray-50 text-gray-800">
+            {/* <div className="flex flex-col p-4 bg-gray-50 text-gray-800"> */}
                 <h1 className="text-2xl font-bold mb-4">Panel de KPIs</h1>
                 <SalesProjection />
                 <Proveedores />
@@ -22,7 +22,7 @@ const Realizar = () => {
                 {/* <SalaryDashboard /> */}
                 {/* </div> */}
                 {/* <SalesWeatherChart /> */}
-            </div>
+            {/* </div> */}
         </DashboardLayout>
     );
 };

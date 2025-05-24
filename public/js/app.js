@@ -7628,6 +7628,188 @@ function getElementRef(element) {
 
 /***/ }),
 
+/***/ "./node_modules/@radix-ui/react-switch/dist/index.mjs":
+/*!************************************************************!*\
+  !*** ./node_modules/@radix-ui/react-switch/dist/index.mjs ***!
+  \************************************************************/
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Root: function() { return /* binding */ Root; },
+/* harmony export */   Switch: function() { return /* binding */ Switch; },
+/* harmony export */   SwitchThumb: function() { return /* binding */ SwitchThumb; },
+/* harmony export */   Thumb: function() { return /* binding */ Thumb; },
+/* harmony export */   createSwitchScope: function() { return /* binding */ createSwitchScope; }
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _radix_ui_primitive__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @radix-ui/primitive */ "./node_modules/@radix-ui/primitive/dist/index.mjs");
+/* harmony import */ var _radix_ui_react_compose_refs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @radix-ui/react-compose-refs */ "./node_modules/@radix-ui/react-compose-refs/dist/index.mjs");
+/* harmony import */ var _radix_ui_react_context__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @radix-ui/react-context */ "./node_modules/@radix-ui/react-context/dist/index.mjs");
+/* harmony import */ var _radix_ui_react_use_controllable_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @radix-ui/react-use-controllable-state */ "./node_modules/@radix-ui/react-use-controllable-state/dist/index.mjs");
+/* harmony import */ var _radix_ui_react_use_previous__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @radix-ui/react-use-previous */ "./node_modules/@radix-ui/react-use-previous/dist/index.mjs");
+/* harmony import */ var _radix_ui_react_use_size__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @radix-ui/react-use-size */ "./node_modules/@radix-ui/react-use-size/dist/index.mjs");
+/* harmony import */ var _radix_ui_react_primitive__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @radix-ui/react-primitive */ "./node_modules/@radix-ui/react-primitive/dist/index.mjs");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+"use client";
+
+// src/switch.tsx
+
+
+
+
+
+
+
+
+
+var SWITCH_NAME = "Switch";
+var [createSwitchContext, createSwitchScope] = (0,_radix_ui_react_context__WEBPACK_IMPORTED_MODULE_2__.createContextScope)(SWITCH_NAME);
+var [SwitchProvider, useSwitchContext] = createSwitchContext(SWITCH_NAME);
+var Switch = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(
+  (props, forwardedRef) => {
+    const {
+      __scopeSwitch,
+      name,
+      checked: checkedProp,
+      defaultChecked,
+      required,
+      disabled,
+      value = "on",
+      onCheckedChange,
+      form,
+      ...switchProps
+    } = props;
+    const [button, setButton] = react__WEBPACK_IMPORTED_MODULE_0__.useState(null);
+    const composedRefs = (0,_radix_ui_react_compose_refs__WEBPACK_IMPORTED_MODULE_3__.useComposedRefs)(forwardedRef, (node) => setButton(node));
+    const hasConsumerStoppedPropagationRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(false);
+    const isFormControl = button ? form || !!button.closest("form") : true;
+    const [checked, setChecked] = (0,_radix_ui_react_use_controllable_state__WEBPACK_IMPORTED_MODULE_4__.useControllableState)({
+      prop: checkedProp,
+      defaultProp: defaultChecked ?? false,
+      onChange: onCheckedChange,
+      caller: SWITCH_NAME
+    });
+    return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(SwitchProvider, { scope: __scopeSwitch, checked, disabled, children: [
+      /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(
+        _radix_ui_react_primitive__WEBPACK_IMPORTED_MODULE_5__.Primitive.button,
+        {
+          type: "button",
+          role: "switch",
+          "aria-checked": checked,
+          "aria-required": required,
+          "data-state": getState(checked),
+          "data-disabled": disabled ? "" : void 0,
+          disabled,
+          value,
+          ...switchProps,
+          ref: composedRefs,
+          onClick: (0,_radix_ui_primitive__WEBPACK_IMPORTED_MODULE_6__.composeEventHandlers)(props.onClick, (event) => {
+            setChecked((prevChecked) => !prevChecked);
+            if (isFormControl) {
+              hasConsumerStoppedPropagationRef.current = event.isPropagationStopped();
+              if (!hasConsumerStoppedPropagationRef.current) event.stopPropagation();
+            }
+          })
+        }
+      ),
+      isFormControl && /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(
+        SwitchBubbleInput,
+        {
+          control: button,
+          bubbles: !hasConsumerStoppedPropagationRef.current,
+          name,
+          value,
+          checked,
+          required,
+          disabled,
+          form,
+          style: { transform: "translateX(-100%)" }
+        }
+      )
+    ] });
+  }
+);
+Switch.displayName = SWITCH_NAME;
+var THUMB_NAME = "SwitchThumb";
+var SwitchThumb = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(
+  (props, forwardedRef) => {
+    const { __scopeSwitch, ...thumbProps } = props;
+    const context = useSwitchContext(THUMB_NAME, __scopeSwitch);
+    return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(
+      _radix_ui_react_primitive__WEBPACK_IMPORTED_MODULE_5__.Primitive.span,
+      {
+        "data-state": getState(context.checked),
+        "data-disabled": context.disabled ? "" : void 0,
+        ...thumbProps,
+        ref: forwardedRef
+      }
+    );
+  }
+);
+SwitchThumb.displayName = THUMB_NAME;
+var BUBBLE_INPUT_NAME = "SwitchBubbleInput";
+var SwitchBubbleInput = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(
+  ({
+    __scopeSwitch,
+    control,
+    checked,
+    bubbles = true,
+    ...props
+  }, forwardedRef) => {
+    const ref = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+    const composedRefs = (0,_radix_ui_react_compose_refs__WEBPACK_IMPORTED_MODULE_3__.useComposedRefs)(ref, forwardedRef);
+    const prevChecked = (0,_radix_ui_react_use_previous__WEBPACK_IMPORTED_MODULE_7__.usePrevious)(checked);
+    const controlSize = (0,_radix_ui_react_use_size__WEBPACK_IMPORTED_MODULE_8__.useSize)(control);
+    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
+      const input = ref.current;
+      if (!input) return;
+      const inputProto = window.HTMLInputElement.prototype;
+      const descriptor = Object.getOwnPropertyDescriptor(
+        inputProto,
+        "checked"
+      );
+      const setChecked = descriptor.set;
+      if (prevChecked !== checked && setChecked) {
+        const event = new Event("click", { bubbles });
+        setChecked.call(input, checked);
+        input.dispatchEvent(event);
+      }
+    }, [prevChecked, checked, bubbles]);
+    return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(
+      "input",
+      {
+        type: "checkbox",
+        "aria-hidden": true,
+        defaultChecked: checked,
+        ...props,
+        tabIndex: -1,
+        ref: composedRefs,
+        style: {
+          ...props.style,
+          ...controlSize,
+          position: "absolute",
+          pointerEvents: "none",
+          opacity: 0,
+          margin: 0
+        }
+      }
+    );
+  }
+);
+SwitchBubbleInput.displayName = BUBBLE_INPUT_NAME;
+function getState(checked) {
+  return checked ? "checked" : "unchecked";
+}
+var Root = Switch;
+var Thumb = SwitchThumb;
+
+//# sourceMappingURL=index.mjs.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@radix-ui/react-toast/dist/index.mjs":
 /*!***********************************************************!*\
   !*** ./node_modules/@radix-ui/react-toast/dist/index.mjs ***!
@@ -9145,6 +9327,36 @@ __webpack_require__.r(__webpack_exports__);
 
 var useLayoutEffect2 = globalThis?.document ? react__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect : () => {
 };
+
+//# sourceMappingURL=index.mjs.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@radix-ui/react-use-previous/dist/index.mjs":
+/*!******************************************************************!*\
+  !*** ./node_modules/@radix-ui/react-use-previous/dist/index.mjs ***!
+  \******************************************************************/
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   usePrevious: function() { return /* binding */ usePrevious; }
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+// packages/react/use-previous/src/use-previous.tsx
+
+function usePrevious(value) {
+  const ref = react__WEBPACK_IMPORTED_MODULE_0__.useRef({ value, previous: value });
+  return react__WEBPACK_IMPORTED_MODULE_0__.useMemo(() => {
+    if (ref.current.value !== value) {
+      ref.current.previous = ref.current.value;
+      ref.current.value = value;
+    }
+    return ref.current.previous;
+  }, [value]);
+}
 
 //# sourceMappingURL=index.mjs.map
 
@@ -30252,7 +30464,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\r\n@tailwind base;\r\n@tailwind components;\r\n@tailwind utilities;\r\n\r\n@layer base {\r\n  :root {\r\n    --background: 210 40% 98%;\r\n    --foreground: 222.2 84% 4.9%;\r\n\r\n    --card: 0 0% 100%;\r\n    --card-foreground: 222.2 84% 4.9%;\r\n\r\n    --popover: 0 0% 100%;\r\n    --popover-foreground: 222.2 84% 4.9%;\r\n\r\n    --primary: 221.2 83.2% 53.3%;\r\n    --primary-foreground: 210 40% 98%;\r\n\r\n    --secondary: 210 40% 96.1%;\r\n    --secondary-foreground: 222.2 47.4% 11.2%;\r\n\r\n    --muted: 210 40% 96.1%;\r\n    --muted-foreground: 215.4 16.3% 46.9%;\r\n\r\n    --accent: 221.2 83.2% 53.3%;\r\n    --accent-foreground: 210 40% 98%;\r\n\r\n    --destructive: 0 84.2% 60.2%;\r\n    --destructive-foreground: 210 40% 98%;\r\n\r\n    --border: 214.3 31.8% 91.4%;\r\n    --input: 214.3 31.8% 91.4%;\r\n    --ring: 221.2 83.2% 53.3%;\r\n\r\n    --radius: 0.5rem;\r\n\r\n    --sidebar-background: 0 0% 100%; /* #FFFFFF white */\r\n    --sidebar-foreground: 222.2 84% 4.9%;\r\n    --sidebar-primary: 187 92% 43%; /* #06B6D4 cyan */\r\n    --sidebar-primary-foreground: 0 0% 98%;\r\n    --sidebar-accent: 240 5.9% 90%; /* #E5E7EB light gray */\r\n    --sidebar-accent-foreground: 222.2 47.4% 11.2%;\r\n    --sidebar-border: 214.3 31.8% 91.4%;\r\n    --sidebar-ring: 221.2 83.2% 53.3%;\r\n  }\r\n\r\n  .dark {\r\n    --background: 222.2 84% 4.9%;\r\n    --foreground: 210 40% 98%;\r\n\r\n    --card: 222.2 84% 4.9%;\r\n    --card-foreground: 210 40% 98%;\r\n\r\n    --popover: 222.2 84% 4.9%;\r\n    --popover-foreground: 210 40% 98%;\r\n\r\n    --primary: 217.2 91.2% 59.8%;\r\n    --primary-foreground: 222.2 47.4% 11.2%;\r\n\r\n    --secondary: 217.2 32.6% 17.5%;\r\n    --secondary-foreground: 210 40% 98%;\r\n\r\n    --muted: 217.2 32.6% 17.5%;\r\n    --muted-foreground: 215 20.2% 65.1%;\r\n\r\n    --accent: 217.2 91.2% 59.8%;\r\n    --accent-foreground: 210 40% 98%;\r\n\r\n    --destructive: 0 62.8% 30.6%;\r\n    --destructive-foreground: 210 40% 98%;\r\n\r\n    --border: 217.2 32.6% 17.5%;\r\n    --input: 217.2 32.6% 17.5%;\r\n    --ring: 224.3 76.3% 48%;\r\n\r\n    --sidebar-background: 0 0% 100%; /* #FFFFFF white */\r\n    --sidebar-foreground: 210 40% 98%;\r\n    --sidebar-primary: 262 83.3% 74.5%; /* #9b87f5 purple */\r\n    --sidebar-primary-foreground: 0 0% 100%;\r\n    --sidebar-accent: 240 5.9% 90%; /* #E5E7EB light gray */\r\n    --sidebar-accent-foreground: 210 40% 98%;\r\n    --sidebar-border: 217.2 32.6% 17.5%;\r\n    --sidebar-ring: 224.3 76.3% 48%;\r\n  }\r\n}\r\n\r\n@layer base {\r\n  * {\r\n    @apply border-border;\r\n  }\r\n\r\n  body {\r\n    @apply bg-background text-foreground;\r\n  }\r\n}\r\n\r\n@layer components {\r\n  .card-gradient {\r\n    @apply bg-gradient-to-br from-card to-secondary/20 backdrop-blur-sm;\r\n  }\r\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "@tailwind base;\r\n@tailwind components;\r\n@tailwind utilities;\r\n\r\n@layer base {\r\n  :root {\r\n    /* Light Theme - Modern Blue & Gray Palette */\r\n    --background: 0 0% 100%;\r\n    --foreground: 222.2 84% 4.9%;\r\n\r\n    --card: 0 0% 100%;\r\n    --card-foreground: 222.2 84% 4.9%;\r\n\r\n    --popover: 0 0% 100%;\r\n    --popover-foreground: 222.2 84% 4.9%;\r\n\r\n    --primary: 221.2 83.2% 53.3%;\r\n    --primary-foreground: 210 40% 98%;\r\n\r\n    --secondary: 210 40% 96.1%;\r\n    --secondary-foreground: 222.2 47.4% 11.2%;\r\n\r\n    --muted: 210 40% 96.1%;\r\n    --muted-foreground: 215.4 16.3% 46.9%;\r\n\r\n    --accent: 212 100% 47%;\r\n    --accent-foreground: 210 40% 98%;\r\n\r\n    --destructive: 0 84.2% 60.2%;\r\n    --destructive-foreground: 210 40% 98%;\r\n\r\n    --border: 214.3 31.8% 91.4%;\r\n    --input: 214.3 31.8% 91.4%;\r\n    --ring: 221.2 83.2% 53.3%;\r\n\r\n    --radius: 0.75rem;\r\n\r\n    /* Light Sidebar - Clean White with Blue Accents */\r\n    --sidebar-background: 0 0% 100%;\r\n    --sidebar-foreground: 222.2 84% 4.9%;\r\n    --sidebar-primary: 221.2 83.2% 53.3%;\r\n    --sidebar-primary-foreground: 0 0% 98%;\r\n    --sidebar-accent: 210 40% 96.1%;\r\n    --sidebar-accent-foreground: 222.2 47.4% 11.2%;\r\n    --sidebar-border: 214.3 31.8% 91.4%;\r\n    --sidebar-ring: 221.2 83.2% 53.3%;\r\n  }\r\n\r\n  .dark {\r\n    /* Dark Theme - Deep Blue & Purple Palette */\r\n    --background: 224 71.4% 4.1%;\r\n    --foreground: 210 20% 98%;\r\n\r\n    --card: 224 71.4% 4.1%;\r\n    --card-foreground: 210 20% 98%;\r\n\r\n    --popover: 224 71.4% 4.1%;\r\n    --popover-foreground: 210 20% 98%;\r\n\r\n    --primary: 263.4 70% 50.4%;\r\n    --primary-foreground: 210 20% 98%;\r\n\r\n    --secondary: 215 27.9% 16.9%;\r\n    --secondary-foreground: 210 20% 98%;\r\n\r\n    --muted: 215 27.9% 16.9%;\r\n    --muted-foreground: 217.9 10.6% 64.9%;\r\n\r\n    --accent: 263.4 70% 50.4%;\r\n    --accent-foreground: 210 20% 98%;\r\n\r\n    --destructive: 0 62.8% 30.6%;\r\n    --destructive-foreground: 210 20% 98%;\r\n\r\n    --border: 215 27.9% 16.9%;\r\n    --input: 215 27.9% 16.9%;\r\n    --ring: 263.4 70% 50.4%;\r\n\r\n    /* Dark Sidebar - Deep Navy with Purple Accents */\r\n    --sidebar-background: 222.2 84% 4.9%;\r\n    --sidebar-foreground: 210 20% 98%;\r\n    --sidebar-primary: 263.4 70% 50.4%;\r\n    --sidebar-primary-foreground: 210 20% 98%;\r\n    --sidebar-accent: 215 27.9% 16.9%;\r\n    --sidebar-accent-foreground: 210 20% 98%;\r\n    --sidebar-border: 215 27.9% 16.9%;\r\n    --sidebar-ring: 263.4 70% 50.4%;\r\n  }\r\n}\r\n\r\n@layer base {\r\n  * {\r\n    @apply border-border;\r\n  }\r\n\r\n  body {\r\n    @apply bg-background text-foreground;\r\n    -webkit-font-feature-settings: \"rlig\" 1, \"calt\" 1;\r\n            font-feature-settings: \"rlig\" 1, \"calt\" 1;\r\n  }\r\n}\r\n\r\n@layer components {\r\n  .card-gradient {\r\n    @apply bg-gradient-to-br from-card to-secondary/20 backdrop-blur-sm;\r\n  }\r\n  \r\n  .theme-transition {\r\n    @apply transition-colors duration-300 ease-in-out;\r\n  }\r\n}", ""]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
@@ -78232,6 +78444,38 @@ const CirclePlus = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default
 
 /***/ }),
 
+/***/ "./node_modules/lucide-react/dist/esm/icons/credit-card.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/credit-card.js ***!
+  \*****************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ CreditCard; }
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.462.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const CreditCard = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("CreditCard", [
+  ["rect", { width: "20", height: "14", x: "2", y: "5", rx: "2", key: "ynyp8z" }],
+  ["line", { x1: "2", x2: "22", y1: "10", y2: "10", key: "1b3vmo" }]
+]);
+
+
+//# sourceMappingURL=credit-card.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/lucide-react/dist/esm/icons/dollar-sign.js":
 /*!*****************************************************************!*\
   !*** ./node_modules/lucide-react/dist/esm/icons/dollar-sign.js ***!
@@ -78404,6 +78648,73 @@ const List = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("L
 
 /***/ }),
 
+/***/ "./node_modules/lucide-react/dist/esm/icons/moon.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/moon.js ***!
+  \**********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ Moon; }
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.462.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Moon = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("Moon", [
+  ["path", { d: "M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z", key: "a7tn18" }]
+]);
+
+
+//# sourceMappingURL=moon.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-react/dist/esm/icons/receipt.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/receipt.js ***!
+  \*************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ Receipt; }
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.462.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Receipt = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("Receipt", [
+  [
+    "path",
+    { d: "M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z", key: "q3az6g" }
+  ],
+  ["path", { d: "M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8", key: "1h4pet" }],
+  ["path", { d: "M12 17.5v-11", key: "1jc1ny" }]
+]);
+
+
+//# sourceMappingURL=receipt.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/lucide-react/dist/esm/icons/refresh-cw.js":
 /*!****************************************************************!*\
   !*** ./node_modules/lucide-react/dist/esm/icons/refresh-cw.js ***!
@@ -78438,16 +78749,16 @@ const RefreshCw = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"
 
 /***/ }),
 
-/***/ "./node_modules/lucide-react/dist/esm/icons/settings.js":
-/*!**************************************************************!*\
-  !*** ./node_modules/lucide-react/dist/esm/icons/settings.js ***!
-  \**************************************************************/
+/***/ "./node_modules/lucide-react/dist/esm/icons/shopping-cart.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/shopping-cart.js ***!
+  \*******************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ Settings; }
+/* harmony export */   "default": function() { return /* binding */ ShoppingCart; }
 /* harmony export */ });
 /* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
 /**
@@ -78459,19 +78770,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const Settings = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("Settings", [
+const ShoppingCart = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("ShoppingCart", [
+  ["circle", { cx: "8", cy: "21", r: "1", key: "jimo8o" }],
+  ["circle", { cx: "19", cy: "21", r: "1", key: "13723u" }],
   [
     "path",
     {
-      d: "M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z",
-      key: "1qme2f"
+      d: "M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12",
+      key: "9zh506"
     }
-  ],
-  ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
+  ]
 ]);
 
 
-//# sourceMappingURL=settings.js.map
+//# sourceMappingURL=shopping-cart.js.map
 
 
 /***/ }),
@@ -78510,6 +78822,45 @@ const SquarePen = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"
 
 
 //# sourceMappingURL=square-pen.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-react/dist/esm/icons/sun.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/sun.js ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ Sun; }
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.462.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Sun = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("Sun", [
+  ["circle", { cx: "12", cy: "12", r: "4", key: "4exip2" }],
+  ["path", { d: "M12 2v2", key: "tus03m" }],
+  ["path", { d: "M12 20v2", key: "1lh1kg" }],
+  ["path", { d: "m4.93 4.93 1.41 1.41", key: "149t6j" }],
+  ["path", { d: "m17.66 17.66 1.41 1.41", key: "ptbguv" }],
+  ["path", { d: "M2 12h2", key: "1t8f8n" }],
+  ["path", { d: "M20 12h2", key: "1q8mjw" }],
+  ["path", { d: "m6.34 17.66-1.41 1.41", key: "1m8zz5" }],
+  ["path", { d: "m19.07 4.93-1.41 1.41", key: "1shlcs" }]
+]);
+
+
+//# sourceMappingURL=sun.js.map
 
 
 /***/ }),
@@ -141820,10 +142171,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ui_toaster__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/ui/toaster */ "./resources/js/components/ui/toaster.tsx");
 /* harmony import */ var _components_ui_sonner__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/ui/sonner */ "./resources/js/components/ui/sonner.tsx");
 /* harmony import */ var _components_ui_tooltip__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/ui/tooltip */ "./resources/js/components/ui/tooltip.tsx");
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @tanstack/react-query */ "./node_modules/@tanstack/query-core/build/modern/queryClient.js");
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @tanstack/react-query */ "./node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @tanstack/react-query */ "./node_modules/@tanstack/query-core/build/modern/queryClient.js");
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @tanstack/react-query */ "./node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _context_DashboardContext__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./context/DashboardContext */ "./resources/js/context/DashboardContext.tsx");
 /* harmony import */ var _pages_Vantas__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/Vantas */ "./resources/js/pages/Vantas/index.tsx");
 /* harmony import */ var _pages_Existentes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/Existentes */ "./resources/js/pages/Existentes.tsx");
@@ -141833,6 +142184,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_Realizar__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/Realizar */ "./resources/js/pages/Realizar/index.tsx");
 /* harmony import */ var _pages_UserLoginVisualization__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/UserLoginVisualization */ "./resources/js/pages/UserLoginVisualization.tsx");
 /* harmony import */ var _pages_NotFound__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pages/NotFound */ "./resources/js/pages/NotFound.tsx");
+/* harmony import */ var _hooks_ThemeContext__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./hooks/ThemeContext */ "./resources/js/hooks/ThemeContext.tsx");
 
 
 
@@ -141848,46 +142200,49 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var queryClient = new _tanstack_react_query__WEBPACK_IMPORTED_MODULE_13__.QueryClient();
+
+var queryClient = new _tanstack_react_query__WEBPACK_IMPORTED_MODULE_14__.QueryClient();
 var App = function App() {
-  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_tanstack_react_query__WEBPACK_IMPORTED_MODULE_14__.QueryClientProvider, {
-    client: queryClient,
-    children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_tooltip__WEBPACK_IMPORTED_MODULE_3__.TooltipProvider, {
-      children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_context_DashboardContext__WEBPACK_IMPORTED_MODULE_4__.DashboardProvider, {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_toaster__WEBPACK_IMPORTED_MODULE_1__.Toaster, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_sonner__WEBPACK_IMPORTED_MODULE_2__.Toaster, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.BrowserRouter, {
-          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Routes, {
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-              path: "/resumenVer",
-              element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Navigate, {
-                to: "/resumenVer/realizar"
-              })
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-              path: "/resumenVer/realizar",
-              element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_Realizar__WEBPACK_IMPORTED_MODULE_10__["default"], {})
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-              path: "/resumenVer/existentes",
-              element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_Existentes__WEBPACK_IMPORTED_MODULE_6__["default"], {})
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-              path: "/resumenVer/ventas",
-              element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_Vantas__WEBPACK_IMPORTED_MODULE_5__["default"], {})
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-              path: "/resumenVer/gastos",
-              element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_Gastos__WEBPACK_IMPORTED_MODULE_7__["default"], {})
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-              path: "/resumenVer/pinta",
-              element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_Pinta__WEBPACK_IMPORTED_MODULE_8__["default"], {})
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-              path: "/resumenVer/pagar",
-              element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_Pagar__WEBPACK_IMPORTED_MODULE_9__["default"], {})
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-              path: "/resumenVer/user",
-              element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_UserLoginVisualization__WEBPACK_IMPORTED_MODULE_11__["default"], {})
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-              path: "*",
-              element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_NotFound__WEBPACK_IMPORTED_MODULE_12__["default"], {})
-            })]
-          })
-        })]
+  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_hooks_ThemeContext__WEBPACK_IMPORTED_MODULE_13__.ThemeProvider, {
+    children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_tanstack_react_query__WEBPACK_IMPORTED_MODULE_15__.QueryClientProvider, {
+      client: queryClient,
+      children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_tooltip__WEBPACK_IMPORTED_MODULE_3__.TooltipProvider, {
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_context_DashboardContext__WEBPACK_IMPORTED_MODULE_4__.DashboardProvider, {
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_toaster__WEBPACK_IMPORTED_MODULE_1__.Toaster, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_sonner__WEBPACK_IMPORTED_MODULE_2__.Toaster, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.BrowserRouter, {
+            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Routes, {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
+                path: "/resumenVer",
+                element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Navigate, {
+                  to: "/resumenVer/realizar"
+                })
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
+                path: "/resumenVer/realizar",
+                element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_Realizar__WEBPACK_IMPORTED_MODULE_10__["default"], {})
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
+                path: "/resumenVer/existentes",
+                element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_Existentes__WEBPACK_IMPORTED_MODULE_6__["default"], {})
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
+                path: "/resumenVer/ventas",
+                element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_Vantas__WEBPACK_IMPORTED_MODULE_5__["default"], {})
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
+                path: "/resumenVer/gastos",
+                element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_Gastos__WEBPACK_IMPORTED_MODULE_7__["default"], {})
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
+                path: "/resumenVer/pinta",
+                element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_Pinta__WEBPACK_IMPORTED_MODULE_8__["default"], {})
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
+                path: "/resumenVer/pagar",
+                element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_Pagar__WEBPACK_IMPORTED_MODULE_9__["default"], {})
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
+                path: "/resumenVer/user",
+                element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_UserLoginVisualization__WEBPACK_IMPORTED_MODULE_11__["default"], {})
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.Route, {
+                path: "*",
+                element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_pages_NotFound__WEBPACK_IMPORTED_MODULE_12__["default"], {})
+              })]
+            })
+          })]
+        })
       })
     })
   });
@@ -141993,9 +142348,9 @@ var DashboardLayout = function DashboardLayout(_ref) {
     }
   };
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "min-h-screen bg-background",
+    className: "min-h-screen bg-background theme-transition",
     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_dashboard_Sidebar__WEBPACK_IMPORTED_MODULE_1__["default"], {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_dashboard_Header__WEBPACK_IMPORTED_MODULE_2__["default"], {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("main", {
-      className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_4__.cn)("pt-16 min-h-screen transition-all duration-300", getMainPaddingClass()),
+      className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_4__.cn)("pt-16 min-h-screen transition-all duration-300 theme-transition", getMainPaddingClass()),
       children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "p-6 max-w-7xl mx-auto",
         children: children
@@ -142019,6 +142374,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _context_DashboardContext__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/context/DashboardContext */ "./resources/js/context/DashboardContext.tsx");
 /* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/utils */ "./resources/js/lib/utils.ts");
 /* harmony import */ var _components_ui_avatar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/ui/avatar */ "./resources/js/components/ui/avatar.tsx");
+/* harmony import */ var _ui_theme_toggle__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ui/theme-toggle */ "./resources/js/components/ui/theme-toggle.tsx");
+
 
 
 
@@ -142042,24 +142399,24 @@ var Header = function Header() {
     }
   };
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("header", {
-    className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_2__.cn)("fixed top-0 right-0 h-16 border-b border-gray-200 bg-white z-20 shadow-header transition-all duration-300", getHeaderLeftClass()),
+    className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_2__.cn)("fixed top-0 right-0 h-16 border-b border-b-[hsl(var(--sidebar-border))] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-20 shadow-sm theme-transition", getHeaderLeftClass()),
     children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "flex items-center justify-between h-full px-6",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
-          className: "text-xl font-semibold text-gray-800",
+          className: "text-xl font-semibold text-foreground theme-transition",
           children: "Dashboard"
         })
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "flex items-center gap-4",
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_ui_avatar__WEBPACK_IMPORTED_MODULE_3__.Avatar, {
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_theme_toggle__WEBPACK_IMPORTED_MODULE_4__.ThemeToggle, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_ui_avatar__WEBPACK_IMPORTED_MODULE_3__.Avatar, {
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_avatar__WEBPACK_IMPORTED_MODULE_3__.AvatarImage, {
             src: ""
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_avatar__WEBPACK_IMPORTED_MODULE_3__.AvatarFallback, {
-            className: "bg-primary text-primary-foreground",
+            className: "bg-primary text-primary-foreground theme-transition",
             children: "JD"
           })]
-        })
+        })]
       })]
     })
   });
@@ -142077,15 +142434,17 @@ var Header = function Header() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/utils */ "./resources/js/lib/utils.ts");
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/layout-dashboard.js");
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/layers.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/chart-pie.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/chart-no-axes-column-increasing.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/settings.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/users.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/list.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/shopping-cart.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/receipt.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/chart-no-axes-column-increasing.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/credit-card.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/users.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/list.js");
 /* harmony import */ var _context_DashboardContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/context/DashboardContext */ "./resources/js/context/DashboardContext.tsx");
 /* harmony import */ var _components_ui_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/ui/button */ "./resources/js/components/ui/button.tsx");
 
@@ -142096,8 +142455,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var navItems = [{
   name: 'Indicadores a realizar',
-  path: '/resumenVer/',
-  icon: lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"]
+  path: '/resumenVer/realizar',
+  icon: lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"],
+  exact: true
 }, {
   name: 'Indicadores existentes',
   path: '/resumenVer/existentes',
@@ -142111,23 +142471,32 @@ var navItems = [{
   path: '/resumenVer/gastos',
   icon: lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"]
 }, {
-  name: 'Pinta ',
+  name: 'Pinta',
   path: '/resumenVer/pinta',
   icon: lucide_react__WEBPACK_IMPORTED_MODULE_8__["default"]
 }, {
   name: 'Pagar',
   path: '/resumenVer/pagar',
-  icon: lucide_react__WEBPACK_IMPORTED_MODULE_8__["default"]
-}, {
-  name: 'User',
-  path: '/resumenVer/user',
   icon: lucide_react__WEBPACK_IMPORTED_MODULE_9__["default"]
+}, {
+  name: 'Users',
+  path: '/resumenVer/user',
+  icon: lucide_react__WEBPACK_IMPORTED_MODULE_10__["default"]
 }];
 var Sidebar = function Sidebar() {
   var _useDashboard = (0,_context_DashboardContext__WEBPACK_IMPORTED_MODULE_2__.useDashboard)(),
     toggleSidebar = _useDashboard.toggleSidebar,
     sidebarWidth = _useDashboard.sidebarWidth,
     miniaturizeSidebar = _useDashboard.miniaturizeSidebar;
+  var location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_11__.useLocation)();
+  var isItemActive = function isItemActive(path, exact) {
+    if (exact) {
+      // For exact matches, check if current path equals the nav path
+      // Also handle the case where we're at /resumenVer and should redirect to /resumenVer/realizar
+      return location.pathname === path || path === '/resumenVer/realizar' && location.pathname === '/resumenVer';
+    }
+    return location.pathname.startsWith(path);
+  };
   // Function to get the width class based on sidebar state
   var getSidebarWidthClass = function getSidebarWidthClass() {
     switch (sidebarWidth) {
@@ -142160,18 +142529,18 @@ var Sidebar = function Sidebar() {
     }
   };
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("aside", {
-    className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_1__.cn)("h-screen bg-white border-r border-gray-200 fixed left-0 top-0 z-30 transition-all duration-300", getSidebarWidthClass()),
+    className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_1__.cn)("h-screen bg-sidebar border-r border-sidebar-border fixed left-0 top-0 z-30 transition-all duration-300 theme-transition", getSidebarWidthClass()),
     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_1__.cn)("flex items-center justify-between h-16 px-4 border-b border-gray-200", isCompactMode() && "justify-center"),
+      className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_1__.cn)("flex items-center justify-between h-16 px-4 border-b border-sidebar-border theme-transition", isCompactMode() && "justify-center"),
       children: [!isCompactMode() && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-        className: "text-lg font-semibold text-gray-800 truncate",
+        className: "text-lg font-semibold text-sidebar-foreground truncate theme-transition",
         children: "Wolf Admin"
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, {
         variant: "ghost",
         size: "icon",
         onClick: handleToggleSidebar,
-        className: "rounded-sm text-gray-600 hover:bg-gray-100",
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_10__["default"], {
+        className: "rounded-sm text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground theme-transition",
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_12__["default"], {
           size: 20
         })
       })]
@@ -142180,19 +142549,17 @@ var Sidebar = function Sidebar() {
       children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("ul", {
         className: "space-y-1",
         children: navItems.map(function (item) {
+          var active = isItemActive(item.path, item.exact);
           return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
-            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.NavLink, {
+            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.NavLink, {
               to: item.path,
-              className: function className(_ref) {
-                var isActive = _ref.isActive;
-                return (0,_lib_utils__WEBPACK_IMPORTED_MODULE_1__.cn)("flex items-center gap-3 px-3 py-2.5 rounded-md transition-all duration-200 no-underline", isActive ? "bg-dashboard-cyan text-white" : "text-gray-700 hover:bg-gray-100", isCompactMode() && "justify-center");
-              },
-              end: item.path === '/resumenVer/user',
+              className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_1__.cn)("flex items-center gap-3 px-3 py-2.5 rounded-md transition-all duration-200 theme-transition", active ? "bg-sidebar-primary text-sidebar-primary-foreground" : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground", isCompactMode() && "justify-center"),
+              end: item.exact,
               title: isCompactMode() ? item.name : undefined,
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(item.icon, {
                 size: 20
               }), shouldShowLabels() && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                className: "text-sm",
+                className: "text-sm theme-transition",
                 children: item.name
               })]
             })
@@ -142387,6 +142754,95 @@ var Toaster = function Toaster(_a) {
   }, props));
 };
 
+
+/***/ }),
+
+/***/ "./resources/js/components/ui/switch.tsx":
+/*!***********************************************!*\
+  !*** ./resources/js/components/ui/switch.tsx ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Switch: function() { return /* binding */ Switch; }
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _radix_ui_react_switch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @radix-ui/react-switch */ "./node_modules/@radix-ui/react-switch/dist/index.mjs");
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/utils */ "./resources/js/lib/utils.ts");
+var __rest = undefined && undefined.__rest || function (s, e) {
+  var t = {};
+  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+
+
+
+var Switch = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(function (_a, ref) {
+  var className = _a.className,
+    props = __rest(_a, ["className"]);
+  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_radix_ui_react_switch__WEBPACK_IMPORTED_MODULE_3__.Root, Object.assign({
+    className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_2__.cn)("peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input", className)
+  }, props, {
+    ref: ref,
+    children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_radix_ui_react_switch__WEBPACK_IMPORTED_MODULE_3__.Thumb, {
+      className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_2__.cn)("pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0")
+    })
+  }));
+});
+Switch.displayName = _radix_ui_react_switch__WEBPACK_IMPORTED_MODULE_3__.Root.displayName;
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ui/theme-toggle.tsx":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/ui/theme-toggle.tsx ***!
+  \*****************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ThemeToggle: function() { return /* binding */ ThemeToggle; }
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/sun.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/moon.js");
+/* harmony import */ var _hooks_ThemeContext__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/hooks/ThemeContext */ "./resources/js/hooks/ThemeContext.tsx");
+/* harmony import */ var _components_ui_switch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/ui/switch */ "./resources/js/components/ui/switch.tsx");
+
+
+
+
+function ThemeToggle() {
+  var _useTheme = (0,_hooks_ThemeContext__WEBPACK_IMPORTED_MODULE_1__.useTheme)(),
+    theme = _useTheme.theme,
+    setTheme = _useTheme.setTheme;
+  var toggleTheme = function toggleTheme() {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+  // Toggle with Switch component
+  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+    className: "flex items-center gap-2",
+    children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      className: "h-[1.2rem] w-[1.2rem] text-foreground theme-transition"
+    }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_switch__WEBPACK_IMPORTED_MODULE_2__.Switch, {
+      checked: theme === 'dark',
+      onCheckedChange: toggleTheme,
+      className: "theme-transition"
+    }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      className: "h-[1.2rem] w-[1.2rem] text-foreground theme-transition"
+    })]
+  });
+}
 
 /***/ }),
 
@@ -142671,6 +143127,74 @@ var DashboardProvider = function DashboardProvider(_ref) {
     children: children
   });
 };
+
+/***/ }),
+
+/***/ "./resources/js/hooks/ThemeContext.tsx":
+/*!*********************************************!*\
+  !*** ./resources/js/hooks/ThemeContext.tsx ***!
+  \*********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ThemeProvider: function() { return /* binding */ ThemeProvider; },
+/* harmony export */   useTheme: function() { return /* binding */ useTheme; }
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
+var ThemeProviderContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createContext)(undefined);
+function useTheme() {
+  var context = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(ThemeProviderContext);
+  if (context === undefined) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+}
+function ThemeProvider(_ref) {
+  var children = _ref.children,
+    _ref$defaultTheme = _ref.defaultTheme,
+    defaultTheme = _ref$defaultTheme === void 0 ? 'system' : _ref$defaultTheme,
+    _ref$storageKey = _ref.storageKey,
+    storageKey = _ref$storageKey === void 0 ? 'vite-ui-theme' : _ref$storageKey;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(function () {
+      return localStorage.getItem(storageKey) || defaultTheme;
+    }),
+    _useState2 = _slicedToArray(_useState, 2),
+    theme = _useState2[0],
+    _setTheme = _useState2[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    var root = window.document.documentElement;
+    root.classList.remove('light', 'dark');
+    if (theme === 'system') {
+      var systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      root.classList.add(systemTheme);
+      return;
+    }
+    root.classList.add(theme);
+  }, [theme]);
+  var value = {
+    theme: theme,
+    setTheme: function setTheme(theme) {
+      localStorage.setItem(storageKey, theme);
+      _setTheme(theme);
+    }
+  };
+  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(ThemeProviderContext.Provider, {
+    value: value,
+    children: children
+  });
+}
 
 /***/ }),
 
@@ -143055,10 +143579,11 @@ var FinancialDashboard = function FinancialDashboard() {
               jsonData = _context.sent;
               setData(jsonData);
               setLoading(false);
-              _context.next = 20;
+              console.log(data);
+              _context.next = 21;
               break;
-            case 14:
-              _context.prev = 14;
+            case 15:
+              _context.prev = 15;
               _context.t0 = _context["catch"](1);
               if (_context.t0 instanceof Error) {
                 setError(_context.t0.message);
@@ -143069,11 +143594,11 @@ var FinancialDashboard = function FinancialDashboard() {
               // For demo purposes, let's create some mock data
               mockData = generateMockData(selectedYear);
               setData(mockData);
-            case 20:
+            case 21:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[1, 14]]);
+        }, _callee, null, [[1, 15]]);
       }));
     };
     fetchData();
@@ -143213,10 +143738,18 @@ var FinancialDashboard = function FinancialDashboard() {
     };
   };
   if (loading) {
-    return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "flex items-center justify-center h-screen",
+    return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_dashboard_DashboardLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
       children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"
+        className: "flex items-center justify-center p-8 min-h-[400px] dark:bg-background",
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          className: "text-center",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+            className: "w-12 h-12 border-4 border-t-dashboard-blue dark:border-t-primary rounded-full animate-spin mx-auto mb-4"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+            className: "text-foreground dark:text-foreground",
+            children: "sobreprima....."
+          })]
+        })
       })
     });
   }
@@ -143284,13 +143817,13 @@ var FinancialDashboard = function FinancialDashboard() {
   });
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_dashboard_DashboardLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
     children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in",
+      className: "bg-background rounded-lg shadow-lg p-4 md:p-6 animate-fade-in",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "bg-white shadow rounded-lg p-6 mb-8",
+        className: "bg-card shadow rounded-lg p-6 mb-8 border border-border",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "flex justify-between items-center mb-6",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h1", {
-            className: "text-2xl font-bold text-gray-800",
+            className: "text-2xl font-bold text-foreground",
             children: ["Dashboard Financiero ", data.year]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "flex space-x-2",
@@ -143299,7 +143832,7 @@ var FinancialDashboard = function FinancialDashboard() {
                 return setSelectedYear(Number(e.target.value));
               },
               value: selectedYear,
-              className: "px-4 py-2 rounded",
+              className: "px-4 py-2 rounded bg-input border border-border text-foreground focus:ring-2 focus:ring-ring",
               children: availableYears.map(function (year) {
                 return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
                   value: year,
@@ -143311,88 +143844,88 @@ var FinancialDashboard = function FinancialDashboard() {
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "bg-blue-50 p-4 rounded-lg shadow",
+            className: "bg-primary/5 dark:bg-primary/10 p-4 rounded-lg shadow border border-border",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-              className: "text-lg font-semibold text-blue-800",
+              className: "text-lg font-semibold text-primary",
               children: "Ventas Totales"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-              className: "text-3xl font-bold text-blue-600",
+              className: "text-3xl font-bold text-primary",
               children: formatCurrency(data.totals.ventas_totales)
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "bg-red-50 p-4 rounded-lg shadow",
+            className: "bg-destructive/5 dark:bg-destructive/10 p-4 rounded-lg shadow border border-border",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-              className: "text-lg font-semibold text-red-800",
+              className: "text-lg font-semibold text-destructive",
               children: "Gastos Totales"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-              className: "text-3xl font-bold text-red-600",
+              className: "text-3xl font-bold text-destructive",
               children: formatCurrency(data.totals.total_gastos)
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "bg-green-50 p-4 rounded-lg shadow",
+            className: "bg-dashboard-green/10 dark:bg-dashboard-green/20 p-4 rounded-lg shadow border border-border dark:text-white",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-              className: "text-lg font-semibold text-green-800",
+              className: "text-lg font-semibold text-dashboard-green",
               children: "Ganancia Neta"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-              className: "text-3xl font-bold text-green-600",
+              className: "text-3xl font-bold text-dashboard-green",
               children: formatCurrency(data.totals.ganancia_neta)
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "bg-purple-50 p-4 rounded-lg shadow",
+            className: "bg-dashboard-purple/10 dark:bg-dashboard-purple/20 p-4 rounded-lg shadow border border-border dark:text-white",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-              className: "text-lg font-semibold text-purple-800",
+              className: "text-lg font-semibold text-dashboard-purple",
               children: "Caja Final"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-              className: "text-3xl font-bold text-purple-600",
+              className: "text-3xl font-bold text-dashboard-purple",
               children: formatCurrency(data.totals.caja_final)
             })]
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "bg-yellow-50 p-4 rounded-lg shadow",
+            className: "bg-dashboard-amber/10 dark:bg-dashboard-amber/20 p-4 rounded-lg shadow border border-border dark:text-white",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-              className: "text-lg font-semibold text-yellow-800",
+              className: "text-lg font-semibold text-dashboard-amber",
               children: "Ganancia %"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-              className: "text-3xl font-bold text-yellow-600",
+              className: "text-3xl font-bold text-dashboard-amber",
               children: formatPercentage(data.totals.ganancia_porcentaje)
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "bg-orange-50 p-4 rounded-lg shadow",
+            className: "bg-orange-50 dark:bg-orange-950/50 p-4 rounded-lg shadow border border-border",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-              className: "text-lg font-semibold text-orange-800",
+              className: "text-lg font-semibold text-orange-800 dark:text-orange-300",
               children: "Costo Alimento %"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-              className: "text-3xl font-bold text-orange-600",
+              className: "text-3xl font-bold text-orange-600 dark:text-orange-400",
               children: formatPercentage(data.totals.costo_alimento_porcentaje)
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "bg-pink-50 p-4 rounded-lg shadow",
+            className: "bg-pink-50 dark:bg-pink-950/50 p-4 rounded-lg shadow border border-border",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-              className: "text-lg font-semibold text-pink-800",
+              className: "text-lg font-semibold text-pink-800 dark:text-pink-300",
               children: "Costo Bebida %"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-              className: "text-3xl font-bold text-pink-600",
+              className: "text-3xl font-bold text-pink-600 dark:text-pink-400",
               children: formatPercentage(data.totals.costo_bebida_porcentaje)
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "bg-indigo-50 p-4 rounded-lg shadow",
+            className: "bg-dashboard-indigo/10 dark:bg-dashboard-indigo/20 p-4 rounded-lg shadow border border-border dark:text-white",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-              className: "text-lg font-semibold text-indigo-800",
+              className: "text-lg font-semibold text-dashboard-indigo",
               children: "Costo Mixto %"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-              className: "text-3xl font-bold text-indigo-600",
+              className: "text-3xl font-bold text-dashboard-indigo",
               children: formatPercentage(data.totals.costo_mixto_porcentaje)
             })]
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "mb-8",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-            className: "text-xl font-bold text-gray-800 mb-4",
+            className: "text-xl font-bold text-foreground mb-4",
             children: "Ventas, Gastos y Ganancias mensuales"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-            className: "h-96",
+            className: "h-96 bg-card border border-border rounded-lg p-4",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_3__.ResponsiveContainer, {
               width: "100%",
               height: "100%",
@@ -143405,12 +143938,22 @@ var FinancialDashboard = function FinancialDashboard() {
                   bottom: 5
                 },
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.CartesianGrid, {
-                  strokeDasharray: "3 3"
+                  strokeDasharray: "3 3",
+                  stroke: "hsl(var(--border))"
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.XAxis, {
+                  stroke: "hsl(var(--muted-foreground))",
                   dataKey: "name"
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Tooltip, {
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.YAxis, {
+                  stroke: "hsl(var(--muted-foreground))"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Tooltip, {
                   formatter: function formatter(value) {
                     return formatCurrency(value);
+                  },
+                  contentStyle: {
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '8px',
+                    color: 'hsl(var(--foreground))'
                   }
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_10__.Line, {
                   type: "monotone",
@@ -143443,10 +143986,10 @@ var FinancialDashboard = function FinancialDashboard() {
           className: "grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-              className: "text-xl font-bold text-gray-800 mb-4",
+              className: "text-xl font-bold text-foreground mb-4",
               children: "Porcentajes de Eficiencia"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-              className: "h-80",
+              className: "h-80 bg-card border border-border rounded-lg p-4",
               children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_3__.ResponsiveContainer, {
                 width: "100%",
                 height: "100%",
@@ -143459,12 +144002,22 @@ var FinancialDashboard = function FinancialDashboard() {
                     bottom: 5
                   },
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.CartesianGrid, {
-                    strokeDasharray: "3 3"
+                    strokeDasharray: "3 3",
+                    stroke: "hsl(var(--border))"
                   }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.XAxis, {
+                    stroke: "hsl(var(--muted-foreground))",
                     dataKey: "name"
-                  }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Tooltip, {
+                  }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.YAxis, {
+                    stroke: "hsl(var(--muted-foreground))"
+                  }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Tooltip, {
                     formatter: function formatter(value) {
                       return "".concat(value.toFixed(2), "%");
+                    },
+                    contentStyle: {
+                      backgroundColor: 'hsl(var(--card))',
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '8px',
+                      color: 'hsl(var(--foreground))'
                     }
                   }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_10__.Line, {
                     type: "monotone",
@@ -143492,10 +144045,10 @@ var FinancialDashboard = function FinancialDashboard() {
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-              className: "text-xl font-bold text-gray-800 mb-4",
+              className: "text-xl font-bold text-foreground mb-4",
               children: "Distribuci\xF3n de Fondos"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-              className: "h-80",
+              className: "h-80 bg-card border border-border rounded-lg p-4",
               children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_3__.ResponsiveContainer, {
                 width: "100%",
                 height: "100%",
@@ -143521,6 +144074,18 @@ var FinancialDashboard = function FinancialDashboard() {
                   }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Tooltip, {
                     formatter: function formatter(value) {
                       return formatCurrency(value);
+                    },
+                    contentStyle: {
+                      backgroundColor: 'hsl(var(--card))',
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '8px',
+                      color: 'hsl(var(--foreground))'
+                    },
+                    labelStyle: {
+                      color: 'hsl(var(--foreground))'
+                    },
+                    itemStyle: {
+                      color: 'hsl(var(--foreground))'
                     }
                   }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Legend, {})]
                 })
@@ -143529,10 +144094,10 @@ var FinancialDashboard = function FinancialDashboard() {
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-            className: "text-xl font-bold text-gray-800 mb-4",
+            className: "text-xl font-bold text-foreground mb-4",
             children: "Flujos Financieros Mensuales"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-            className: "h-80",
+            className: "h-80 bg-card border border-border rounded-lg p-4",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_3__.ResponsiveContainer, {
               width: "100%",
               height: "100%",
@@ -143545,12 +144110,22 @@ var FinancialDashboard = function FinancialDashboard() {
                   bottom: 5
                 },
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.CartesianGrid, {
-                  strokeDasharray: "3 3"
+                  strokeDasharray: "3 3",
+                  stroke: "hsl(var(--border))"
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.XAxis, {
+                  stroke: "hsl(var(--muted-foreground))",
                   dataKey: "name"
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Tooltip, {
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.YAxis, {
+                  stroke: "hsl(var(--muted-foreground))"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Tooltip, {
                   formatter: function formatter(value) {
                     return formatCurrency(value);
+                  },
+                  contentStyle: {
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '8px',
+                    color: 'hsl(var(--foreground))'
                   }
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_15__.Bar, {
                   dataKey: "ingresos",
@@ -143584,15 +144159,15 @@ var FinancialDashboard = function FinancialDashboard() {
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "mt-8",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-            className: "text-xl font-bold text-gray-800 mb-4",
+            className: "text-xl font-bold text-foreground mb-4",
             children: "Detalle Mensual"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-            className: "overflow-x-auto",
+            className: "overflow-x-auto border border-border rounded-lg",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", {
-              className: "min-w-full bg-white",
+              className: "min-w-full bg-card",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", {
                 children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                  className: "bg-gray-200 text-gray-600 uppercase text-sm leading-normal",
+                  className: "bg-muted text-muted-foreground uppercase text-sm leading-normal",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
                     className: "py-3 px-6 text-left",
                     children: "Concepto"
@@ -143607,9 +144182,9 @@ var FinancialDashboard = function FinancialDashboard() {
                   })]
                 })
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tbody", {
-                className: "text-gray-600 text-sm",
+                className: "text-foreground text-sm",
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                  className: "border-b border-gray-200 hover:bg-gray-100",
+                  className: "border-b border-border hover:bg-muted/50",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                     className: "py-3 px-6 text-left whitespace-nowrap font-medium",
                     children: "Ventas Totales"
@@ -143623,7 +144198,7 @@ var FinancialDashboard = function FinancialDashboard() {
                     children: formatCurrency(data.totals.ventas_totales)
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                  className: "border-b border-gray-200 hover:bg-gray-100",
+                  className: "border-b border-border hover:bg-muted/50",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                     className: "py-3 px-6 text-left whitespace-nowrap font-medium",
                     children: "Gastos Totales"
@@ -143637,7 +144212,7 @@ var FinancialDashboard = function FinancialDashboard() {
                     children: formatCurrency(data.totals.total_gastos)
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                  className: "border-b border-gray-200 hover:bg-gray-100 bg-green-50",
+                  className: "border-b border-border hover:bg-muted/50 bg-dashboard-green/10 dark:bg-dashboard-green/20",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                     className: "py-3 px-6 text-left whitespace-nowrap font-medium",
                     children: "Ganancia Bruta"
@@ -143651,7 +144226,7 @@ var FinancialDashboard = function FinancialDashboard() {
                     children: formatCurrency(data.totals.ganancia_bruta)
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                  className: "border-b border-gray-200 hover:bg-gray-100",
+                  className: "border-b border-border hover:bg-muted/50",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                     className: "py-3 px-6 text-left whitespace-nowrap font-medium",
                     children: "IIBB"
@@ -143665,7 +144240,7 @@ var FinancialDashboard = function FinancialDashboard() {
                     children: formatCurrency(data.totals.iibb)
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                  className: "border-b border-gray-200 hover:bg-gray-100",
+                  className: "border-b border-border hover:bg-muted/50",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                     className: "py-3 px-6 text-left whitespace-nowrap font-medium",
                     children: "IVA"
@@ -143679,7 +144254,7 @@ var FinancialDashboard = function FinancialDashboard() {
                     children: formatCurrency(data.totals.iva)
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                  className: "border-b border-gray-200 hover:bg-gray-100",
+                  className: "border-b border-border hover:bg-muted/50",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                     className: "py-3 px-6 text-left whitespace-nowrap font-medium",
                     children: "Impuesto Ganancias"
@@ -143693,7 +144268,7 @@ var FinancialDashboard = function FinancialDashboard() {
                     children: formatCurrency(data.totals.impuesto_ganancia)
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                  className: "border-b border-gray-200 hover:bg-gray-100 bg-green-100",
+                  className: "border-b border-border hover:bg-muted/50 bg-dashboard-green/20 dark:bg-dashboard-green/30",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                     className: "py-3 px-6 text-left whitespace-nowrap font-medium",
                     children: "Ganancia Neta"
@@ -143707,7 +144282,7 @@ var FinancialDashboard = function FinancialDashboard() {
                     children: formatCurrency(data.totals.ganancia_neta)
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                  className: "border-b border-gray-200 hover:bg-gray-100",
+                  className: "border-b border-border hover:bg-muted/50",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                     className: "py-3 px-6 text-left whitespace-nowrap font-medium",
                     children: "Ingresos Propietarios"
@@ -143721,7 +144296,7 @@ var FinancialDashboard = function FinancialDashboard() {
                     children: formatCurrency(data.totals.ingresos_propietarios)
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                  className: "border-b border-gray-200 hover:bg-gray-100",
+                  className: "border-b border-border hover:bg-muted/50",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                     className: "py-3 px-6 text-left whitespace-nowrap font-medium",
                     children: "Inversiones"
@@ -143735,7 +144310,7 @@ var FinancialDashboard = function FinancialDashboard() {
                     children: formatCurrency(data.totals.inversiones)
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                  className: "border-b border-gray-200 hover:bg-gray-100",
+                  className: "border-b border-border hover:bg-muted/50",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                     className: "py-3 px-6 text-left whitespace-nowrap font-medium",
                     children: "Pago Deuda Atrasada"
@@ -143749,7 +144324,7 @@ var FinancialDashboard = function FinancialDashboard() {
                     children: formatCurrency(data.totals.pago_deuda_atrasada)
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                  className: "border-b border-gray-200 hover:bg-gray-100",
+                  className: "border-b border-border hover:bg-muted/50",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                     className: "py-3 px-6 text-left whitespace-nowrap font-medium",
                     children: "Retiro Dividendos"
@@ -143763,7 +144338,7 @@ var FinancialDashboard = function FinancialDashboard() {
                     children: formatCurrency(data.totals.retiro_dividendos)
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                  className: "border-b border-gray-200 hover:bg-gray-100",
+                  className: "border-b border-border hover:bg-muted/50",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                     className: "py-3 px-6 text-left whitespace-nowrap font-medium",
                     children: "Gastos Cta. Cte."
@@ -143777,7 +144352,7 @@ var FinancialDashboard = function FinancialDashboard() {
                     children: formatCurrency(data.totals.gastos_cta_cte)
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                  className: "border-b border-gray-200 hover:bg-gray-100 bg-purple-100",
+                  className: "border-b border-border hover:bg-muted/50 bg-dashboard-purple/20 dark:bg-dashboard-purple/30",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                     className: "py-3 px-6 text-left whitespace-nowrap font-medium",
                     children: "Caja Final"
@@ -143796,7 +144371,7 @@ var FinancialDashboard = function FinancialDashboard() {
           })]
         })]
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "text-center text-sm text-gray-500 mt-8",
+        className: "text-center text-sm text-muted-foreground mt-8",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
           children: ["Dashboard Financiero \xA9 ", new Date().getFullYear(), " - Todos los datos son actualizados autom\xE1ticamente"]
         })
@@ -144140,18 +144715,18 @@ var Gastos = function Gastos() {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "space-y-6",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "bg-white rounded-lg shadow p-4",
+        className: "bg-card rounded-lg shadow border-border p-4 theme-transition",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-          className: "text-lg font-medium mb-4",
+          className: "text-lg font-medium mb-4 text-card-foreground theme-transition",
           children: "Analysis Parameters"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "grid grid-cols-1 md:grid-cols-4 gap-4",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-              className: "block text-sm font-medium text-gray-700 mb-1",
+              className: "block text-sm font-medium text-card-foreground mb-1 theme-transition",
               children: "Period Type"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
-              className: "w-full border border-gray-300 rounded-md px-3 py-2",
+              className: "w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition",
               value: periodType,
               onChange: function onChange(e) {
                 return setPeriodType(e.target.value);
@@ -144169,11 +144744,11 @@ var Gastos = function Gastos() {
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-              className: "block text-sm font-medium text-gray-700 mb-1",
+              className: "block text-sm font-medium text-card-foreground mb-1 theme-transition",
               children: "Start Date"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
               type: "date",
-              className: "w-full border border-gray-300 rounded-md px-3 py-2",
+              className: "w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition",
               value: dateRange.startDate,
               onChange: function onChange(e) {
                 return setDateRange(Object.assign(Object.assign({}, dateRange), {
@@ -144183,11 +144758,11 @@ var Gastos = function Gastos() {
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-              className: "block text-sm font-medium text-gray-700 mb-1",
+              className: "block text-sm font-medium text-card-foreground mb-1 theme-transition",
               children: "End Date"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
               type: "date",
-              className: "w-full border border-gray-300 rounded-md px-3 py-2",
+              className: "w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition",
               value: dateRange.endDate,
               onChange: function onChange(e) {
                 return setDateRange(Object.assign(Object.assign({}, dateRange), {
@@ -144197,11 +144772,11 @@ var Gastos = function Gastos() {
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-              className: "block text-sm font-medium text-gray-700 mb-1",
+              className: "block text-sm font-medium text-card-foreground mb-1 theme-transition",
               children: "Item Limit"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
               type: "number",
-              className: "w-full border border-gray-300 rounded-md px-3 py-2",
+              className: "w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition",
               value: limit,
               min: 3,
               max: 50,
@@ -144213,55 +144788,55 @@ var Gastos = function Gastos() {
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
           className: "mt-4",
           children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-            className: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors",
+            className: "bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors theme-transition",
             onClick: fetchExpensesByIncidence,
             disabled: loading,
-            children: loading ? 'Loading...' : 'Analyze'
+            children: loading ? 'sobreprima...' : 'Analyze'
           })
         })]
       }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded",
+        className: "bg-destructive/10 border border-destructive text-destructive px-4 py-3 rounded theme-transition",
         children: error
       }), incidenceData.length > 0 && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "grid grid-cols-1 lg:grid-cols-2 gap-6",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-white rounded-lg shadow p-4",
+          className: "bg-card rounded-lg shadow border-border p-4 theme-transition",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-            className: "text-lg font-medium mb-4",
+            className: "text-lg font-medium mb-4 text-card-foreground theme-transition",
             children: "Analyzed Periods"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "overflow-x-auto h-72 max-h-72 overflow-y-auto",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", {
-              className: "min-w-full divide-y divide-gray-200",
+              className: "min-w-full divide-y divide-border",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", {
-                className: "bg-gray-50 sticky top-0 z-10",
+                className: "bg-muted sticky top-0 z-10 theme-transition",
                 children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    className: "px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition",
                     children: "Period"
                   }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    className: "px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition",
                     children: "Total"
                   }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    className: "px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition",
                     children: "Actions"
                   })]
                 })
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", {
-                className: "bg-white divide-y divide-gray-200",
+                className: "bg-card divide-y divide-border theme-transition",
                 children: incidenceData.map(function (period, idx) {
                   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                    className: selectedPeriod === idx ? 'bg-blue-50' : '',
+                    className: selectedPeriod === idx ? 'bg-accent theme-transition' : 'theme-transition',
                     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                      className: "px-6 py-4 whitespace-nowrap",
+                      className: "px-6 py-4 whitespace-nowrap text-card-foreground theme-transition",
                       children: period.period.display
                     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                      className: "px-6 py-4 whitespace-nowrap",
+                      className: "px-6 py-4 whitespace-nowrap text-card-foreground theme-transition",
                       children: formatCurrency(period.total)
                     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                       className: "px-6 py-4 whitespace-nowrap",
                       children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-                        className: "text-blue-600 hover:text-blue-900",
+                        className: "text-primary hover:text-primary/80 theme-transition",
                         onClick: function onClick() {
                           return setSelectedPeriod(idx);
                         },
@@ -144274,9 +144849,9 @@ var Gastos = function Gastos() {
             })
           })]
         }), incidenceData[selectedPeriod] && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-white rounded-lg shadow p-4 flex flex-col h-full",
+          className: "bg-card rounded-lg shadow border-border p-4 flex flex-col h-full theme-transition",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", {
-            className: "text-lg font-medium mb-4",
+            className: "text-lg font-medium mb-4 text-card-foreground theme-transition",
             children: ["Period Details: ", incidenceData[selectedPeriod].period.display]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "mb-6",
@@ -144317,33 +144892,34 @@ var Gastos = function Gastos() {
               maxHeight: '300px'
             },
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", {
-              className: "min-w-full divide-y divide-gray-200",
+              className: "min-w-full divide-y divide-border",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", {
-                className: "bg-gray-50 sticky top-0 z-10",
+                className: "bg-muted sticky top-0 z-10 theme-transition",
                 children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    className: "px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition",
                     children: "Item"
                   }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    className: "px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition",
                     children: "Amount"
                   }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    className: "px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition",
                     children: "Percentage"
                   })]
                 })
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", {
-                className: "bg-white divide-y divide-gray-200",
+                className: "bg-card divide-y divide-border theme-transition",
                 children: incidenceData[selectedPeriod].expenses.map(function (expense, idx) {
                   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
+                    className: "theme-transition",
                     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                      className: "px-6 py-4 whitespace-nowrap",
+                      className: "px-6 py-4 whitespace-nowrap text-card-foreground theme-transition",
                       children: expense.rubro_nombre
                     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                      className: "px-6 py-4 whitespace-nowrap",
+                      className: "px-6 py-4 whitespace-nowrap text-card-foreground theme-transition",
                       children: formatCurrency(expense.importe)
                     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("td", {
-                      className: "px-6 py-4 whitespace-nowrap",
+                      className: "px-6 py-4 whitespace-nowrap text-card-foreground theme-transition",
                       children: [expense.porcentaje.toFixed(1), "%"]
                     })]
                   }, idx);
@@ -144365,25 +144941,25 @@ var Gastos = function Gastos() {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "space-y-6",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "bg-white rounded-lg shadow p-4",
+        className: "bg-card rounded-lg shadow border-border p-4 theme-transition",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-          className: "text-lg font-medium mb-4",
+          className: "text-lg font-medium mb-4 text-card-foreground theme-transition",
           children: "Comparison Parameters"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "grid grid-cols-1 md:grid-cols-2 gap-6 mb-4",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", {
-              className: "font-medium mb-2",
+              className: "font-medium mb-2 text-card-foreground theme-transition",
               children: "Period 1"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
               className: "grid grid-cols-1 sm:grid-cols-2 gap-4",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-                  className: "block text-sm font-medium text-gray-700 mb-1",
+                  className: "block text-sm font-medium text-card-foreground mb-1 theme-transition",
                   children: "Start Date"
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
                   type: "date",
-                  className: "w-full border border-gray-300 rounded-md px-3 py-2",
+                  className: "w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition",
                   value: period1.startDate,
                   onChange: function onChange(e) {
                     return setPeriod1(Object.assign(Object.assign({}, period1), {
@@ -144393,11 +144969,11 @@ var Gastos = function Gastos() {
                 })]
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-                  className: "block text-sm font-medium text-gray-700 mb-1",
+                  className: "block text-sm font-medium text-card-foreground mb-1 theme-transition",
                   children: "End Date"
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
                   type: "date",
-                  className: "w-full border border-gray-300 rounded-md px-3 py-2",
+                  className: "w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition",
                   value: period1.endDate,
                   onChange: function onChange(e) {
                     return setPeriod1(Object.assign(Object.assign({}, period1), {
@@ -144409,17 +144985,17 @@ var Gastos = function Gastos() {
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", {
-              className: "font-medium mb-2",
+              className: "font-medium mb-2 text-card-foreground theme-transition",
               children: "Period 2"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
               className: "grid grid-cols-1 sm:grid-cols-2 gap-4",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-                  className: "block text-sm font-medium text-gray-700 mb-1",
+                  className: "block text-sm font-medium text-card-foreground mb-1 theme-transition",
                   children: "Start Date"
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
                   type: "date",
-                  className: "w-full border border-gray-300 rounded-md px-3 py-2",
+                  className: "w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition",
                   value: period2.startDate,
                   onChange: function onChange(e) {
                     return setPeriod2(Object.assign(Object.assign({}, period2), {
@@ -144429,11 +145005,11 @@ var Gastos = function Gastos() {
                 })]
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-                  className: "block text-sm font-medium text-gray-700 mb-1",
+                  className: "block text-sm font-medium text-card-foreground mb-1 theme-transition",
                   children: "End Date"
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
                   type: "date",
-                  className: "w-full border border-gray-300 rounded-md px-3 py-2",
+                  className: "w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition",
                   value: period2.endDate,
                   onChange: function onChange(e) {
                     return setPeriod2(Object.assign(Object.assign({}, period2), {
@@ -144448,10 +145024,10 @@ var Gastos = function Gastos() {
           className: "grid grid-cols-1 md:grid-cols-3 gap-4",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-              className: "block text-sm font-medium text-gray-700 mb-1",
+              className: "block text-sm font-medium text-card-foreground mb-1 theme-transition",
               children: "Period Type"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
-              className: "w-full border border-gray-300 rounded-md px-3 py-2",
+              className: "w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition",
               value: comparisonPeriodType,
               onChange: function onChange(e) {
                 return setComparisonPeriodType(e.target.value);
@@ -144469,10 +145045,10 @@ var Gastos = function Gastos() {
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-              className: "block text-sm font-medium text-gray-700 mb-1",
+              className: "block text-sm font-medium text-card-foreground mb-1 theme-transition",
               children: "Group By"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
-              className: "w-full border border-gray-300 rounded-md px-3 py-2",
+              className: "w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition",
               value: groupBy,
               onChange: function onChange(e) {
                 return setGroupBy(e.target.value);
@@ -144488,7 +145064,7 @@ var Gastos = function Gastos() {
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "flex items-end",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-              className: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors",
+              className: "bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors theme-transition",
               onClick: compareExpensesPeriods,
               disabled: loading,
               children: loading ? 'Loading...' : 'Compare'
@@ -144496,35 +145072,35 @@ var Gastos = function Gastos() {
           })]
         })]
       }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded",
+        className: "bg-destructive/10 border border-destructive text-destructive px-4 py-3 rounded theme-transition",
         children: error
       }), comparisonData.length > 0 && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "space-y-6",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-white rounded-lg shadow p-4",
+          className: "bg-card rounded-lg shadow border-border p-4 theme-transition",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-            className: "text-lg font-medium mb-4",
+            className: "text-lg font-medium mb-4 text-card-foreground theme-transition",
             children: "Comparison Summary"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             className: "grid grid-cols-1 md:grid-cols-2 gap-6",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", {
-                className: "font-medium mb-2",
+                className: "font-medium mb-2 text-card-foreground theme-transition",
                 children: "Period Totals"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-                className: "mb-1",
+                className: "mb-1 text-card-foreground theme-transition",
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
                   className: "font-medium",
                   children: ["Period 1 (", period1Label, "):"]
                 }), " ", formatCurrency(periodTotals.period1)]
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-                className: "mb-1",
+                className: "mb-1 text-card-foreground theme-transition",
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
                   className: "font-medium",
                   children: ["Period 2 (", period2Label, "):"]
                 }), " ", formatCurrency(periodTotals.period2)]
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-                className: "mb-1",
+                className: "mb-1 text-card-foreground theme-transition",
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
                   className: "font-medium",
                   children: "Difference:"
@@ -144564,9 +145140,9 @@ var Gastos = function Gastos() {
             })]
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-white rounded-lg shadow p-4",
+          className: "bg-card rounded-lg shadow border-border p-4 theme-transition",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", {
-            className: "text-lg font-medium mb-4",
+            className: "text-lg font-medium mb-4 text-card-foreground theme-transition",
             children: ["Comparison by ", groupBy === 'rubro' ? 'Item' : 'Category']
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "mb-6",
@@ -144607,50 +145183,51 @@ var Gastos = function Gastos() {
               maxHeight: '300px'
             },
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", {
-              className: "min-w-full divide-y divide-gray-200",
+              className: "min-w-full divide-y divide-border",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", {
-                className: "bg-gray-50 sticky top-0 z-10",
+                className: "bg-muted sticky top-0 z-10 theme-transition",
                 children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    className: "px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition",
                     children: groupBy === 'rubro' ? 'Item' : 'Category'
                   }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    className: "px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition",
                     children: period1Label
                   }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    className: "px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition",
                     children: period2Label
                   }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    className: "px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition",
                     children: "Difference"
                   }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                    className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    className: "px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition",
                     children: "Change %"
                   })]
                 })
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", {
-                className: "bg-white divide-y divide-gray-200",
+                className: "bg-card divide-y divide-border theme-transition",
                 children: comparisonData.map(function (item, idx) {
                   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
+                    className: "theme-transition",
                     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                      className: "px-6 py-4 whitespace-nowrap",
+                      className: "px-6 py-4 whitespace-nowrap text-card-foreground theme-transition",
                       children: item.group_name
                     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                      className: "px-6 py-4 whitespace-nowrap",
+                      className: "px-6 py-4 whitespace-nowrap text-card-foreground theme-transition",
                       children: formatCurrency(item.period1_amount)
                     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                      className: "px-6 py-4 whitespace-nowrap",
+                      className: "px-6 py-4 whitespace-nowrap text-card-foreground theme-transition",
                       children: formatCurrency(item.period2_amount)
                     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                       className: "px-6 py-4 whitespace-nowrap",
                       children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                        className: "inline-flex px-2 py-1 text-xs font-semibold rounded-full \n                            ".concat(item.difference > 0 ? 'bg-red-100 text-red-800' : item.difference < 0 ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'),
+                        className: "inline-flex px-2 py-1 text-xs font-semibold rounded-full theme-transition\n                            ".concat(item.difference > 0 ? 'bg-destructive/10 text-destructive' : item.difference < 0 ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400' : 'bg-muted text-muted-foreground'),
                         children: formatCurrency(item.difference)
                       })
                     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                       className: "px-6 py-4 whitespace-nowrap",
                       children: item.difference_percentage !== null ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
-                        className: "inline-flex px-2 py-1 text-xs font-semibold rounded-full \n                                ".concat(item.difference_percentage > 0 ? 'bg-red-100 text-red-800' : item.difference_percentage < 0 ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'),
+                        className: "inline-flex px-2 py-1 text-xs font-semibold rounded-full theme-transition\n                                ".concat(item.difference_percentage > 0 ? 'bg-destructive/10 text-destructive' : item.difference_percentage < 0 ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400' : 'bg-muted text-muted-foreground'),
                         children: [item.difference_percentage > 0 ? '+' : '', item.difference_percentage.toFixed(1), "%"]
                       }) : 'N/A'
                     })]
@@ -144665,24 +145242,24 @@ var Gastos = function Gastos() {
   };
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_dashboard_DashboardLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
     children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in",
+      className: "bg-card rounded-lg shadow-lg border-border p-4 md:p-6 animate-fade-in theme-transition",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-        className: "text-2xl font-bold mb-6 text-gray-800",
+        className: "text-2xl font-bold mb-6 text-card-foreground theme-transition",
         children: "Expense Analysis Dashboard"
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "mb-6",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-          className: "border-b border-gray-200",
+          className: "border-b border-border theme-transition",
           children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("nav", {
             className: "-mb-px flex",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-              className: "py-4 px-6 font-medium text-sm ".concat(activeTab === 'incidence' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'),
+              className: "py-4 px-6 font-medium text-sm theme-transition ".concat(activeTab === 'incidence' ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground hover:text-foreground hover:border-muted-foreground'),
               onClick: function onClick() {
                 return handleTabChange('incidence');
               },
               children: "Incidence Analysis"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-              className: "py-4 px-6 font-medium text-sm ".concat(activeTab === 'comparison' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'),
+              className: "py-4 px-6 font-medium text-sm theme-transition ".concat(activeTab === 'comparison' ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground hover:text-foreground hover:border-muted-foreground'),
               onClick: function onClick() {
                 return handleTabChange('comparison');
               },
@@ -144830,15 +145407,32 @@ var FormaPagoPanel = function FormaPagoPanel() {
     _useState10 = _slicedToArray(_useState1, 2),
     exito = _useState10[0],
     setExito = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState12 = _slicedToArray(_useState11, 2),
+    darkMode = _useState12[0],
+    setDarkMode = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
       tipo: '',
       estado: 1,
       fiscal: 0,
       opciones: 0
     }),
-    _useState12 = _slicedToArray(_useState11, 2),
-    formValues = _useState12[0],
-    setFormValues = _useState12[1];
+    _useState14 = _slicedToArray(_useState13, 2),
+    formValues = _useState14[0],
+    setFormValues = _useState14[1];
+  // Initialize dark mode from localStorage or system preference
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    var savedTheme = localStorage.getItem('theme');
+    var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (savedTheme === 'dark' || !savedTheme && systemDark) {
+      setDarkMode(true);
+      document.documentElement.classList.add('dark');
+    }
+  }, []);
+  // Save theme preference
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
   // Obtener formas de pago al cargar el componente
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     obtenerFormasPago();
@@ -145075,142 +145669,141 @@ var FormaPagoPanel = function FormaPagoPanel() {
   var renderizarOpciones = function renderizarOpciones(opciones) {
     var caracteristicas = [];
     if (opciones & 1) {
-      // Bitwise AND para verificar si el bit 1 está activado
       caracteristicas.push('Impacta en caja');
     } else {
       caracteristicas.push('No impacta en caja');
     }
     if (opciones & 2) {
-      // Bitwise AND para verificar si el bit 2 está activado
       caracteristicas.push('Medio electrónico');
     } else {
       caracteristicas.push('Medio no electrónico');
     }
     return caracteristicas.join(', ');
   };
-  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "container mx-auto px-4 py-6",
-    children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
-      className: "text-2xl font-bold mb-6",
-      children: "Gesti\xF3n de Formas de Pago"
-    }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 flex items-center",
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        className: "w-5 h-5 mr-2"
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-        children: error
-      })]
-    }), exito && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 flex items-center",
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        className: "w-5 h-5 mr-2"
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-        children: exito
-      })]
-    }), !modoEdicion && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
-      onClick: iniciarNueva,
-      className: "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center mb-4",
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        className: "w-5 h-5 mr-2"
-      }), "Nueva Forma de Pago"]
-    }), !modoEdicion && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-      children: cargando ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "text-center py-4",
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-          className: "animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500 mx-auto"
-        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-          className: "mt-2",
-          children: "Cargando formas de pago..."
+  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+    className: "min-h-screen bg-background text-foreground transition-colors duration-300",
+    children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+      className: "container mx-auto px-4 py-6",
+      children: [error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        className: "bg-destructive/10 border border-destructive/20 text-destructive px-4 py-3 rounded-lg mb-4 flex items-center",
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          className: "w-5 h-5 mr-2"
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
+          children: error
         })]
-      }) : formasPago.length > 0 ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "overflow-x-auto",
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", {
-          className: "min-w-full bg-white shadow-md rounded",
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", {
-            className: "bg-gray-200 text-gray-700",
-            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-3 px-4 text-left",
-                children: "ID"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-3 px-4 text-left",
-                children: "Nombre"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-3 px-4 text-left",
-                children: "Estado"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-3 px-4 text-left",
-                children: "Fiscal"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-3 px-4 text-left",
-                children: "Opciones"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-3 px-4 text-left",
-                children: "Acciones"
-              })]
-            })
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", {
-            className: "text-gray-600",
-            children: formasPago.map(function (formaPago) {
-              return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                className: "border-b hover:bg-gray-50",
-                children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-3 px-4",
-                  children: formaPago.id
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-3 px-4",
-                  children: formaPago.tipo
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-3 px-4",
-                  children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                    className: "px-2 py-1 rounded text-white ".concat(formaPago.estado ? 'bg-green-500' : 'bg-red-500'),
-                    children: formaPago.estado ? 'Activo' : 'Inactivo'
-                  })
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-3 px-4",
-                  children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                    className: "px-2 py-1 rounded text-white ".concat(formaPago.fiscal ? 'bg-blue-500' : 'bg-yellow-500'),
-                    children: formaPago.fiscal ? 'Fiscal' : 'No Fiscal'
-                  })
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-3 px-4",
-                  children: renderizarOpciones(formaPago.opciones)
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-3 px-4",
-                  children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                    className: "flex space-x-2",
-                    children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-                      onClick: function onClick() {
-                        return seleccionarParaEditar(formaPago);
-                      },
-                      className: "text-blue-500 hover:text-blue-700",
-                      title: "Editar",
-                      children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], {
-                        className: "w-5 h-5"
-                      })
-                    }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-                      onClick: function onClick() {
-                        return eliminarFormaPago(formaPago.id);
-                      },
-                      className: "text-red-500 hover:text-red-700",
-                      title: "Eliminar",
-                      children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], {
-                        className: "w-5 h-5"
-                      })
-                    })]
-                  })
-                })]
-              }, formaPago.id);
-            })
+      }), exito && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        className: "bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 px-4 py-3 rounded-lg mb-4 flex items-center",
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          className: "w-5 h-5 mr-2"
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
+          children: exito
+        })]
+      }), !modoEdicion && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
+        onClick: iniciarNueva,
+        className: "bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg flex items-center mb-4 transition-colors duration-200",
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          className: "w-5 h-5 mr-2"
+        }), "Nueva Forma de Pago"]
+      }), !modoEdicion && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        children: cargando ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          className: "text-center py-8",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+            className: "animate-spin rounded-full h-12 w-12 border-2 border-primary border-t-transparent mx-auto"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+            className: "mt-4 text-muted-foreground",
+            children: "Cargando formas de pago..."
           })]
+        }) : formasPago.length > 0 ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+          className: "overflow-x-auto rounded-lg border border-border bg-card shadow-sm",
+          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", {
+            className: "min-w-full",
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", {
+              className: "bg-muted/50",
+              children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
+                children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
+                  className: "py-3 px-4 text-left text-sm font-medium text-muted-foreground",
+                  children: "ID"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
+                  className: "py-3 px-4 text-left text-sm font-medium text-muted-foreground",
+                  children: "Nombre"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
+                  className: "py-3 px-4 text-left text-sm font-medium text-muted-foreground",
+                  children: "Estado"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
+                  className: "py-3 px-4 text-left text-sm font-medium text-muted-foreground",
+                  children: "Fiscal"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
+                  className: "py-3 px-4 text-left text-sm font-medium text-muted-foreground",
+                  children: "Opciones"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
+                  className: "py-3 px-4 text-left text-sm font-medium text-muted-foreground",
+                  children: "Acciones"
+                })]
+              })
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", {
+              className: "divide-y divide-border",
+              children: formasPago.map(function (formaPago) {
+                return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
+                  className: "hover:bg-muted/25 transition-colors duration-150",
+                  children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
+                    className: "py-3 px-4 text-sm",
+                    children: formaPago.id
+                  }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
+                    className: "py-3 px-4 text-sm font-medium",
+                    children: formaPago.tipo
+                  }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
+                    className: "py-3 px-4",
+                    children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
+                      className: "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ".concat(formaPago.estado ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-400' : 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400'),
+                      children: formaPago.estado ? 'Activo' : 'Inactivo'
+                    })
+                  }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
+                    className: "py-3 px-4",
+                    children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
+                      className: "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ".concat(formaPago.fiscal ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400' : 'bg-amber-100 text-amber-800 dark:bg-amber-900/20 dark:text-amber-400'),
+                      children: formaPago.fiscal ? 'Fiscal' : 'No Fiscal'
+                    })
+                  }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
+                    className: "py-3 px-4 text-sm text-muted-foreground",
+                    children: renderizarOpciones(formaPago.opciones)
+                  }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
+                    className: "py-3 px-4",
+                    children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                      className: "flex space-x-2",
+                      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
+                        onClick: function onClick() {
+                          return seleccionarParaEditar(formaPago);
+                        },
+                        className: "text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-150",
+                        title: "Editar",
+                        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], {
+                          className: "w-4 h-4"
+                        })
+                      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
+                        onClick: function onClick() {
+                          return eliminarFormaPago(formaPago.id);
+                        },
+                        className: "text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-150",
+                        title: "Eliminar",
+                        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], {
+                          className: "w-4 h-4"
+                        })
+                      })]
+                    })
+                  })]
+                }, formaPago.id);
+              })
+            })]
+          })
+        }) : (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+          className: "text-center py-8 bg-muted/10 rounded-lg border border-dashed border-muted-foreground/25",
+          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+            className: "text-muted-foreground",
+            children: "No hay formas de pago disponibles."
+          })
         })
-      }) : (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "text-center py-4 bg-gray-100 rounded",
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-          children: "No hay formas de pago disponibles."
-        })
-      })
-    })]
+      })]
+    })
   });
 };
 /* harmony default export */ __webpack_exports__["default"] = (FormaPagoPanel);
@@ -145254,16 +145847,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/ResponsiveContainer.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/LineChart.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/CartesianGrid.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/XAxis.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/YAxis.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Tooltip.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Legend.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Line.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/BarChart.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Bar.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/ResponsiveContainer.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/LineChart.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/CartesianGrid.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/XAxis.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/YAxis.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Tooltip.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Legend.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Line.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/BarChart.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Bar.js");
+/* harmony import */ var _components_dashboard_DashboardLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/dashboard/DashboardLayout */ "./resources/js/components/dashboard/DashboardLayout.tsx");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
@@ -145302,6 +145896,7 @@ var __awaiter = undefined && undefined.__awaiter || function (thisArg, _argument
     step((generator = generator.apply(thisArg, _arguments || [])).next());
   });
 };
+
 
 
 
@@ -145535,360 +146130,392 @@ var Pinta = function Pinta() {
     }, comparativoData.grafico.datasets[0].label, comparativoData.grafico.datasets[0].data[index]), comparativoData.grafico.datasets[1].label, comparativoData.grafico.datasets[1].data[index]);
     return dataPoint;
   })) || [];
-  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "bg-white p-6 rounded-lg shadow-md",
-    children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
-      className: "text-3xl font-bold mb-6",
-      children: "Dashboard \xCDndice Pinta"
-    }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "flex border-b border-gray-200 mb-6",
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-        className: "mr-4 py-2 px-4 font-medium ".concat(activeTab === 'temporal' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'),
-        onClick: function onClick() {
-          return setActiveTab('temporal');
-        },
-        children: "Evoluci\xF3n Temporal"
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-        className: "mr-4 py-2 px-4 font-medium ".concat(activeTab === 'comparativo' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'),
-        onClick: function onClick() {
-          return setActiveTab('comparativo');
-        },
-        children: "Comparativo"
-      })]
-    }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-      className: "text-gray-600 mb-4",
-      children: [lastUpdate ? "\xDAltima actualizaci\xF3n: ".concat(lastUpdate.toLocaleTimeString()) : 'Cargando datos...', activeTab === 'temporal' && ' (actualización automática cada 10 segundos)']
-    }), activeTab === 'temporal' && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 bg-gray-50 p-4 rounded-md",
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-          className: "block text-sm font-medium text-gray-700 mb-1",
-          children: "Fecha Inicio"
-        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
-          type: "date",
-          name: "fecha_inicio",
-          value: temporalParams.fecha_inicio,
-          onChange: handleTemporalParamChange,
-          className: "w-full rounded-md border-gray-300 shadow-sm p-2 border"
-        })]
+  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_dashboard_DashboardLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+      className: "bg-card border border-border p-6 rounded-lg shadow-md transition-colors duration-200",
+      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
+        className: "text-3xl font-bold mb-6 text-foreground",
+        children: "Dashboard \xCDndice Pinta"
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-          className: "block text-sm font-medium text-gray-700 mb-1",
-          children: "Fecha Fin"
-        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
-          type: "date",
-          name: "fecha_fin",
-          value: temporalParams.fecha_fin,
-          onChange: handleTemporalParamChange,
-          className: "w-full rounded-md border-gray-300 shadow-sm p-2 border"
-        })]
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-          className: "block text-sm font-medium text-gray-700 mb-1",
-          children: "Agrupaci\xF3n"
-        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
-          name: "agrupacion",
-          value: temporalParams.agrupacion,
-          onChange: handleTemporalParamChange,
-          className: "w-full rounded-md border-gray-300 shadow-sm p-2 border",
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
-            value: "dia",
-            children: "Diaria"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
-            value: "semana",
-            children: "Semanal"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
-            value: "mes",
-            children: "Mensual"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
-            value: "anio",
-            children: "Anual"
-          })]
-        })]
-      })]
-    }), activeTab === 'comparativo' && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 bg-gray-50 p-4 rounded-md",
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "border-r border-gray-200 pr-4",
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-          className: "font-semibold mb-2 text-blue-600",
-          children: "Per\xEDodo 1"
-        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "grid grid-cols-1 md:grid-cols-2 gap-4",
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-              className: "block text-sm font-medium text-gray-700 mb-1",
-              children: "Fecha Inicio"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
-              type: "date",
-              name: "periodo1_inicio",
-              value: comparativoParams.periodo1_inicio,
-              onChange: handleComparativoParamChange,
-              className: "w-full rounded-md border-gray-300 shadow-sm p-2 border"
-            })]
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-              className: "block text-sm font-medium text-gray-700 mb-1",
-              children: "Fecha Fin"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
-              type: "date",
-              name: "periodo1_fin",
-              value: comparativoParams.periodo1_fin,
-              onChange: handleComparativoParamChange,
-              className: "w-full rounded-md border-gray-300 shadow-sm p-2 border"
-            })]
-          })]
-        })]
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "pl-4",
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-          className: "font-semibold mb-2 text-green-600",
-          children: "Per\xEDodo 2"
-        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "grid grid-cols-1 md:grid-cols-2 gap-4",
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-              className: "block text-sm font-medium text-gray-700 mb-1",
-              children: "Fecha Inicio"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
-              type: "date",
-              name: "periodo2_inicio",
-              value: comparativoParams.periodo2_inicio,
-              onChange: handleComparativoParamChange,
-              className: "w-full rounded-md border-gray-300 shadow-sm p-2 border"
-            })]
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-              className: "block text-sm font-medium text-gray-700 mb-1",
-              children: "Fecha Fin"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
-              type: "date",
-              name: "periodo2_fin",
-              value: comparativoParams.periodo2_fin,
-              onChange: handleComparativoParamChange,
-              className: "w-full rounded-md border-gray-300 shadow-sm p-2 border"
-            })]
-          })]
-        })]
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "col-span-1 md:col-span-2",
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-          className: "block text-sm font-medium text-gray-700 mb-1",
-          children: "Agrupaci\xF3n"
-        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
-          name: "agrupacion",
-          value: comparativoParams.agrupacion,
-          onChange: handleComparativoParamChange,
-          className: "w-full md:w-1/3 rounded-md border-gray-300 shadow-sm p-2 border",
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
-            value: "dia",
-            children: "Diaria"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
-            value: "semana",
-            children: "Semanal"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
-            value: "mes",
-            children: "Mensual"
-          })]
-        })]
-      })]
-    }), loading && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "flex justify-center items-center h-12 mb-4",
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-        className: "ml-2 text-blue-500",
-        children: "Cargando datos..."
-      })]
-    }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "bg-red-100 p-4 rounded-md mb-4",
-      children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-        className: "text-red-700",
-        children: ["Error: ", error]
-      })
-    }), activeTab === 'temporal' && !loading && chartFormattedData.length > 0 && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "h-96 mb-6",
-      children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_2__.ResponsiveContainer, {
-        width: "100%",
-        height: "100%",
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_3__.LineChart, {
-          data: chartFormattedData,
-          margin: {
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5
+        className: "flex border-b border-border mb-6",
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
+          className: "mr-4 py-2 px-4 font-medium transition-colors duration-200 ".concat(activeTab === 'temporal' ? 'text-primary border-b-2 border-primary' : 'text-muted-foreground hover:text-foreground'),
+          onClick: function onClick() {
+            return setActiveTab('temporal');
           },
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-            strokeDasharray: "3 3"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
-            dataKey: "fecha"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (_b = chartData.datasets) === null || _b === void 0 ? void 0 : _b.map(function (dataset, index) {
-            return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, {
-              type: "monotone",
-              dataKey: dataset.label,
-              stroke: dataset.borderColor,
-              fill: dataset.backgroundColor,
-              activeDot: {
-                r: 8
-              }
-            }, index);
+          children: "Evoluci\xF3n Temporal"
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
+          className: "mr-4 py-2 px-4 font-medium transition-colors duration-200 ".concat(activeTab === 'comparativo' ? 'text-primary border-b-2 border-primary' : 'text-muted-foreground hover:text-foreground'),
+          onClick: function onClick() {
+            return setActiveTab('comparativo');
+          },
+          children: "Comparativo"
+        })]
+      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+        className: "text-muted-foreground mb-4",
+        children: [lastUpdate ? "\xDAltima actualizaci\xF3n: ".concat(lastUpdate.toLocaleTimeString()) : 'Cargando datos...', activeTab === 'temporal' && ' (actualización automática cada 10 segundos)']
+      }), activeTab === 'temporal' && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        className: "grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 bg-muted/50 p-4 rounded-md border border-border",
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+            className: "block text-sm font-medium text-foreground mb-1",
+            children: "Fecha Inicio"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+            type: "date",
+            name: "fecha_inicio",
+            value: temporalParams.fecha_inicio,
+            onChange: handleTemporalParamChange,
+            className: "w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
+          })]
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+            className: "block text-sm font-medium text-foreground mb-1",
+            children: "Fecha Fin"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+            type: "date",
+            name: "fecha_fin",
+            value: temporalParams.fecha_fin,
+            onChange: handleTemporalParamChange,
+            className: "w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
+          })]
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+            className: "block text-sm font-medium text-foreground mb-1",
+            children: "Agrupaci\xF3n"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
+            name: "agrupacion",
+            value: temporalParams.agrupacion,
+            onChange: handleTemporalParamChange,
+            className: "w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200",
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
+              value: "dia",
+              children: "Diaria"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
+              value: "semana",
+              children: "Semanal"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
+              value: "mes",
+              children: "Mensual"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
+              value: "anio",
+              children: "Anual"
+            })]
+          })]
+        })]
+      }), activeTab === 'comparativo' && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        className: "grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 bg-muted/50 p-4 rounded-md border border-border",
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          className: "border-r border-border pr-4",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
+            className: "font-semibold mb-2 text-dashboard-blue",
+            children: "Per\xEDodo 1"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            className: "grid grid-cols-1 md:grid-cols-2 gap-4",
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+                className: "block text-sm font-medium text-foreground mb-1",
+                children: "Fecha Inicio"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+                type: "date",
+                name: "periodo1_inicio",
+                value: comparativoParams.periodo1_inicio,
+                onChange: handleComparativoParamChange,
+                className: "w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
+              })]
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+                className: "block text-sm font-medium text-foreground mb-1",
+                children: "Fecha Fin"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+                type: "date",
+                name: "periodo1_fin",
+                value: comparativoParams.periodo1_fin,
+                onChange: handleComparativoParamChange,
+                className: "w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
+              })]
+            })]
+          })]
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          className: "pl-4",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
+            className: "font-semibold mb-2 text-dashboard-green",
+            children: "Per\xEDodo 2"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            className: "grid grid-cols-1 md:grid-cols-2 gap-4",
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+                className: "block text-sm font-medium text-foreground mb-1",
+                children: "Fecha Inicio"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+                type: "date",
+                name: "periodo2_inicio",
+                value: comparativoParams.periodo2_inicio,
+                onChange: handleComparativoParamChange,
+                className: "w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
+              })]
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+                className: "block text-sm font-medium text-foreground mb-1",
+                children: "Fecha Fin"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+                type: "date",
+                name: "periodo2_fin",
+                value: comparativoParams.periodo2_fin,
+                onChange: handleComparativoParamChange,
+                className: "w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
+              })]
+            })]
+          })]
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          className: "col-span-1 md:col-span-2",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+            className: "block text-sm font-medium text-foreground mb-1",
+            children: "Agrupaci\xF3n"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
+            name: "agrupacion",
+            value: comparativoParams.agrupacion,
+            onChange: handleComparativoParamChange,
+            className: "w-full md:w-1/3 rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200",
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
+              value: "dia",
+              children: "Diaria"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
+              value: "semana",
+              children: "Semanal"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
+              value: "mes",
+              children: "Mensual"
+            })]
+          })]
+        })]
+      }), loading && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+        className: "flex items-center justify-center p-8 min-h-[400px] dark:bg-background",
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          className: "text-center",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+            className: "w-12 h-12 border-4 border-t-dashboard-blue dark:border-t-primary rounded-full animate-spin mx-auto mb-4"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+            className: "text-foreground dark:text-foreground",
+            children: "Cargando datos....."
           })]
         })
-      })
-    }), activeTab === 'comparativo' && !loading && comparativoData && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "grid grid-cols-1 md:grid-cols-2 gap-6 mb-6",
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-blue-50 p-4 rounded-lg",
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-            className: "text-lg font-semibold mb-2 text-blue-600",
-            children: "Per\xEDodo 1"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-            className: "text-sm text-gray-500 mb-2",
-            children: [comparativoData.periodo1.fecha_inicio, " al ", comparativoData.periodo1.fecha_fin]
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "grid grid-cols-2 gap-4",
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-sm text-gray-600",
-                children: "Total:"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-xl font-bold",
-                children: comparativoData.periodo1.total.toFixed(2)
-              })]
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-sm text-gray-600",
-                children: "Promedio:"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-xl font-bold",
-                children: comparativoData.periodo1.promedio.toFixed(2)
-              })]
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-sm text-gray-600",
-                children: "M\xEDnimo:"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-lg",
-                children: comparativoData.periodo1.minimo.toFixed(2)
-              })]
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-sm text-gray-600",
-                children: "M\xE1ximo:"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-lg",
-                children: comparativoData.periodo1.maximo.toFixed(2)
-              })]
-            })]
-          })]
-        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-green-50 p-4 rounded-lg",
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-            className: "text-lg font-semibold mb-2 text-green-600",
-            children: "Per\xEDodo 2"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-            className: "text-sm text-gray-500 mb-2",
-            children: [comparativoData.periodo2.fecha_inicio, " al ", comparativoData.periodo2.fecha_fin]
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "grid grid-cols-2 gap-4",
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-sm text-gray-600",
-                children: "Total:"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-xl font-bold",
-                children: comparativoData.periodo2.total.toFixed(2)
-              })]
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-sm text-gray-600",
-                children: "Promedio:"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-xl font-bold",
-                children: comparativoData.periodo2.promedio.toFixed(2)
-              })]
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-sm text-gray-600",
-                children: "M\xEDnimo:"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-lg",
-                children: comparativoData.periodo2.minimo.toFixed(2)
-              })]
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-sm text-gray-600",
-                children: "M\xE1ximo:"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-lg",
-                children: comparativoData.periodo2.maximo.toFixed(2)
-              })]
-            })]
-          })]
-        })]
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "bg-gray-50 p-4 rounded-lg mb-6",
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-          className: "text-lg font-semibold mb-4",
-          children: "Variaci\xF3n entre per\xEDodos"
-        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "grid grid-cols-1 md:grid-cols-2 gap-6",
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "flex items-center",
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              className: "text-3xl font-bold ".concat(comparativoData.comparacion.variacion_total >= 0 ? 'text-green-600' : 'text-red-600', " mr-2"),
-              children: [comparativoData.comparacion.variacion_total >= 0 ? '+' : '', comparativoData.comparacion.variacion_total, "%"]
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-              className: "text-gray-600",
-              children: "Variaci\xF3n total"
-            })]
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "flex items-center",
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              className: "text-3xl font-bold ".concat(comparativoData.comparacion.variacion_promedio >= 0 ? 'text-green-600' : 'text-red-600', " mr-2"),
-              children: [comparativoData.comparacion.variacion_promedio >= 0 ? '+' : '', comparativoData.comparacion.variacion_promedio, "%"]
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-              className: "text-gray-600",
-              children: "Variaci\xF3n promedio"
-            })]
-          })]
-        })]
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "h-96",
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_2__.ResponsiveContainer, {
+      }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+        className: "bg-destructive/10 border border-destructive/20 p-4 rounded-md mb-4",
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+          className: "text-destructive",
+          children: ["Error: ", error]
+        })
+      }), activeTab === 'temporal' && !loading && chartFormattedData.length > 0 && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+        className: "h-96 mb-6 bg-card border border-border rounded-lg p-4",
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_3__.ResponsiveContainer, {
           width: "100%",
           height: "100%",
-          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_10__.BarChart, {
-            data: comparativeChartData,
+          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_4__.LineChart, {
+            data: chartFormattedData,
             margin: {
               top: 5,
               right: 30,
               left: 20,
               bottom: 5
             },
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-              strokeDasharray: "3 3"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
-              dataKey: "metrica"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Bar, {
-              dataKey: comparativoData.grafico.datasets[0].label,
-              fill: "rgba(59, 130, 246, 0.7)"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Bar, {
-              dataKey: comparativoData.grafico.datasets[1].label,
-              fill: "rgba(16, 185, 129, 0.7)"
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.CartesianGrid, {
+              strokeDasharray: "3 3",
+              stroke: "hsl(var(--border))"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.XAxis, {
+              dataKey: "fecha",
+              stroke: "hsl(var(--muted-foreground))",
+              fontSize: 12
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.YAxis, {
+              stroke: "hsl(var(--muted-foreground))",
+              fontSize: 12
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Tooltip, {
+              contentStyle: {
+                backgroundColor: 'hsl(var(--card))',
+                border: '1px solid hsl(var(--border))',
+                borderRadius: '6px',
+                color: 'hsl(var(--foreground))'
+              }
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Legend, {}), (_b = chartData.datasets) === null || _b === void 0 ? void 0 : _b.map(function (dataset, index) {
+              return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_10__.Line, {
+                type: "monotone",
+                dataKey: dataset.label,
+                stroke: dataset.borderColor,
+                fill: dataset.backgroundColor,
+                activeDot: {
+                  r: 8
+                },
+                strokeWidth: 2
+              }, index);
             })]
           })
         })
+      }), activeTab === 'comparativo' && !loading && comparativoData && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          className: "grid grid-cols-1 md:grid-cols-2 gap-6 mb-6",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            className: "bg-dashboard-blue/10 border border-dashboard-blue/20 p-4 rounded-lg",
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
+              className: "text-lg font-semibold mb-2 text-dashboard-blue",
+              children: "Per\xEDodo 1"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+              className: "text-sm text-muted-foreground mb-2",
+              children: [comparativoData.periodo1.fecha_inicio, " al ", comparativoData.periodo1.fecha_fin]
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              className: "grid grid-cols-2 gap-4",
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                  className: "text-sm text-muted-foreground",
+                  children: "Total:"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                  className: "text-xl font-bold text-foreground",
+                  children: comparativoData.periodo1.total.toFixed(2)
+                })]
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                  className: "text-sm text-muted-foreground",
+                  children: "Promedio:"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                  className: "text-xl font-bold text-foreground",
+                  children: comparativoData.periodo1.promedio.toFixed(2)
+                })]
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                  className: "text-sm text-muted-foreground",
+                  children: "M\xEDnimo:"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                  className: "text-lg text-foreground",
+                  children: comparativoData.periodo1.minimo.toFixed(2)
+                })]
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                  className: "text-sm text-muted-foreground",
+                  children: "M\xE1ximo:"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                  className: "text-lg text-foreground",
+                  children: comparativoData.periodo1.maximo.toFixed(2)
+                })]
+              })]
+            })]
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            className: "bg-dashboard-green/10 border border-dashboard-green/20 p-4 rounded-lg",
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
+              className: "text-lg font-semibold mb-2 text-dashboard-green",
+              children: "Per\xEDodo 2"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+              className: "text-sm text-muted-foreground mb-2",
+              children: [comparativoData.periodo2.fecha_inicio, " al ", comparativoData.periodo2.fecha_fin]
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              className: "grid grid-cols-2 gap-4",
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                  className: "text-sm text-muted-foreground",
+                  children: "Total:"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                  className: "text-xl font-bold text-foreground",
+                  children: comparativoData.periodo2.total.toFixed(2)
+                })]
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                  className: "text-sm text-muted-foreground",
+                  children: "Promedio:"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                  className: "text-xl font-bold text-foreground",
+                  children: comparativoData.periodo2.promedio.toFixed(2)
+                })]
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                  className: "text-sm text-muted-foreground",
+                  children: "M\xEDnimo:"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                  className: "text-lg text-foreground",
+                  children: comparativoData.periodo2.minimo.toFixed(2)
+                })]
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                  className: "text-sm text-muted-foreground",
+                  children: "M\xE1ximo:"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+                  className: "text-lg text-foreground",
+                  children: comparativoData.periodo2.maximo.toFixed(2)
+                })]
+              })]
+            })]
+          })]
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          className: "bg-muted/50 border border-border p-4 rounded-lg mb-6",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
+            className: "text-lg font-semibold mb-4 text-foreground",
+            children: "Variaci\xF3n entre per\xEDodos"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            className: "grid grid-cols-1 md:grid-cols-2 gap-6",
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              className: "flex items-center",
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                className: "text-3xl font-bold mr-2 ".concat(comparativoData.comparacion.variacion_total >= 0 ? 'text-dashboard-green' : 'text-dashboard-red'),
+                children: [comparativoData.comparacion.variacion_total >= 0 ? '+' : '', comparativoData.comparacion.variacion_total, "%"]
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                className: "text-muted-foreground",
+                children: "Variaci\xF3n total"
+              })]
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              className: "flex items-center",
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                className: "text-3xl font-bold mr-2 ".concat(comparativoData.comparacion.variacion_promedio >= 0 ? 'text-dashboard-green' : 'text-dashboard-red'),
+                children: [comparativoData.comparacion.variacion_promedio >= 0 ? '+' : '', comparativoData.comparacion.variacion_promedio, "%"]
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+                className: "text-muted-foreground",
+                children: "Variaci\xF3n promedio"
+              })]
+            })]
+          })]
+        }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+          className: "h-96 bg-card border border-border rounded-lg p-4",
+          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_3__.ResponsiveContainer, {
+            width: "100%",
+            height: "100%",
+            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_11__.BarChart, {
+              data: comparativeChartData,
+              margin: {
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5
+              },
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.CartesianGrid, {
+                strokeDasharray: "3 3",
+                stroke: "hsl(var(--border))"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.XAxis, {
+                dataKey: "metrica",
+                stroke: "hsl(var(--muted-foreground))",
+                fontSize: 12
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.YAxis, {
+                stroke: "hsl(var(--muted-foreground))",
+                fontSize: 12
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Tooltip, {
+                contentStyle: {
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))',
+                  borderRadius: '6px',
+                  color: 'hsl(var(--foreground))'
+                }
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_12__.Bar, {
+                dataKey: comparativoData.grafico.datasets[0].label,
+                fill: "hsl(var(--dashboard-blue))"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_12__.Bar, {
+                dataKey: comparativoData.grafico.datasets[1].label,
+                fill: "hsl(var(--dashboard-green))"
+              })]
+            })
+          })
+        })]
+      }), !loading && (activeTab === 'temporal' && chartFormattedData.length === 0 || activeTab === 'comparativo' && !comparativoData) && !error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+        className: "flex justify-center items-center h-64 bg-muted/30 border border-border rounded-lg",
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+          className: "text-lg text-muted-foreground",
+          children: "No hay datos disponibles para los par\xE1metros seleccionados"
+        })
       })]
-    }), !loading && (activeTab === 'temporal' && chartFormattedData.length === 0 || activeTab === 'comparativo' && !comparativoData) && !error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "flex justify-center items-center h-64 bg-gray-50 rounded-lg",
-      children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-        className: "text-lg text-gray-500",
-        children: "No hay datos disponibles para los par\xE1metros seleccionados"
-      })
-    })]
+    })
   });
 };
 /* harmony default export */ __webpack_exports__["default"] = (Pinta);
@@ -145906,20 +146533,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/ResponsiveContainer.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/LineChart.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/CartesianGrid.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/XAxis.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/YAxis.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Tooltip.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Legend.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Line.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/BarChart.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Bar.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/ResponsiveContainer.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/LineChart.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/CartesianGrid.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/XAxis.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/YAxis.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Tooltip.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Legend.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Line.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/BarChart.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Bar.js");
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/filter.js");
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/chevron-down.js");
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/refresh-cw.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/calendar.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return r; }; var t, r = {}, e = Object.prototype, n = e.hasOwnProperty, o = "function" == typeof Symbol ? Symbol : {}, i = o.iterator || "@@iterator", a = o.asyncIterator || "@@asyncIterator", u = o.toStringTag || "@@toStringTag"; function c(t, r, e, n) { return Object.defineProperty(t, r, { value: e, enumerable: !n, configurable: !n, writable: !n }); } try { c({}, ""); } catch (t) { c = function c(t, r, e) { return t[r] = e; }; } function h(r, e, n, o) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype); return c(a, "_invoke", function (r, e, n) { var o = 1; return function (i, a) { if (3 === o) throw Error("Generator is already running"); if (4 === o) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var u = n.delegate; if (u) { var c = d(u, n); if (c) { if (c === f) continue; return c; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (1 === o) throw o = 4, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = 3; var h = s(r, e, n); if ("normal" === h.type) { if (o = n.done ? 4 : 2, h.arg === f) continue; return { value: h.arg, done: n.done }; } "throw" === h.type && (o = 4, n.method = "throw", n.arg = h.arg); } }; }(r, n, new Context(o || [])), !0), a; } function s(t, r, e) { try { return { type: "normal", arg: t.call(r, e) }; } catch (t) { return { type: "throw", arg: t }; } } r.wrap = h; var f = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var l = {}; c(l, i, function () { return this; }); var p = Object.getPrototypeOf, y = p && p(p(x([]))); y && y !== e && n.call(y, i) && (l = y); var v = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(l); function g(t) { ["next", "throw", "return"].forEach(function (r) { c(t, r, function (t) { return this._invoke(r, t); }); }); } function AsyncIterator(t, r) { function e(o, i, a, u) { var c = s(t[o], t, i); if ("throw" !== c.type) { var h = c.arg, f = h.value; return f && "object" == _typeof(f) && n.call(f, "__await") ? r.resolve(f.__await).then(function (t) { e("next", t, a, u); }, function (t) { e("throw", t, a, u); }) : r.resolve(f).then(function (t) { h.value = t, a(h); }, function (t) { return e("throw", t, a, u); }); } u(c.arg); } var o; c(this, "_invoke", function (t, n) { function i() { return new r(function (r, o) { e(t, n, r, o); }); } return o = o ? o.then(i, i) : i(); }, !0); } function d(r, e) { var n = e.method, o = r.i[n]; if (o === t) return e.delegate = null, "throw" === n && r.i["return"] && (e.method = "return", e.arg = t, d(r, e), "throw" === e.method) || "return" !== n && (e.method = "throw", e.arg = new TypeError("The iterator does not provide a '" + n + "' method")), f; var i = s(o, r.i, e.arg); if ("throw" === i.type) return e.method = "throw", e.arg = i.arg, e.delegate = null, f; var a = i.arg; return a ? a.done ? (e[r.r] = a.value, e.next = r.n, "return" !== e.method && (e.method = "next", e.arg = t), e.delegate = null, f) : a : (e.method = "throw", e.arg = new TypeError("iterator result is not an object"), e.delegate = null, f); } function w(t) { this.tryEntries.push(t); } function m(r) { var e = r[4] || {}; e.type = "normal", e.arg = t, r[4] = e; } function Context(t) { this.tryEntries = [[-1]], t.forEach(w, this), this.reset(!0); } function x(r) { if (null != r) { var e = r[i]; if (e) return e.call(r); if ("function" == typeof r.next) return r; if (!isNaN(r.length)) { var o = -1, a = function e() { for (; ++o < r.length;) if (n.call(r, o)) return e.value = r[o], e.done = !1, e; return e.value = t, e.done = !0, e; }; return a.next = a; } } throw new TypeError(_typeof(r) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, c(v, "constructor", GeneratorFunctionPrototype), c(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = c(GeneratorFunctionPrototype, u, "GeneratorFunction"), r.isGeneratorFunction = function (t) { var r = "function" == typeof t && t.constructor; return !!r && (r === GeneratorFunction || "GeneratorFunction" === (r.displayName || r.name)); }, r.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, c(t, u, "GeneratorFunction")), t.prototype = Object.create(v), t; }, r.awrap = function (t) { return { __await: t }; }, g(AsyncIterator.prototype), c(AsyncIterator.prototype, a, function () { return this; }), r.AsyncIterator = AsyncIterator, r.async = function (t, e, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(h(t, e, n, o), i); return r.isGeneratorFunction(e) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, g(v), c(v, u, "Generator"), c(v, i, function () { return this; }), c(v, "toString", function () { return "[object Generator]"; }), r.keys = function (t) { var r = Object(t), e = []; for (var n in r) e.unshift(n); return function t() { for (; e.length;) if ((n = e.pop()) in r) return t.value = n, t.done = !1, t; return t.done = !0, t; }; }, r.values = x, Context.prototype = { constructor: Context, reset: function reset(r) { if (this.prev = this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(m), !r) for (var e in this) "t" === e.charAt(0) && n.call(this, e) && !isNaN(+e.slice(1)) && (this[e] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0][4]; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(r) { if (this.done) throw r; var e = this; function n(t) { a.type = "throw", a.arg = r, e.next = t; } for (var o = e.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i[4], u = this.prev, c = i[1], h = i[2]; if (-1 === i[0]) return n("end"), !1; if (!c && !h) throw Error("try statement without catch or finally"); if (null != i[0] && i[0] <= u) { if (u < c) return this.method = "next", this.arg = t, n(c), !0; if (u < h) return n(h), !1; } } }, abrupt: function abrupt(t, r) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var n = this.tryEntries[e]; if (n[0] > -1 && n[0] <= this.prev && this.prev < n[2]) { var o = n; break; } } o && ("break" === t || "continue" === t) && o[0] <= r && r <= o[2] && (o = null); var i = o ? o[4] : {}; return i.type = t, i.arg = r, o ? (this.method = "next", this.next = o[2], f) : this.complete(i); }, complete: function complete(t, r) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && r && (this.next = r), f; }, finish: function finish(t) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var e = this.tryEntries[r]; if (e[2] === t) return this.complete(e[4], e[3]), m(e), f; } }, "catch": function _catch(t) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var e = this.tryEntries[r]; if (e[0] === t) { var n = e[4]; if ("throw" === n.type) { var o = n.arg; m(e); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(r, e, n) { return this.delegate = { i: x(r), r: e, n: n }, "next" === this.method && (this.arg = t), f; } }, r; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -146144,13 +146770,13 @@ var CostMetricsPanel = function CostMetricsPanel() {
     }
   };
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "flex flex-col h-full bg-white rounded-lg bg-white shadow-lg p-4 md:p-6 animate-fade-in shadow mt-[50px]",
+    className: "flex flex-col h-full bg-background dark:bg-card rounded-lg shadow-lg p-4 md:p-6 animate-fade-in shadow mt-[50px] transition-colors duration-200",
     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "px-6 py-4 border-b border-gray-200",
+      className: "px-6 py-4 border-b border-border dark:border-border",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "flex justify-between items-center",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-          className: "text-2xl font-semibold text-gray-800",
+          className: "text-2xl font-semibold text-foreground dark:text-foreground",
           children: "M\xE9tricas de Costos"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "flex items-center space-x-2",
@@ -146158,71 +146784,67 @@ var CostMetricsPanel = function CostMetricsPanel() {
             onClick: function onClick() {
               return setShowFilters(!showFilters);
             },
-            className: "flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50",
+            className: "flex items-center px-3 py-2 text-sm font-medium text-foreground dark:text-foreground bg-background dark:bg-card border border-border dark:border-border rounded-md hover:bg-secondary dark:hover:bg-sidebar-accent transition-colors duration-200",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_2__["default"], {
               className: "w-4 h-4 mr-2"
             }), "Filtros", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_3__["default"], {
-              className: "w-4 h-4 ml-1 transform ".concat(showFilters ? 'rotate-180' : '')
+              className: "w-4 h-4 ml-1 transform transition-transform duration-200 ".concat(showFilters ? 'rotate-180' : '')
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
             onClick: function onClick() {
               fetchCostMetrics();
               fetchDetailedMetrics();
             },
-            className: "flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700",
+            className: "flex items-center px-3 py-2 text-sm font-medium text-primary-foreground dark:text-primary-foreground bg-primary dark:bg-primary rounded-md hover:bg-primary/90 dark:hover:bg-primary/90 transition-colors duration-200",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], {
               className: "w-4 h-4 mr-1"
             }), "Actualizar"]
           })]
         })]
       }), showFilters && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "mt-4 p-4 bg-gray-50 rounded-md border border-gray-200",
+        className: "mt-4 p-4 bg-secondary dark:bg-sidebar-background rounded-md border border-border dark:border-border transition-colors duration-200",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-              className: "block text-sm font-medium text-gray-700 mb-1",
+              className: "block text-sm font-medium text-muted-foreground dark:text-muted-foreground mb-1",
               children: "Desde"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
               className: "relative",
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+              children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
                 type: "date",
                 value: startDate,
                 onChange: function onChange(e) {
                   return setStartDate(e.target.value);
                 },
-                className: "block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], {
-                className: "absolute right-3 top-2.5 h-4 w-4 text-gray-400"
-              })]
+                className: "block w-full px-3 py-2 border border-border dark:border-border rounded-md shadow-sm focus:ring-ring focus:border-ring dark:focus:ring-ring dark:focus:border-ring bg-background dark:bg-card text-foreground dark:text-foreground transition-colors duration-200"
+              })
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-              className: "block text-sm font-medium text-gray-700 mb-1",
+              className: "block text-sm font-medium text-muted-foreground dark:text-muted-foreground mb-1",
               children: "Hasta"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
               className: "relative",
-              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+              children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
                 type: "date",
                 value: endDate,
                 onChange: function onChange(e) {
                   return setEndDate(e.target.value);
                 },
-                className: "block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], {
-                className: "absolute right-3 top-2.5 h-4 w-4 text-gray-400"
-              })]
+                className: "block w-full px-3 py-2 border border-border dark:border-border rounded-md shadow-sm focus:ring-ring focus:border-ring dark:focus:ring-ring dark:focus:border-ring bg-background dark:bg-card text-foreground dark:text-foreground transition-colors duration-200"
+              })
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-              className: "block text-sm font-medium text-gray-700 mb-1",
+              className: "block text-sm font-medium text-muted-foreground dark:text-muted-foreground mb-1",
               children: "Temporalidad"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
               value: temporality,
               onChange: function onChange(e) {
                 return setTemporality(e.target.value);
               },
-              className: "block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500",
+              className: "block w-full px-3 py-2 border border-border dark:border-border rounded-md shadow-sm focus:ring-ring focus:border-ring dark:focus:ring-ring dark:focus:border-ring bg-background dark:bg-card text-foreground dark:text-foreground transition-colors duration-200",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
                 value: "weekly",
                 children: "Semanal"
@@ -146233,14 +146855,14 @@ var CostMetricsPanel = function CostMetricsPanel() {
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-              className: "block text-sm font-medium text-gray-700 mb-1",
+              className: "block text-sm font-medium text-muted-foreground dark:text-muted-foreground mb-1",
               children: "M\xE9trica Detallada"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
               value: metricType,
               onChange: function onChange(e) {
                 return setMetricType(e.target.value);
               },
-              className: "block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500",
+              className: "block w-full px-3 py-2 border border-border dark:border-border rounded-md shadow-sm focus:ring-ring focus:border-ring dark:focus:ring-ring dark:focus:border-ring bg-background dark:bg-card text-foreground dark:text-foreground transition-colors duration-200",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
                 value: "food",
                 children: "Food Cost"
@@ -146257,7 +146879,7 @@ var CostMetricsPanel = function CostMetricsPanel() {
           className: "mt-4 flex justify-end",
           children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
             onClick: handleApplyFilters,
-            className: "px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+            className: "px-4 py-2 bg-primary dark:bg-primary text-primary-foreground dark:text-primary-foreground rounded-md hover:bg-primary/90 dark:hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring dark:focus:ring-ring focus:ring-offset-2 dark:focus:ring-offset-background transition-colors duration-200",
             children: "Aplicar Filtros"
           })
         })]
@@ -146265,18 +146887,24 @@ var CostMetricsPanel = function CostMetricsPanel() {
     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "flex-1 p-6 overflow-auto",
       children: [loading && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "flex justify-center items-center h-64",
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-          className: "animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
+        className: "flex items-center justify-center p-8 min-h-[400px] dark:bg-background",
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          className: "text-center",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+            className: "w-12 h-12 border-4 border-t-dashboard-blue dark:border-t-primary rounded-full animate-spin mx-auto mb-4"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+            className: "text-foreground dark:text-foreground",
+            children: "sobreprima....."
+          })]
         })
       }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "bg-red-50 border-l-4 border-red-500 p-4 mb-6",
+        className: "bg-destructive/10 dark:bg-destructive/20 border-l-4 border-destructive dark:border-destructive p-4 mb-6",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
           className: "flex",
           children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "ml-3",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-              className: "text-sm text-red-700",
+              className: "text-sm text-destructive dark:text-destructive-foreground",
               children: error
             })
           })
@@ -146285,50 +146913,50 @@ var CostMetricsPanel = function CostMetricsPanel() {
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
           className: "grid grid-cols-1 md:grid-cols-3 gap-6 mb-8",
           children: ['food_cost', 'beverage_cost', 'mix_cost'].map(function (metric) {
-            // Calcular el promedio de la métrica
+            // Calculate the metric average
             var avgValue = data.length ? data.reduce(function (sum, item) {
               return sum + item[metric];
             }, 0) / data.length : 0;
-            // Determinar la última tendencia (último valor vs penúltimo)
+            // Determine the last trend (last value vs second to last)
             var lastValue = data.length >= 1 ? data[data.length - 1][metric] : 0;
             var previousValue = data.length >= 2 ? data[data.length - 2][metric] : lastValue;
             var trend = lastValue - previousValue;
             return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              className: "bg-white rounded-lg shadow p-6 border border-gray-100",
+              className: "bg-card dark:bg-card rounded-lg shadow p-6 border border-border dark:border-border transition-colors duration-200",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                 className: "flex justify-between items-start",
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                    className: "text-sm font-medium text-gray-500",
+                    className: "text-sm font-medium text-muted-foreground dark:text-muted-foreground",
                     children: metric === 'food_cost' ? 'Food Cost' : metric === 'beverage_cost' ? 'Beverage Cost' : 'Mix Cost'
                   }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-                    className: "mt-1 text-3xl font-semibold text-gray-900",
+                    className: "mt-1 text-3xl font-semibold text-foreground dark:text-foreground",
                     children: formatPercentage(avgValue)
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                  className: "flex items-center px-2.5 py-0.5 rounded text-xs font-medium ".concat(trend < 0 ? 'bg-green-100 text-green-800' : trend > 0 ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'),
+                  className: "flex items-center px-2.5 py-0.5 rounded text-xs font-medium ".concat(trend < 0 ? 'bg-dashboard-green/10 dark:bg-dashboard-green/20 text-dashboard-green dark:text-dashboard-green' : trend > 0 ? 'bg-dashboard-red/10 dark:bg-dashboard-red/20 text-dashboard-red dark:text-dashboard-red' : 'bg-muted dark:bg-muted text-muted-foreground dark:text-muted-foreground'),
                   children: [trend !== 0 && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
                     className: "mr-1",
                     children: trend < 0 ? '↓' : '↑'
                   }), Math.abs(trend).toFixed(2), "%"]
                 })]
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "mt-1 text-sm text-gray-500",
+                className: "mt-1 text-sm text-muted-foreground dark:text-muted-foreground",
                 children: "Promedio del per\xEDodo"
               })]
             }, metric);
           })
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-white rounded-lg shadow p-6 border border-gray-100 mb-8",
+          className: "bg-card dark:bg-card rounded-lg shadow p-6 border border-border dark:border-border mb-8 transition-colors duration-200",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", {
-            className: "text-lg font-medium text-gray-900 mb-4",
+            className: "text-lg font-medium text-foreground dark:text-foreground mb-4",
             children: ["Comparativa de Costos (", temporality === 'weekly' ? 'Semanal' : 'Mensual', ")"]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "h-80",
-            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.ResponsiveContainer, {
+            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.ResponsiveContainer, {
               width: "100%",
               height: "100%",
-              children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_7__.LineChart, {
+              children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_6__.LineChart, {
                 data: data,
                 margin: {
                   top: 5,
@@ -146336,30 +146964,42 @@ var CostMetricsPanel = function CostMetricsPanel() {
                   left: 20,
                   bottom: 30
                 },
-                children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.CartesianGrid, {
-                  strokeDasharray: "3 3"
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.XAxis, {
+                children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.CartesianGrid, {
+                  strokeDasharray: "3 3",
+                  stroke: "hsl(var(--border))"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.XAxis, {
                   dataKey: "period",
                   angle: -45,
                   textAnchor: "end",
                   height: 70,
                   interval: 0,
                   tick: {
-                    fontSize: 12
+                    fontSize: 12,
+                    fill: 'hsl(var(--muted-foreground))'
                   }
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_10__.YAxis, {
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.YAxis, {
                   tickFormatter: formatPercentage,
                   domain: [0, 'auto'],
                   label: {
                     value: 'Porcentaje (%)',
                     angle: -90,
                     position: 'insideLeft'
+                  },
+                  tick: {
+                    fontSize: 12,
+                    fill: 'hsl(var(--muted-foreground))'
                   }
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Tooltip, {
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_10__.Tooltip, {
                   formatter: function formatter(value) {
                     return [formatPercentage(value), 'Porcentaje'];
+                  },
+                  contentStyle: {
+                    backgroundColor: 'hsl(var(--popover))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '8px',
+                    color: 'hsl(var(--popover-foreground))'
                   }
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_12__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_13__.Line, {
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_12__.Line, {
                   type: "monotone",
                   dataKey: "food_cost",
                   name: "Food Cost",
@@ -146367,7 +147007,7 @@ var CostMetricsPanel = function CostMetricsPanel() {
                   activeDot: {
                     r: 8
                   }
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_13__.Line, {
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_12__.Line, {
                   type: "monotone",
                   dataKey: "beverage_cost",
                   name: "Beverage Cost",
@@ -146375,7 +147015,7 @@ var CostMetricsPanel = function CostMetricsPanel() {
                   activeDot: {
                     r: 8
                   }
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_13__.Line, {
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_12__.Line, {
                   type: "monotone",
                   dataKey: "mix_cost",
                   name: "Mix Cost",
@@ -146388,16 +147028,16 @@ var CostMetricsPanel = function CostMetricsPanel() {
             })
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-white rounded-lg shadow p-6 border border-gray-100",
+          className: "bg-card dark:bg-card rounded-lg shadow p-6 border border-border dark:border-border transition-colors duration-200",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", {
-            className: "text-lg font-medium text-gray-900 mb-4",
+            className: "text-lg font-medium text-foreground dark:text-foreground mb-4",
             children: ["Detalle Diario: ", metricType === 'food' ? 'Food Cost' : metricType === 'beverage' ? 'Beverage Cost' : 'Mix Cost']
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "h-80",
-            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.ResponsiveContainer, {
+            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.ResponsiveContainer, {
               width: "100%",
               height: "100%",
-              children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_14__.BarChart, {
+              children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_13__.BarChart, {
                 data: detailedData,
                 margin: {
                   top: 5,
@@ -146405,25 +147045,31 @@ var CostMetricsPanel = function CostMetricsPanel() {
                   left: 20,
                   bottom: 30
                 },
-                children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.CartesianGrid, {
-                  strokeDasharray: "3 3"
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.XAxis, {
+                children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.CartesianGrid, {
+                  strokeDasharray: "3 3",
+                  stroke: "hsl(var(--border))"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.XAxis, {
                   dataKey: "date",
                   angle: -45,
                   textAnchor: "end",
                   height: 70,
                   tick: {
-                    fontSize: 12
+                    fontSize: 12,
+                    fill: 'hsl(var(--muted-foreground))'
                   }
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_10__.YAxis, {
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.YAxis, {
                   tickFormatter: formatPercentage,
                   domain: [0, 'auto'],
                   label: {
                     value: 'Porcentaje (%)',
                     angle: -90,
                     position: 'insideLeft'
+                  },
+                  tick: {
+                    fontSize: 12,
+                    fill: 'hsl(var(--muted-foreground))'
                   }
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Tooltip, {
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_10__.Tooltip, {
                   formatter: function formatter(value, name) {
                     return [formatPercentage(value), name === 'value' ? 'Porcentaje' : name];
                   },
@@ -146432,8 +147078,14 @@ var CostMetricsPanel = function CostMetricsPanel() {
                       return d.date === label;
                     });
                     return "".concat(label, " (").concat((item === null || item === void 0 ? void 0 : item.day_name) || '', ")");
+                  },
+                  contentStyle: {
+                    backgroundColor: 'hsl(var(--popover))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '8px',
+                    color: 'hsl(var(--popover-foreground))'
                   }
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_12__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_15__.Bar, {
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_14__.Bar, {
                   dataKey: "value",
                   name: metricType === 'food' ? 'Food Cost' : metricType === 'beverage' ? 'Beverage Cost' : 'Mix Cost',
                   fill: getChartColor(metricType === 'food' ? 'food_cost' : metricType === 'beverage' ? 'beverage_cost' : 'mix_cost')
@@ -146474,10 +147126,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Cell.js");
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/refresh-cw.js");
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/circle-alert.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/calendar.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/chart-no-axes-column.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/dollar-sign.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/chart-pie.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/chart-no-axes-column.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/dollar-sign.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/chart-pie.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -146630,6 +147281,7 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
       return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "text-center p-4",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+          className: "text-foreground dark:text-foreground",
           children: "No hay datos disponibles para mostrar."
         })
       });
@@ -146641,16 +147293,16 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "mt-4",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-        className: "text-lg font-medium mb-2",
+        className: "text-lg font-medium mb-2 text-foreground dark:text-foreground",
         children: "Gastos como porcentaje de ventas totales"
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "mb-2",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-          className: "text-sm",
+          className: "text-sm text-muted-foreground dark:text-muted-foreground",
           children: ["Ventas totales: ", formatoMoneda(dashboard.ventas_totales || 0)]
         })
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "h-96",
+        className: "h-96 bg-card dark:bg-card border border-border dark:border-border rounded-lg p-2",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_2__.ResponsiveContainer, {
           width: "100%",
           height: "100%",
@@ -146664,46 +147316,69 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
               bottom: 5
             },
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-              strokeDasharray: "3 3"
+              strokeDasharray: "3 3",
+              stroke: "hsl(var(--border))"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
               type: "number",
               domain: [0, Math.max.apply(Math, _toConsumableArray(data.map(function (d) {
                 return d.porcentaje_ventas || 0;
               }))) * 1.1],
-              unit: "%"
+              unit: "%",
+              tick: {
+                fill: 'hsl(var(--foreground))'
+              },
+              axisLine: {
+                stroke: 'hsl(var(--border))'
+              }
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {
               dataKey: "rubro_nombre",
               type: "category",
-              width: 140
+              width: 140,
+              tick: {
+                fill: 'hsl(var(--foreground))'
+              },
+              axisLine: {
+                stroke: 'hsl(var(--border))'
+              }
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
               formatter: function formatter(value) {
                 return ["".concat(value.toFixed(2), "%"), 'Porcentaje'];
               },
               labelFormatter: function labelFormatter(label) {
                 return "Rubro: ".concat(label);
+              },
+              contentStyle: {
+                backgroundColor: 'hsl(var(--popover))',
+                border: '1px solid hsl(var(--border))',
+                borderRadius: '8px',
+                color: 'hsl(var(--foreground))'
               }
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Bar, {
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {
+              wrapperStyle: {
+                color: 'hsl(var(--foreground))'
+              }
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Bar, {
               dataKey: "porcentaje_ventas",
               name: "% de Ventas",
-              fill: "#8884d8"
+              fill: "hsl(var(--primary))"
             })]
           })
         })
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "mt-4 overflow-x-auto",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", {
-          className: "min-w-full bg-white border rounded-lg",
+          className: "min-w-full bg-card dark:bg-card border border-border dark:border-border rounded-lg",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", {
-            className: "bg-gray-100",
+            className: "bg-muted dark:bg-muted",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b text-left",
+                className: "py-2 px-4 border-b border-border dark:border-border text-left text-foreground dark:text-foreground",
                 children: "Rubro"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b text-right",
+                className: "py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground",
                 children: "Importe"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b text-right",
+                className: "py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground",
                 children: "% de Ventas"
               })]
             })
@@ -146711,15 +147386,15 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
             children: data.map(function (item, index) {
               var _a;
               return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                className: index % 2 === 0 ? 'bg-gray-50' : '',
+                className: index % 2 === 0 ? 'bg-muted/50 dark:bg-muted/50' : 'bg-card dark:bg-card',
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-2 px-4 border-b",
+                  className: "py-2 px-4 border-b border-border dark:border-border text-foreground dark:text-foreground",
                   children: item.rubro_nombre
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-2 px-4 border-b text-right",
+                  className: "py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground",
                   children: formatoMoneda(item.importe)
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("td", {
-                  className: "py-2 px-4 border-b text-right",
+                  className: "py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground",
                   children: [(_a = item.porcentaje_ventas) === null || _a === void 0 ? void 0 : _a.toFixed(2), "%"]
                 })]
               }, index);
@@ -146734,6 +147409,7 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
       return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "text-center p-4",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+          className: "text-foreground dark:text-foreground",
           children: "No hay datos disponibles para mostrar."
         })
       });
@@ -146761,18 +147437,18 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "mt-4",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-        className: "text-lg font-medium mb-2",
+        className: "text-lg font-medium mb-2 text-foreground dark:text-foreground",
         children: "Distribuci\xF3n de gastos por rubro"
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "mb-2",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-          className: "text-sm",
+          className: "text-sm text-muted-foreground dark:text-muted-foreground",
           children: ["Gastos totales: ", formatoMoneda(dashboard.gastos_totales || 0)]
         })
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "flex flex-col md:flex-row",
+        className: "flex flex-col md:flex-row gap-4",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-          className: "w-full md:w-1/2 h-80",
+          className: "w-full md:w-1/2 h-80 bg-card dark:bg-card border border-border dark:border-border rounded-lg p-2",
           children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_2__.ResponsiveContainer, {
             width: "100%",
             height: "100%",
@@ -146783,7 +147459,7 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
                 cy: "50%",
                 labelLine: false,
                 outerRadius: 80,
-                fill: "#8884d8",
+                fill: "hsl(var(--primary))",
                 dataKey: "porcentaje_gastos_totales",
                 nameKey: "rubro_nombre",
                 label: function label(_ref) {
@@ -146802,12 +147478,22 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
                 },
                 labelFormatter: function labelFormatter(name) {
                   return "Rubro: ".concat(name);
+                },
+                contentStyle: {
+                  backgroundColor: 'hsl(var(--popover))',
+                  border: '1px solid hsl(var(--border))',
+                  borderRadius: '8px',
+                  color: 'hsl(var(--foreground))'
                 }
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {})]
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {
+                wrapperStyle: {
+                  color: 'hsl(var(--foreground))'
+                }
+              })]
             })
           })
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-          className: "w-full md:w-1/2 h-80",
+          className: "w-full md:w-1/2 h-80 bg-card dark:bg-card border border-border dark:border-border rounded-lg p-2",
           children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_2__.ResponsiveContainer, {
             width: "100%",
             height: "100%",
@@ -146821,25 +147507,48 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
                 bottom: 5
               },
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-                strokeDasharray: "3 3"
+                strokeDasharray: "3 3",
+                stroke: "hsl(var(--border))"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
                 type: "number",
-                unit: "%"
+                unit: "%",
+                tick: {
+                  fill: 'hsl(var(--foreground))'
+                },
+                axisLine: {
+                  stroke: 'hsl(var(--border))'
+                }
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {
                 dataKey: "rubro_nombre",
                 type: "category",
-                width: 140
+                width: 140,
+                tick: {
+                  fill: 'hsl(var(--foreground))'
+                },
+                axisLine: {
+                  stroke: 'hsl(var(--border))'
+                }
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
                 formatter: function formatter(value) {
                   return ["".concat(value.toFixed(2), "%"), 'Porcentaje'];
                 },
                 labelFormatter: function labelFormatter(label) {
                   return "Rubro: ".concat(label);
+                },
+                contentStyle: {
+                  backgroundColor: 'hsl(var(--popover))',
+                  border: '1px solid hsl(var(--border))',
+                  borderRadius: '8px',
+                  color: 'hsl(var(--foreground))'
                 }
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Bar, {
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {
+                wrapperStyle: {
+                  color: 'hsl(var(--foreground))'
+                }
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Bar, {
                 dataKey: "porcentaje_gastos_totales",
                 name: "% del Total",
-                fill: "#82ca9d"
+                fill: "hsl(var(--accent))"
               })]
             })
           })
@@ -146847,18 +147556,18 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "mt-4 overflow-x-auto",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", {
-          className: "min-w-full bg-white border rounded-lg",
+          className: "min-w-full bg-card dark:bg-card border border-border dark:border-border rounded-lg",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", {
-            className: "bg-gray-100",
+            className: "bg-muted dark:bg-muted",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b text-left",
+                className: "py-2 px-4 border-b border-border dark:border-border text-left text-foreground dark:text-foreground",
                 children: "Rubro"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b text-right",
+                className: "py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground",
                 children: "Importe"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b text-right",
+                className: "py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground",
                 children: "% del Total"
               })]
             })
@@ -146866,15 +147575,15 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
             children: data.map(function (item, index) {
               var _a;
               return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                className: index % 2 === 0 ? 'bg-gray-50' : '',
+                className: index % 2 === 0 ? 'bg-muted/50 dark:bg-muted/50' : 'bg-card dark:bg-card',
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-2 px-4 border-b",
+                  className: "py-2 px-4 border-b border-border dark:border-border text-foreground dark:text-foreground",
                   children: item.rubro_nombre
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-2 px-4 border-b text-right",
+                  className: "py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground",
                   children: formatoMoneda(item.importe)
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("td", {
-                  className: "py-2 px-4 border-b text-right",
+                  className: "py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground",
                   children: [(_a = item.porcentaje_gastos_totales) === null || _a === void 0 ? void 0 : _a.toFixed(2), "%"]
                 })]
               }, index);
@@ -146889,6 +147598,7 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
       return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "text-center p-4",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+          className: "text-foreground dark:text-foreground",
           children: "No hay datos disponibles para mostrar."
         })
       });
@@ -146897,16 +147607,16 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "mt-4",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-        className: "text-lg font-medium mb-2",
+        className: "text-lg font-medium mb-2 text-foreground dark:text-foreground",
         children: "Rubros de gastos m\xE1s relevantes"
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "mb-2",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-          className: "text-sm",
+          className: "text-sm text-muted-foreground dark:text-muted-foreground",
           children: ["Gastos totales: ", formatoMoneda(dashboard.gastos_totales || 0)]
         })
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "h-80",
+        className: "h-80 bg-card dark:bg-card border border-border dark:border-border rounded-lg p-2",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_2__.ResponsiveContainer, {
           width: "100%",
           height: "100%",
@@ -146919,42 +147629,66 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
               bottom: 5
             },
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-              strokeDasharray: "3 3"
+              strokeDasharray: "3 3",
+              stroke: "hsl(var(--border))"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
-              dataKey: "rubro_nombre"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
+              dataKey: "rubro_nombre",
+              tick: {
+                fill: 'hsl(var(--foreground))'
+              },
+              axisLine: {
+                stroke: 'hsl(var(--border))'
+              }
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {
+              tick: {
+                fill: 'hsl(var(--foreground))'
+              },
+              axisLine: {
+                stroke: 'hsl(var(--border))'
+              }
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
               formatter: function formatter(value, name) {
                 return [name === "importe" ? formatoMoneda(value) : "".concat(value.toFixed(2), "%"), name === "importe" ? "Importe" : "% del Total"];
+              },
+              contentStyle: {
+                backgroundColor: 'hsl(var(--popover))',
+                border: '1px solid hsl(var(--border))',
+                borderRadius: '8px',
+                color: 'hsl(var(--foreground))'
               }
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Bar, {
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {
+              wrapperStyle: {
+                color: 'hsl(var(--foreground))'
+              }
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Bar, {
               dataKey: "importe",
               name: "Importe",
-              fill: "#8884d8"
+              fill: "hsl(var(--primary))"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Bar, {
               dataKey: "porcentaje_gastos_totales",
               name: "% del Total",
-              fill: "#82ca9d"
+              fill: "hsl(var(--accent))"
             })]
           })
         })
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "mt-4 overflow-x-auto",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", {
-          className: "min-w-full bg-white border rounded-lg",
+          className: "min-w-full bg-card dark:bg-card border border-border dark:border-border rounded-lg",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", {
-            className: "bg-gray-100",
+            className: "bg-muted dark:bg-muted",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b text-center",
+                className: "py-2 px-4 border-b border-border dark:border-border text-center text-foreground dark:text-foreground",
                 children: "#"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b text-left",
+                className: "py-2 px-4 border-b border-border dark:border-border text-left text-foreground dark:text-foreground",
                 children: "Rubro"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b text-right",
+                className: "py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground",
                 children: "Importe"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b text-right",
+                className: "py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground",
                 children: "% del Total"
               })]
             })
@@ -146962,18 +147696,18 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
             children: data.map(function (item, index) {
               var _a;
               return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                className: index % 2 === 0 ? 'bg-gray-50' : '',
+                className: index % 2 === 0 ? 'bg-muted/50 dark:bg-muted/50' : 'bg-card dark:bg-card',
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-2 px-4 border-b text-center",
+                  className: "py-2 px-4 border-b border-border dark:border-border text-center text-foreground dark:text-foreground",
                   children: index + 1
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-2 px-4 border-b",
+                  className: "py-2 px-4 border-b border-border dark:border-border text-foreground dark:text-foreground",
                   children: item.rubro_nombre
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-2 px-4 border-b text-right",
+                  className: "py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground",
                   children: formatoMoneda(item.importe)
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("td", {
-                  className: "py-2 px-4 border-b text-right",
+                  className: "py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground",
                   children: [(_a = item.porcentaje_gastos_totales) === null || _a === void 0 ? void 0 : _a.toFixed(2), "%"]
                 })]
               }, index);
@@ -146988,6 +147722,7 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
       return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "text-center p-4",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+          className: "text-foreground dark:text-foreground",
           children: "No hay datos disponibles para mostrar en el dashboard."
         })
       });
@@ -147003,80 +147738,80 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "grid grid-cols-1 md:grid-cols-2 gap-4 mb-6",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-white p-4 rounded-lg shadow",
+          className: "bg-white dark:bg-card p-4 rounded-lg shadow dark:shadow-lg",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-            className: "text-lg font-medium mb-2",
+            className: "text-lg font-medium mb-2 text-foreground dark:text-foreground",
             children: "Resumen General"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             className: "grid grid-cols-2 gap-4",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              className: "bg-blue-50 p-3 rounded-lg",
+              className: "bg-blue-50 dark:bg-blue-950/20 p-3 rounded-lg border dark:border-blue-800/30",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-sm text-blue-500",
+                className: "text-sm text-blue-500 dark:text-blue-400",
                 children: "Ventas Totales"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-xl font-bold",
+                className: "text-xl font-bold text-foreground dark:text-foreground",
                 children: formatoMoneda(dashboard.ventas_totales || 0)
               })]
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              className: "bg-red-50 p-3 rounded-lg",
+              className: "bg-red-50 dark:bg-red-950/20 p-3 rounded-lg border dark:border-red-800/30",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-sm text-red-500",
+                className: "text-sm text-red-500 dark:text-red-400",
                 children: "Gastos Totales"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-xl font-bold",
+                className: "text-xl font-bold text-foreground dark:text-foreground",
                 children: formatoMoneda(dashboard.gastos_totales || 0)
               })]
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              className: "bg-green-50 p-3 rounded-lg",
+              className: "bg-green-50 dark:bg-green-950/20 p-3 rounded-lg border dark:border-green-800/30",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-sm text-green-500",
+                className: "text-sm text-green-500 dark:text-green-400",
                 children: "Rentabilidad"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-xl font-bold",
+                className: "text-xl font-bold text-foreground dark:text-foreground",
                 children: formatoMoneda((dashboard.ventas_totales || 0) - (dashboard.gastos_totales || 0))
               })]
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              className: "bg-purple-50 p-3 rounded-lg",
+              className: "bg-purple-50 dark:bg-purple-950/20 p-3 rounded-lg border dark:border-purple-800/30",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-sm text-purple-500",
+                className: "text-sm text-purple-500 dark:text-purple-400",
                 children: "Margen"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-                className: "text-xl font-bold",
+                className: "text-xl font-bold text-foreground dark:text-foreground",
                 children: [(((dashboard.ventas_totales || 0) - (dashboard.gastos_totales || 0)) / (dashboard.ventas_totales || 1) * 100).toFixed(2), "%"]
               })]
             })]
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-white p-4 rounded-lg shadow",
+          className: "bg-white dark:bg-card p-4 rounded-lg shadow dark:shadow-lg",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-            className: "text-lg font-medium mb-2",
+            className: "text-lg font-medium mb-2 text-foreground dark:text-foreground",
             children: "Per\xEDodo de An\xE1lisis"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             className: "grid grid-cols-2 gap-4",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              className: "bg-gray-50 p-3 rounded-lg",
+              className: "bg-gray-50 dark:bg-muted p-3 rounded-lg",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-sm text-gray-500",
+                className: "text-sm text-gray-500 dark:text-muted-foreground",
                 children: "Fecha Inicio"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-lg font-semibold",
+                className: "text-lg font-semibold text-foreground dark:text-foreground",
                 children: formatoFecha(dashboard.periodo.fecha_inicio)
               })]
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              className: "bg-gray-50 p-3 rounded-lg",
+              className: "bg-gray-50 dark:bg-muted p-3 rounded-lg",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-sm text-gray-500",
+                className: "text-sm text-gray-500 dark:text-muted-foreground",
                 children: "Fecha Fin"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-lg font-semibold",
+                className: "text-lg font-semibold text-foreground dark:text-foreground",
                 children: formatoFecha(dashboard.periodo.fecha_fin)
               })]
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "mt-4",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-              className: "text-sm text-gray-500",
+              className: "text-sm text-gray-500 dark:text-muted-foreground",
               children: "El an\xE1lisis muestra los gastos clasificados por rubro, permitiendo identificar patrones y \xE1reas de oportunidad para la optimizaci\xF3n de recursos."
             })
           })]
@@ -147084,9 +147819,9 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "grid grid-cols-1 md:grid-cols-2 gap-4",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-white p-4 rounded-lg shadow",
+          className: "bg-white dark:bg-card p-4 rounded-lg shadow dark:shadow-lg",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-            className: "text-lg font-medium mb-2",
+            className: "text-lg font-medium mb-2 text-foreground dark:text-foreground",
             children: "Top 5 Gastos sobre Ventas"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "h-64",
@@ -147103,17 +147838,29 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
                   bottom: 5
                 },
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-                  strokeDasharray: "3 3"
+                  strokeDasharray: "3 3",
+                  stroke: "currentColor",
+                  className: "text-border dark:text-border opacity-30"
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
                   type: "number",
-                  unit: "%"
+                  unit: "%",
+                  stroke: "currentColor",
+                  className: "text-muted-foreground dark:text-muted-foreground"
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {
                   dataKey: "rubro_nombre",
                   type: "category",
-                  width: 90
+                  width: 90,
+                  stroke: "currentColor",
+                  className: "text-muted-foreground dark:text-muted-foreground"
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
                   formatter: function formatter(value) {
                     return ["".concat(value.toFixed(2), "%"), 'Porcentaje'];
+                  },
+                  contentStyle: {
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '6px',
+                    color: 'hsl(var(--foreground))'
                   }
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Bar, {
                   dataKey: "porcentaje_ventas",
@@ -147128,14 +147875,14 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
               onClick: function onClick() {
                 return cargarDatos('sobre-ventas');
               },
-              className: "text-blue-500 hover:text-blue-700 text-sm",
+              className: "text-blue-500 dark:text-primary hover:text-blue-700 dark:hover:text-primary/80 text-sm transition-colors",
               children: "Ver an\xE1lisis completo \u2192"
             })
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-white p-4 rounded-lg shadow",
+          className: "bg-white dark:bg-card p-4 rounded-lg shadow dark:shadow-lg",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-            className: "text-lg font-medium mb-2",
+            className: "text-lg font-medium mb-2 text-foreground dark:text-foreground",
             children: "Gastos M\xE1s Relevantes"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "h-64",
@@ -147168,6 +147915,12 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
                   },
                   labelFormatter: function labelFormatter(name) {
                     return "Rubro: ".concat(name);
+                  },
+                  contentStyle: {
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '6px',
+                    color: 'hsl(var(--foreground))'
                   }
                 })]
               })
@@ -147178,7 +147931,7 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
               onClick: function onClick() {
                 return cargarDatos('mas-relevantes');
               },
-              className: "text-blue-500 hover:text-blue-700 text-sm",
+              className: "text-blue-500 dark:text-primary hover:text-blue-700 dark:hover:text-primary/80 text-sm transition-colors",
               children: "Ver an\xE1lisis completo \u2192"
             })
           })]
@@ -147191,15 +147944,16 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
       return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "text-center p-10",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_13__["default"], {
-          className: "animate-spin h-10 w-10 text-blue-500 mx-auto mb-4"
+          className: "animate-spin h-10 w-10 text-blue-500 dark:text-primary mx-auto mb-4"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+          className: "text-foreground dark:text-foreground",
           children: "Cargando datos..."
         })]
       });
     }
     if (error) {
       return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "text-center p-10 text-red-500",
+        className: "text-center p-10 text-red-500 dark:text-destructive",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_14__["default"], {
           className: "h-10 w-10 mx-auto mb-4"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
@@ -147211,13 +147965,14 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
       return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "text-center p-10",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+          className: "text-foreground dark:text-foreground",
           children: "Seleccione un per\xEDodo y haga clic en \"Analizar\" para ver los resultados."
         })
       });
     }
     if (dashboard.status === 'warning') {
       return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "text-center p-10 text-yellow-500",
+        className: "text-center p-10 text-yellow-500 dark:text-yellow-400",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_14__["default"], {
           className: "h-10 w-10 mx-auto mb-4"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
@@ -147238,11 +147993,11 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
     }
   };
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in shadow mt-[50px]",
+    className: "bg-white dark:bg-card rounded-lg shadow-lg p-4 md:p-6 animate-fade-in shadow mt-[50px]",
     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "mb-4",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-        className: "text-2xl font-bold mb-4",
+        className: "text-2xl font-bold mb-4 text-foreground dark:text-foreground",
         children: "Panel de An\xE1lisis de Gastos"
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", {
         onSubmit: handleSubmit,
@@ -147251,94 +148006,90 @@ var PanelGastosAnalisis = function PanelGastosAnalisis() {
           className: "flex-1",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
             htmlFor: "fechaInicio",
-            className: "block text-sm font-medium text-gray-700 mb-1",
+            className: "block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1",
             children: "Fecha Inicio"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "relative",
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_15__["default"], {
-              className: "absolute left-2 top-2 h-5 w-5 text-gray-400"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
               type: "date",
               id: "fechaInicio",
               value: fechaInicio,
               onChange: function onChange(e) {
                 return setFechaInicio(e.target.value);
               },
-              className: "pl-9 w-full p-2 border border-gray-300 rounded-md",
+              className: "pl-9 w-full p-2 border border-gray-300 dark:border-border rounded-md bg-white dark:bg-input text-foreground dark:text-foreground",
               required: true
-            })]
+            })
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "flex-1",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
             htmlFor: "fechaFin",
-            className: "block text-sm font-medium text-gray-700 mb-1",
+            className: "block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1",
             children: "Fecha Fin"
-          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "relative",
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_15__["default"], {
-              className: "absolute left-2 top-2 h-5 w-5 text-gray-400"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+            children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
               type: "date",
               id: "fechaFin",
               value: fechaFin,
               onChange: function onChange(e) {
                 return setFechaFin(e.target.value);
               },
-              className: "pl-9 w-full p-2 border border-gray-300 rounded-md",
+              className: "pl-9 w-full p-2 border border-gray-300 dark:border-border rounded-md bg-white dark:bg-input text-foreground dark:text-foreground",
               required: true
-            })]
+            })
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
           className: "flex items-end",
           children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
             type: "submit",
-            className: "w-full md:w-auto px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition",
+            className: "w-full md:w-auto px-4 py-2 bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground rounded-md hover:bg-blue-700 dark:hover:bg-primary/90 transition",
             disabled: cargando,
             children: cargando ? 'Analizando...' : 'Analizar'
           })
         })]
       })]
     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "mb-4 bg-white p-2 rounded-lg shadow",
+      className: "mb-4 bg-white dark:bg-card p-2 rounded-lg shadow dark:shadow-lg",
       children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "flex overflow-x-auto",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
           onClick: function onClick() {
             return cargarDatos('dashboard');
           },
-          className: "flex items-center px-4 py-2 border-b-2 ".concat(vistaActiva === 'dashboard' ? 'border-blue-500 text-blue-600' : 'border-transparent hover:border-gray-300'),
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_16__["default"], {
+          className: "flex items-center px-4 py-2 border-b-2 ".concat(vistaActiva === 'dashboard' ? 'border-blue-500 dark:border-primary text-blue-600 dark:text-primary' : 'border-transparent hover:border-gray-300 dark:hover:border-border text-foreground dark:text-foreground'),
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_15__["default"], {
             className: "mr-2 h-5 w-5"
           }), "Dashboard"]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
           onClick: function onClick() {
             return cargarDatos('sobre-ventas');
           },
-          className: "flex items-center px-4 py-2 border-b-2 ".concat(vistaActiva === 'sobre-ventas' ? 'border-blue-500 text-blue-600' : 'border-transparent hover:border-gray-300'),
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_17__["default"], {
+          className: "flex items-center px-4 py-2 border-b-2 ".concat(vistaActiva === 'sobre-ventas' ? 'border-blue-500 dark:border-primary text-blue-600 dark:text-primary' : 'border-transparent hover:border-gray-300 dark:hover:border-border text-foreground dark:text-foreground'),
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_16__["default"], {
             className: "mr-2 h-5 w-5"
           }), "Gastos sobre Ventas"]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
           onClick: function onClick() {
             return cargarDatos('sobre-total');
           },
-          className: "flex items-center px-4 py-2 border-b-2 ".concat(vistaActiva === 'sobre-total' ? 'border-blue-500 text-blue-600' : 'border-transparent hover:border-gray-300'),
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_18__["default"], {
+          className: "flex items-center px-4 py-2 border-b-2 ".concat(vistaActiva === 'sobre-total' ? 'border-blue-500 dark:border-primary text-blue-600 dark:text-primary' : 'border-transparent hover:border-gray-300 dark:hover:border-border text-foreground dark:text-foreground'),
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_17__["default"], {
             className: "mr-2 h-5 w-5"
           }), "Distribuci\xF3n de Gastos"]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
           onClick: function onClick() {
             return cargarDatos('mas-relevantes');
           },
-          className: "flex items-center px-4 py-2 border-b-2 ".concat(vistaActiva === 'mas-relevantes' ? 'border-blue-500 text-blue-600' : 'border-transparent hover:border-gray-300'),
+          className: "flex items-center px-4 py-2 border-b-2 ".concat(vistaActiva === 'mas-relevantes' ? 'border-blue-500 dark:border-primary text-blue-600 dark:text-primary' : 'border-transparent hover:border-gray-300 dark:hover:border-border text-foreground dark:text-foreground'),
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_3__.BarChart, {
             className: "mr-2 h-5 w-5"
           }), "Gastos M\xE1s Relevantes"]
         })]
       })
     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "bg-white rounded-lg shadow",
+      className: "bg-white dark:bg-card rounded-lg shadow dark:shadow-lg",
       children: renderContent()
     })]
   });
@@ -147621,7 +148372,8 @@ var Proveedores = function Proveedores() {
           y: 0,
           dy: 16,
           textAnchor: "middle",
-          fill: "#666",
+          fill: "currentColor",
+          className: "text-muted-foreground",
           style: {
             fontSize: '12px'
           },
@@ -147643,30 +148395,67 @@ var Proveedores = function Proveedores() {
               bottom: 50
             },
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-              strokeDasharray: "3 3"
+              strokeDasharray: "3 3",
+              stroke: "currentColor",
+              className: "text-border dark:text-border opacity-30"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
               dataKey: "etiqueta",
               height: 60,
-              tick: TickPersonalizadoEjeX
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
+              tick: TickPersonalizadoEjeX,
+              axisLine: {
+                stroke: 'currentColor'
+              },
+              tickLine: {
+                stroke: 'currentColor'
+              },
+              className: "text-muted-foreground"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {
+              tick: {
+                fill: 'currentColor'
+              },
+              axisLine: {
+                stroke: 'currentColor'
+              },
+              tickLine: {
+                stroke: 'currentColor'
+              },
+              className: "text-muted-foreground"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
               formatter: function formatter(value) {
                 return formatearMoneda(value);
+              },
+              contentStyle: {
+                backgroundColor: 'hsl(var(--background))',
+                border: '1px solid hsl(var(--border))',
+                borderRadius: '6px',
+                color: 'hsl(var(--foreground))',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+              },
+              labelStyle: {
+                color: 'hsl(var(--foreground))'
               }
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, {
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {
+              wrapperStyle: {
+                color: 'hsl(var(--foreground))'
+              }
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, {
               type: "monotone",
               dataKey: "deuda_total",
               name: "Deuda Total",
-              stroke: "#8884d8"
+              stroke: "#8884d8",
+              strokeWidth: 2
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, {
               type: "monotone",
               dataKey: "nuevas_facturas",
               name: "Nuevas Facturas",
-              stroke: "#82ca9d"
+              stroke: "#82ca9d",
+              strokeWidth: 2
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, {
               type: "monotone",
               dataKey: "pagos_realizados",
               name: "Pagos",
-              stroke: "#ffc658"
+              stroke: "#ffc658",
+              strokeWidth: 2
             })]
           })
         });
@@ -147683,16 +148472,50 @@ var Proveedores = function Proveedores() {
               bottom: 50
             },
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-              strokeDasharray: "3 3"
+              strokeDasharray: "3 3",
+              stroke: "currentColor",
+              className: "text-border dark:text-border opacity-30"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
               dataKey: "etiqueta",
               height: 60,
-              tick: TickPersonalizadoEjeX
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
+              tick: TickPersonalizadoEjeX,
+              axisLine: {
+                stroke: 'currentColor'
+              },
+              tickLine: {
+                stroke: 'currentColor'
+              },
+              className: "text-muted-foreground"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {
+              tick: {
+                fill: 'currentColor'
+              },
+              axisLine: {
+                stroke: 'currentColor'
+              },
+              tickLine: {
+                stroke: 'currentColor'
+              },
+              className: "text-muted-foreground"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
               formatter: function formatter(value) {
                 return formatearMoneda(value);
+              },
+              contentStyle: {
+                backgroundColor: 'hsl(var(--background))',
+                border: '1px solid hsl(var(--border))',
+                borderRadius: '6px',
+                color: 'hsl(var(--foreground))',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+              },
+              labelStyle: {
+                color: 'hsl(var(--foreground))'
               }
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Area, {
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {
+              wrapperStyle: {
+                color: 'hsl(var(--foreground))'
+              }
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Area, {
               type: "monotone",
               dataKey: "deuda_total",
               name: "Deuda Total",
@@ -147729,27 +148552,64 @@ var Proveedores = function Proveedores() {
               bottom: 50
             },
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-              strokeDasharray: "3 3"
+              strokeDasharray: "3 3",
+              stroke: "currentColor",
+              className: "text-border dark:text-border opacity-30"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
               dataKey: "etiqueta",
               height: 60,
-              tick: TickPersonalizadoEjeX
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
+              tick: TickPersonalizadoEjeX,
+              axisLine: {
+                stroke: 'currentColor'
+              },
+              tickLine: {
+                stroke: 'currentColor'
+              },
+              className: "text-muted-foreground"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {
+              tick: {
+                fill: 'currentColor'
+              },
+              axisLine: {
+                stroke: 'currentColor'
+              },
+              tickLine: {
+                stroke: 'currentColor'
+              },
+              className: "text-muted-foreground"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
               formatter: function formatter(value) {
                 return formatearMoneda(value);
+              },
+              contentStyle: {
+                backgroundColor: 'hsl(var(--background))',
+                border: '1px solid hsl(var(--border))',
+                borderRadius: '6px',
+                color: 'hsl(var(--foreground))',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+              },
+              labelStyle: {
+                color: 'hsl(var(--foreground))'
               }
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_13__.Bar, {
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {
+              wrapperStyle: {
+                color: 'hsl(var(--foreground))'
+              }
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_13__.Bar, {
               dataKey: "deuda_total",
               name: "Deuda Total",
-              fill: "#8884d8"
+              fill: "#8884d8",
+              radius: [2, 2, 0, 0]
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_13__.Bar, {
               dataKey: "nuevas_facturas",
               name: "Nuevas Facturas",
-              fill: "#82ca9d"
+              fill: "#82ca9d",
+              radius: [2, 2, 0, 0]
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_13__.Bar, {
               dataKey: "pagos_realizados",
               name: "Pagos",
-              fill: "#ffc658"
+              fill: "#ffc658",
+              radius: [2, 2, 0, 0]
             })]
           })
         });
@@ -147759,79 +148619,79 @@ var Proveedores = function Proveedores() {
   };
   if (cargando) {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "flex items-center justify-center min-h-screen",
+      className: "flex items-center justify-center min-h-screen bg-background text-foreground",
       children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "text-xl text-gray-600",
+        className: "text-xl text-gray-600 dark:text-muted-foreground",
         children: "Cargando datos del dashboard..."
       })
     });
   }
   if (error) {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "flex items-center justify-center min-h-screen",
+      className: "flex items-center justify-center min-h-screen bg-background text-foreground",
       children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "text-xl text-red-600",
+        className: "text-xl text-red-600 dark:text-destructive",
         children: ["Error: ", error]
       })
     });
   }
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in shadow mt-[50px]",
+    className: "bg-white dark:bg-card rounded-lg shadow-lg p-4 md:p-6 animate-fade-in shadow mt-[50px]",
     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
       className: "flex justify-between items-center mb-6",
       children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
-        className: "text-2xl md:text-3xl font-bold text-gray-800",
+        className: "text-2xl md:text-3xl font-bold text-gray-800 dark:text-foreground",
         children: "CERVECER\xCDA TEMPLE - Distribuci\xF3n de Deuda"
       })
     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
       className: "grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-4 md:gap-6 mb-6",
       children: datosPasivo && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-white rounded-lg shadow p-4 md:p-6",
+          className: "bg-white dark:bg-card rounded-lg shadow p-4 md:p-6 border dark:border-border",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-            className: "text-lg font-semibold text-gray-700 mb-2",
+            className: "text-lg font-semibold text-gray-700 dark:text-foreground mb-2",
             children: "Deuda Total"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-            className: "text-2xl md:text-3xl font-bold text-blue-600",
+            className: "text-2xl md:text-3xl font-bold text-blue-600 dark:text-primary",
             children: formatearMoneda(datosPasivo.totales.total_pendiente_pago)
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-            className: "text-sm text-gray-500 mt-2",
+            className: "text-sm text-gray-500 dark:text-muted-foreground mt-2",
             children: [datosPasivo.conteo.facturas_pendientes_pago, " facturas sin pagar"]
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-white rounded-lg shadow p-4 md:p-6",
+          className: "bg-white dark:bg-card rounded-lg shadow p-4 md:p-6 border dark:border-border",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-            className: "text-lg font-semibold text-gray-700 mb-2",
+            className: "text-lg font-semibold text-gray-700 dark:text-foreground mb-2",
             children: "Validadas"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-            className: "text-2xl md:text-3xl font-bold text-green-600",
+            className: "text-2xl md:text-3xl font-bold text-green-600 dark:text-dashboard-green",
             children: formatearMoneda(datosPasivo.totales.total_validado)
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-            className: "text-sm text-gray-500 mt-2",
+            className: "text-sm text-gray-500 dark:text-muted-foreground mt-2",
             children: [datosPasivo.conteo.facturas_validadas, " facturas validadas"]
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-white rounded-lg shadow p-4 md:p-6",
+          className: "bg-white dark:bg-card rounded-lg shadow p-4 md:p-6 border dark:border-border",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-            className: "text-lg font-semibold text-gray-700 mb-2",
+            className: "text-lg font-semibold text-gray-700 dark:text-foreground mb-2",
             children: "Pendientes de Validaci\xF3n"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-            className: "text-2xl md:text-3xl font-bold text-amber-600",
+            className: "text-2xl md:text-3xl font-bold text-amber-600 dark:text-dashboard-amber",
             children: formatearMoneda(datosPasivo.totales.total_por_validar)
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-            className: "text-sm text-gray-500 mt-2",
+            className: "text-sm text-gray-500 dark:text-muted-foreground mt-2",
             children: [datosPasivo.conteo.facturas_por_validar, " facturas por validar"]
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-white rounded-lg shadow p-4 md:p-6",
+          className: "bg-white dark:bg-card rounded-lg shadow p-4 md:p-6 border dark:border-border",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-            className: "text-lg font-semibold text-gray-700 mb-2",
+            className: "text-lg font-semibold text-gray-700 dark:text-foreground mb-2",
             children: "Total Facturas"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-            className: "text-2xl md:text-3xl font-bold text-indigo-600",
+            className: "text-2xl md:text-3xl font-bold text-indigo-600 dark:text-dashboard-indigo",
             children: formatearMoneda(datosPasivo.totales.total_general)
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-            className: "text-sm text-gray-500 mt-2",
+            className: "text-sm text-gray-500 dark:text-muted-foreground mt-2",
             children: [datosPasivo.conteo.facturas_total, " facturas totales"]
           })]
         })]
@@ -147839,21 +148699,21 @@ var Proveedores = function Proveedores() {
     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "lg:col-span-3",
       children: [datosHistoricos && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "bg-white rounded-lg shadow p-4 md:p-6 mb-6",
+        className: "bg-white dark:bg-card rounded-lg shadow p-4 md:p-6 mb-6 border dark:border-border",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-            className: "text-xl font-bold text-gray-800",
+            className: "text-xl font-bold text-gray-800 dark:text-foreground",
             children: "Historial de Pagos"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             className: "flex mt-2 sm:mt-0",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
               className: "mr-4",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-                className: "text-sm text-gray-600 mr-2",
+                className: "text-sm text-gray-600 dark:text-muted-foreground mr-2",
                 children: "Per\xEDodo:"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
-                className: "text-sm border rounded px-2 py-1",
+                className: "text-sm border dark:border-border bg-white dark:bg-background text-gray-900 dark:text-foreground rounded px-2 py-1",
                 value: periodoHistorico,
                 onChange: function onChange(e) {
                   return setPeriodoHistorico(e.target.value);
@@ -147868,10 +148728,10 @@ var Proveedores = function Proveedores() {
               })]
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-                className: "text-sm text-gray-600 mr-2",
+                className: "text-sm text-gray-600 dark:text-muted-foreground mr-2",
                 children: "Gr\xE1fico:"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
-                className: "text-sm border rounded px-2 py-1",
+                className: "text-sm border dark:border-border bg-white dark:bg-background text-gray-900 dark:text-foreground rounded px-2 py-1",
                 value: tipoGrafico,
                 onChange: function onChange(e) {
                   return setTipoGrafico(e.target.value);
@@ -147891,9 +148751,9 @@ var Proveedores = function Proveedores() {
           })]
         }), renderizarGraficoHistorico()]
       }), datosHistoricos && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "bg-white rounded-lg shadow p-4 md:p-6 mb-6",
+        className: "bg-white dark:bg-card rounded-lg shadow p-4 md:p-6 mb-6 border dark:border-border",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-          className: "text-xl font-bold mb-4 text-gray-800",
+          className: "text-xl font-bold mb-4 text-gray-800 dark:text-foreground",
           children: "Tendencias de Pago"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_2__.ResponsiveContainer, {
           width: "100%",
@@ -147907,7 +148767,9 @@ var Proveedores = function Proveedores() {
               bottom: 50
             },
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-              strokeDasharray: "3 3"
+              strokeDasharray: "3 3",
+              stroke: "currentColor",
+              className: "text-border dark:text-border"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
               dataKey: "etiqueta",
               height: 60,
@@ -147922,7 +148784,8 @@ var Proveedores = function Proveedores() {
                     y: 0,
                     dy: 16,
                     textAnchor: "middle",
-                    fill: "#666",
+                    fill: "currentColor",
+                    className: "text-muted-foreground",
                     style: {
                       fontSize: '12px'
                     },
@@ -147930,9 +148793,20 @@ var Proveedores = function Proveedores() {
                   })
                 });
               }
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {
+              tick: {
+                fill: 'currentColor'
+              },
+              className: "text-muted-foreground"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
               formatter: function formatter(value) {
                 return formatearMoneda(value);
+              },
+              contentStyle: {
+                backgroundColor: 'hsl(var(--background))',
+                border: '1px solid hsl(var(--border))',
+                borderRadius: '6px',
+                color: 'hsl(var(--foreground))'
               }
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_13__.Bar, {
               dataKey: "nuevas_facturas_monto",
@@ -147953,9 +148827,9 @@ var Proveedores = function Proveedores() {
     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: 'flex items-center justify-between flex-col xl:flex-row',
       children: [datosDeuda && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "bg-white rounded-lg shadow p-4 md:p-6 mb-6 w-full xl:w-[45%]",
+        className: "bg-white dark:bg-card rounded-lg shadow p-4 md:p-6 mb-6 w-full xl:w-[45%] border dark:border-border",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-          className: "text-xl font-bold text-gray-800",
+          className: "text-xl font-bold text-gray-800 dark:text-foreground",
           children: "Distribuci\xF3n de Deuda"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_2__.ResponsiveContainer, {
           width: "100%",
@@ -147988,34 +148862,40 @@ var Proveedores = function Proveedores() {
               },
               labelFormatter: function labelFormatter(name) {
                 return "Proveedor: ".concat(name);
+              },
+              contentStyle: {
+                backgroundColor: 'hsl(var(--background))',
+                border: '1px solid hsl(var(--border))',
+                borderRadius: '6px',
+                color: 'hsl(var(--foreground))'
               }
             })]
           })
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "mt-4",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-            className: "font-semibold mb-2",
+            className: "font-semibold mb-2 text-gray-800 dark:text-foreground",
             children: "Principales Proveedores por Deuda"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "max-h-60 overflow-y-auto",
             children: datosDeuda.proveedores.map(function (proveedor) {
               return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: "p-2 mb-1 rounded cursor-pointer hover:bg-gray-100 ".concat(proveedorSeleccionado === proveedor.id ? 'bg-blue-100' : ''),
+                className: "p-2 mb-1 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-muted ".concat(proveedorSeleccionado === proveedor.id ? 'bg-blue-100 dark:bg-accent' : ''),
                 onClick: function onClick() {
                   return manejarSeleccionProveedor(proveedor.id);
                 },
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                   className: "flex justify-between items-center",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                    className: "font-medium truncate mr-2",
+                    className: "font-medium truncate mr-2 text-gray-900 dark:text-foreground",
                     title: proveedor.nombre,
                     children: proveedor.nombre.length > 20 ? "".concat(proveedor.nombre.substring(0, 18), "...") : proveedor.nombre
                   }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                    className: "text-sm whitespace-nowrap",
+                    className: "text-sm whitespace-nowrap text-gray-700 dark:text-foreground",
                     children: formatearMoneda(proveedor.deuda)
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                  className: "text-xs text-gray-500",
+                  className: "text-xs text-gray-500 dark:text-muted-foreground",
                   children: [proveedor.porcentaje.toFixed(1), "% de la deuda total"]
                 })]
               }, proveedor.id);
@@ -148023,13 +148903,13 @@ var Proveedores = function Proveedores() {
           })]
         })]
       }), detalleProveedor && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "bg-white rounded-lg shadow p-4 md:p-6 w-full xl:w-[45%]",
+        className: "bg-white dark:bg-card rounded-lg shadow p-4 md:p-6 w-full xl:w-[45%] border dark:border-border",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-          className: "text-xl font-bold mb-4 text-gray-800 truncate",
+          className: "text-xl font-bold mb-4 text-gray-800 dark:text-foreground truncate",
           title: detalleProveedor.proveedor.nombre,
           children: detalleProveedor.proveedor.nombre
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "mb-4",
+          className: "mb-4 text-gray-700 dark:text-foreground",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
             className: "text-sm",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", {
@@ -148049,82 +148929,83 @@ var Proveedores = function Proveedores() {
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "mb-4",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-            className: "font-semibold mb-2",
+            className: "font-semibold mb-2 text-gray-800 dark:text-foreground",
             children: "Deuda por Antig\xFCedad"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             className: "grid grid-cols-2 gap-2",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              className: "border rounded p-2",
+              className: "border dark:border-border rounded p-2 bg-gray-50 dark:bg-muted",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-xs text-gray-500",
+                className: "text-xs text-gray-500 dark:text-muted-foreground",
                 children: "Actual"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "font-medium",
+                className: "font-medium text-gray-900 dark:text-foreground",
                 children: formatearMoneda(detalleProveedor.deuda_por_antiguedad.current)
               })]
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              className: "border rounded p-2",
+              className: "border dark:border-border rounded p-2 bg-gray-50 dark:bg-muted",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-xs text-gray-500",
+                className: "text-xs text-gray-500 dark:text-muted-foreground",
                 children: "1-30 D\xEDas"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "font-medium",
+                className: "font-medium text-gray-900 dark:text-foreground",
                 children: formatearMoneda(detalleProveedor.deuda_por_antiguedad['1_30'])
               })]
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              className: "border rounded p-2",
+              className: "border dark:border-border rounded p-2 bg-gray-50 dark:bg-muted",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-xs text-gray-500",
+                className: "text-xs text-gray-500 dark:text-muted-foreground",
                 children: "31-60 D\xEDas"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "font-medium",
+                className: "font-medium text-gray-900 dark:text-foreground",
                 children: formatearMoneda(detalleProveedor.deuda_por_antiguedad['31_60'])
               })]
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              className: "border rounded p-2",
+              className: "border dark:border-border rounded p-2 bg-gray-50 dark:bg-muted",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-xs text-gray-500",
+                className: "text-xs text-gray-500 dark:text-muted-foreground",
                 children: "61-90 D\xEDas"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "font-medium",
+                className: "font-medium text-gray-900 dark:text-foreground",
                 children: formatearMoneda(detalleProveedor.deuda_por_antiguedad['61_90'])
               })]
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              className: "border rounded p-2 col-span-2",
+              className: "border dark:border-border rounded p-2 col-span-2 bg-gray-50 dark:bg-muted",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "text-xs text-gray-500",
+                className: "text-xs text-gray-500 dark:text-muted-foreground",
                 children: "M\xE1s de 90 D\xEDas"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                className: "font-medium",
+                className: "font-medium text-gray-900 dark:text-foreground",
                 children: formatearMoneda(detalleProveedor.deuda_por_antiguedad.over_90)
               })]
             })]
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", {
-            className: "font-semibold mb-2",
+            className: "font-semibold mb-2 text-gray-800 dark:text-foreground",
             children: ["Facturas Pendientes (", detalleProveedor.facturas_pendientes_detalle.length, ")"]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "max-h-60 overflow-y-auto",
             children: detalleProveedor.facturas_pendientes_detalle.map(function (factura) {
               return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: "border-b last:border-b-0 py-2",
+                className: "border-b dark:border-border last:border-b-0 py-2",
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                   className: "flex justify-between",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
-                    className: "font-medium truncate mr-2",
+                    className: "font-medium truncate mr-2 text-gray-900 dark:text-foreground",
                     title: "#".concat(factura.nro_factura || factura.nro_documento),
                     children: ["#", factura.nro_factura || factura.nro_documento]
                   }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                    className: "whitespace-nowrap",
+                    className: "whitespace-nowrap text-gray-700 dark:text-foreground",
                     children: formatearMoneda(factura.total)
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                   className: "text-xs flex justify-between flex-wrap",
                   children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
+                    className: "text-gray-500 dark:text-muted-foreground",
                     children: ["Vence: ", new Date(factura.fecha_limite).toLocaleDateString()]
                   }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                    className: "".concat(factura.dias_vencidos > 0 ? 'text-red-600' : 'text-green-600'),
+                    className: "".concat(factura.dias_vencidos > 0 ? 'text-red-600 dark:text-destructive' : 'text-green-600 dark:text-dashboard-green'),
                     children: factura.dias_vencidos > 0 ? "".concat(factura.dias_vencidos, " d\xEDas vencida") : 'No vencida aún'
                   })]
                 })]
@@ -148312,40 +149193,41 @@ var SalesProjection = function SalesProjection() {
   var availableYears = [currentYear - 2, currentYear - 1, currentYear, currentYear + 1];
   if (loading) {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "flex items-center justify-center p-8 min-h-[400px]",
+      className: "flex items-center justify-center p-8 min-h-[400px] dark:bg-background",
       children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "text-center",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-          className: "w-12 h-12 border-4 border-t-dashboard-blue rounded-full animate-spin mx-auto mb-4"
+          className: "w-12 h-12 border-4 border-t-dashboard-blue dark:border-t-primary rounded-full animate-spin mx-auto mb-4"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-          children: "Cargando datos de proyecci\xF3n..."
+          className: "text-foreground dark:text-foreground",
+          children: "Cargando datos de proyecci\xF3n....."
         })]
       })
     });
   }
   if (error) {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "bg-red-50 p-4 rounded-lg",
+      className: "bg-red-50 dark:bg-destructive/10 p-4 rounded-lg",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-        className: "text-xl font-semibold text-red-700 mb-2",
+        className: "text-xl font-semibold text-red-700 dark:text-destructive-foreground mb-2",
         children: "Error"
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-        className: "text-red-600",
+        className: "text-red-600 dark:text-destructive-foreground",
         children: error
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-        className: "mt-2",
+        className: "mt-2 text-red-600 dark:text-destructive-foreground",
         children: "Por favor intente nuevamente m\xE1s tarde o contacte al soporte t\xE9cnico."
       })]
     });
   }
   if (!dashboardData) {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "bg-yellow-50 p-4 rounded-lg",
+      className: "bg-yellow-50 dark:bg-accent/10 p-4 rounded-lg",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-        className: "text-xl font-semibold text-yellow-700 mb-2",
+        className: "text-xl font-semibold text-yellow-700 dark:text-accent-foreground mb-2",
         children: "Sin datos"
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-        className: "text-yellow-600",
+        className: "text-yellow-600 dark:text-muted-foreground",
         children: "No hay datos disponibles para mostrar."
       })]
     });
@@ -148362,11 +149244,11 @@ var SalesProjection = function SalesProjection() {
     });
   });
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in",
+    className: "bg-white dark:bg-card rounded-lg shadow-lg p-4 md:p-6 animate-fade-in",
     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "mb-6 flex flex-col md:flex-row justify-between items-center gap-4",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
-        className: "text-2xl font-bold text-gray-800",
+        className: "text-2xl font-bold text-gray-800 dark:text-gray-100",
         children: "Panel de Proyecciones de Ventas"
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "flex flex-wrap gap-2",
@@ -148374,7 +149256,7 @@ var SalesProjection = function SalesProjection() {
           className: "flex items-center",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
             htmlFor: "year-select",
-            className: "mr-2 text-sm font-medium",
+            className: "mr-2 text-sm font-medium text-gray-700 dark:text-gray-300",
             children: "A\xF1o:"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("select", {
             id: "year-select",
@@ -148382,7 +149264,7 @@ var SalesProjection = function SalesProjection() {
             onChange: function onChange(e) {
               return setSelectedYear(parseInt(e.target.value));
             },
-            className: "rounded-md border-gray-300 shadow-sm focus:border-dashboard-blue focus:ring focus:ring-dashboard-blue focus:ring-opacity-50",
+            className: "rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm focus:border-dashboard-blue focus:ring focus:ring-dashboard-blue focus:ring-opacity-50 px-[20px] py-[5px]",
             children: availableYears.map(function (year) {
               return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
                 value: year,
@@ -148394,7 +149276,7 @@ var SalesProjection = function SalesProjection() {
           className: "flex items-center",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
             htmlFor: "month-select",
-            className: "mr-2 text-sm font-medium",
+            className: "mr-2 text-sm font-medium text-gray-700 dark:text-gray-300",
             children: "Mes:"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("select", {
             id: "month-select",
@@ -148402,7 +149284,7 @@ var SalesProjection = function SalesProjection() {
             onChange: function onChange(e) {
               return setSelectedMonth(parseInt(e.target.value));
             },
-            className: "rounded-md border-gray-300 shadow-sm focus:border-dashboard-blue focus:ring focus:ring-dashboard-blue focus:ring-opacity-50",
+            className: "rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm focus:border-dashboard-blue focus:ring focus:ring-dashboard-blue focus:ring-opacity-50 px-[20px] py-[5px]",
             children: months.map(function (month, index) {
               return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
                 value: index + 1,
@@ -148415,90 +149297,90 @@ var SalesProjection = function SalesProjection() {
     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "bg-white rounded-lg shadow p-4 border-l-4 border-dashboard-blue",
+        className: "bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border-l-4 border-dashboard-blue",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "flex justify-between items-start",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-              className: "text-sm text-gray-500 font-medium",
+              className: "text-sm text-gray-500 dark:text-muted-foreground font-medium",
               children: "Ventas Mes Actual"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-              className: "text-xl font-bold text-dashboard-blue mt-1",
+              className: "text-xl font-bold text-dashboard-blue dark:text-foreground mt-1",
               children: formatCurrency(monthly_projection.sales_to_date)
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-              className: "text-xs text-gray-500 mt-1",
+              className: "text-xs text-gray-500 dark:text-muted-foreground mt-1",
               children: [monthly_projection.days_elapsed, " de ", monthly_projection.total_days, " d\xEDas transcurridos"]
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-            className: "p-2 bg-blue-100 rounded-full",
+            className: "p-2 bg-blue-100 dark:bg-blue-950/30 rounded-full border dark:border-blue-800/30",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_2__["default"], {
-              className: "w-6 h-6 text-dashboard-blue"
+              className: "w-6 h-6 text-dashboard-blue dark:text-blue-400"
             })
           })]
         })
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "bg-white rounded-lg shadow p-4 border-l-4 border-dashboard-purple",
+        className: "bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border-l-4 border-dashboard-purple dark:border-dashboard-purple",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "flex justify-between items-start",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-              className: "text-sm text-gray-500 font-medium",
+              className: "text-sm text-gray-500 dark:text-muted-foreground font-medium",
               children: "Proyecci\xF3n Mensual"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-              className: "text-xl font-bold text-dashboard-purple mt-1",
+              className: "text-xl font-bold text-dashboard-purple dark:text-foreground mt-1",
               children: formatCurrency(monthly_projection.projected_sales)
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-              className: "text-xs text-gray-500 mt-1",
+              className: "text-xs text-gray-500 dark:text-muted-foreground mt-1",
               children: ["Faltan ", monthly_projection.remaining_days, " d\xEDas para fin de mes"]
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-            className: "p-2 bg-purple-100 rounded-full",
+            className: "p-2 bg-purple-100 dark:bg-purple-950/30 rounded-full border dark:border-purple-800/30",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_3__["default"], {
-              className: "w-6 h-6 text-dashboard-purple"
+              className: "w-6 h-6 text-dashboard-purple dark:text-purple-400"
             })
           })]
         })
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "bg-white rounded-lg shadow p-4 border-l-4 border-dashboard-teal",
+        className: "bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border-l-4 border-dashboard-teal dark:border-dashboard-teal",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "flex justify-between items-start",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-              className: "text-sm text-gray-500 font-medium",
+              className: "text-sm text-gray-500 dark:text-muted-foreground font-medium",
               children: "Ventas A\xF1o Actual"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-              className: "text-xl font-bold text-dashboard-teal mt-1",
+              className: "text-xl font-bold text-dashboard-teal dark:text-foreground mt-1",
               children: formatCurrency(annual_projection.sales_to_date)
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-              className: "text-xs text-gray-500 mt-1",
+              className: "text-xs text-gray-500 dark:text-muted-foreground mt-1",
               children: [annual_projection.months_elapsed, " de 12 meses transcurridos"]
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-            className: "p-2 bg-teal-100 rounded-full",
+            className: "p-2 bg-teal-100 dark:bg-teal-950/30 rounded-full border dark:border-teal-800/30",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], {
-              className: "w-6 h-6 text-dashboard-teal"
+              className: "w-6 h-6 text-dashboard-teal dark:text-teal-400"
             })
           })]
         })
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "bg-white rounded-lg shadow p-4 border-l-4 border-dashboard-amber",
+        className: "bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border-l-4 border-dashboard-amber dark:border-dashboard-amber",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "flex justify-between items-start",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-              className: "text-sm text-gray-500 font-medium",
+              className: "text-sm text-gray-500 dark:text-muted-foreground font-medium",
               children: "Proyecci\xF3n Anual"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-              className: "text-xl font-bold text-dashboard-amber mt-1",
+              className: "text-xl font-bold text-dashboard-amber dark:text-foreground mt-1",
               children: formatCurrency(annual_projection.projected_annual_sales)
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-              className: "text-xs text-gray-500 mt-1",
+              className: "text-xs text-gray-500 dark:text-muted-foreground mt-1",
               children: ["Faltan ", annual_projection.remaining_months, " meses para fin de a\xF1o"]
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-            className: "p-2 bg-amber-100 rounded-full",
+            className: "p-2 bg-amber-100 dark:bg-amber-950/30 rounded-full border dark:border-amber-800/30",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], {
-              className: "w-6 h-6 text-dashboard-amber"
+              className: "w-6 h-6 text-dashboard-amber dark:text-amber-400"
             })
           })]
         })
@@ -148506,16 +149388,16 @@ var SalesProjection = function SalesProjection() {
     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "grid grid-cols-1 md:grid-cols-2 gap-6 mb-8",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "bg-white rounded-lg shadow p-5",
+        className: "bg-card dark:bg-card border border-border dark:border-border rounded-lg shadow p-5",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "flex justify-between items-center mb-4",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-            className: "text-lg font-semibold text-gray-800",
+            className: "text-lg font-semibold text-foreground dark:text-foreground",
             children: "Objetivo Mensual"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-            className: "p-2 bg-blue-100 rounded-full",
+            className: "p-2 bg-primary/10 dark:bg-primary/20 rounded-full",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], {
-              className: "w-5 h-5 text-dashboard-blue"
+              className: "w-5 h-5 text-primary dark:text-primary"
             })
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -148523,14 +149405,14 @@ var SalesProjection = function SalesProjection() {
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             className: "flex justify-between mb-1",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
-              className: "text-sm font-medium text-gray-700",
+              className: "text-sm font-medium text-foreground dark:text-foreground",
               children: [formatCurrency(monthly_projection.sales_to_date), " de ", formatCurrency(monthly_projection.objective)]
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
               className: "text-sm font-medium ".concat(getProgressColor(monthly_projection.objective_progress)),
               children: formatPercentage(monthly_projection.objective_progress)
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-            className: "w-full bg-gray-200 rounded-full h-2.5",
+            className: "w-full bg-muted dark:bg-muted rounded-full h-2.5",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
               className: "h-2.5 rounded-full ".concat(getProgressBarColor(monthly_projection.objective_progress)),
               style: {
@@ -148541,14 +149423,14 @@ var SalesProjection = function SalesProjection() {
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "flex flex-col sm:flex-row justify-between items-start sm:items-center text-sm",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "flex items-center text-gray-500 mb-2 sm:mb-0",
+            className: "flex items-center text-muted-foreground dark:text-muted-foreground mb-2 sm:mb-0",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_2__["default"], {
               className: "w-4 h-4 mr-1"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
               children: [monthly_projection.month_name, " ", monthly_projection.year]
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "flex items-center ".concat(monthly_projection.objective_progress >= 100 ? 'text-green-600' : 'text-yellow-600'),
+            className: "flex items-center ".concat(monthly_projection.objective_progress >= 100 ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400'),
             children: [monthly_projection.objective_progress >= 100 ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], {
               className: "w-4 h-4 mr-1"
             }) : (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_8__["default"], {
@@ -148559,16 +149441,16 @@ var SalesProjection = function SalesProjection() {
           })]
         })]
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "bg-white rounded-lg shadow p-5",
+        className: "bg-card dark:bg-card border border-border dark:border-border rounded-lg shadow p-5",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "flex justify-between items-center mb-4",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-            className: "text-lg font-semibold text-gray-800",
+            className: "text-lg font-semibold text-foreground dark:text-foreground",
             children: "Objetivo Anual"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-            className: "p-2 bg-teal-100 rounded-full",
+            className: "p-2 bg-accent/10 dark:bg-accent/20 rounded-full",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], {
-              className: "w-5 h-5 text-dashboard-teal"
+              className: "w-5 h-5 text-accent dark:text-accent"
             })
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -148576,14 +149458,14 @@ var SalesProjection = function SalesProjection() {
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             className: "flex justify-between mb-1",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
-              className: "text-sm font-medium text-gray-700",
+              className: "text-sm font-medium text-foreground dark:text-foreground",
               children: [formatCurrency(annual_projection.sales_to_date), " de ", formatCurrency(annual_projection.annual_objective)]
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
               className: "text-sm font-medium ".concat(getProgressColor(annual_projection.objective_progress)),
               children: formatPercentage(annual_projection.objective_progress)
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-            className: "w-full bg-gray-200 rounded-full h-2.5",
+            className: "w-full bg-muted dark:bg-muted rounded-full h-2.5",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
               className: "h-2.5 rounded-full ".concat(getProgressBarColor(annual_projection.objective_progress)),
               style: {
@@ -148594,14 +149476,14 @@ var SalesProjection = function SalesProjection() {
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "flex flex-col sm:flex-row justify-between items-start sm:items-center text-sm",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "flex items-center text-gray-500 mb-2 sm:mb-0",
+            className: "flex items-center text-muted-foreground dark:text-muted-foreground mb-2 sm:mb-0",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_2__["default"], {
               className: "w-4 h-4 mr-1"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
               children: annual_projection.year
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "flex items-center ".concat(annual_projection.objective_progress >= 100 ? 'text-green-600' : 'text-yellow-600'),
+            className: "flex items-center ".concat(annual_projection.objective_progress >= 100 ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400'),
             children: [annual_projection.objective_progress >= 100 ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], {
               className: "w-4 h-4 mr-1"
             }) : (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_8__["default"], {
@@ -148613,9 +149495,9 @@ var SalesProjection = function SalesProjection() {
         })]
       })]
     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "bg-white rounded-lg shadow p-5",
+      className: "bg-white dark:bg-card rounded-lg shadow p-5 border dark:border-border",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", {
-        className: "text-lg font-semibold text-gray-800 mb-4",
+        className: "text-lg font-semibold text-gray-800 dark:text-foreground mb-4",
         children: ["Progreso Mensual del A\xF1o ", annual_projection.year]
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "h-80",
@@ -148631,32 +149513,71 @@ var SalesProjection = function SalesProjection() {
               bottom: 5
             },
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.CartesianGrid, {
-              strokeDasharray: "3 3"
+              strokeDasharray: "3 3",
+              stroke: "currentColor",
+              className: "text-border dark:text-border opacity-30"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_12__.XAxis, {
-              dataKey: "name"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_13__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_14__.Tooltip, {
+              dataKey: "name",
+              tick: {
+                fill: 'currentColor'
+              },
+              axisLine: {
+                stroke: 'currentColor'
+              },
+              tickLine: {
+                stroke: 'currentColor'
+              },
+              className: "text-muted-foreground"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_13__.YAxis, {
+              tick: {
+                fill: 'currentColor'
+              },
+              axisLine: {
+                stroke: 'currentColor'
+              },
+              tickLine: {
+                stroke: 'currentColor'
+              },
+              className: "text-muted-foreground"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_14__.Tooltip, {
               formatter: function formatter(value, name) {
                 if (name === "sales") return [formatCurrency(Number(value)), "Ventas"];
                 if (name === "objective") return [formatCurrency(Number(value)), "Objetivo"];
                 if (name === "progressPercentage") return [formatPercentage(Number(value)), "Progreso"];
                 return [value, name];
+              },
+              contentStyle: {
+                backgroundColor: 'hsl(var(--background))',
+                border: '1px solid hsl(var(--border))',
+                borderRadius: '6px',
+                color: 'hsl(var(--foreground))',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+              },
+              labelStyle: {
+                color: 'hsl(var(--foreground))'
               }
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_15__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_16__.Bar, {
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_15__.Legend, {
+              wrapperStyle: {
+                color: 'hsl(var(--foreground))'
+              }
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_16__.Bar, {
               dataKey: "sales",
               name: "Ventas",
-              fill: "#3B82F6"
+              fill: "#3B82F6",
+              radius: [2, 2, 0, 0]
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_16__.Bar, {
               dataKey: "objective",
               name: "Objetivo",
-              fill: "#22C55E"
+              fill: "#22C55E",
+              radius: [2, 2, 0, 0]
             })]
           })
         })
       })]
     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "bg-white rounded-lg shadow p-5",
+      className: "bg-card dark:bg-card border border-border dark:border-border rounded-lg shadow p-5",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-        className: "text-lg font-semibold text-gray-800 mb-4",
+        className: "text-lg font-semibold text-foreground dark:text-foreground mb-4",
         children: "Tendencia de Ventas vs Objetivos"
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "h-80",
@@ -148672,108 +149593,132 @@ var SalesProjection = function SalesProjection() {
               bottom: 5
             },
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.CartesianGrid, {
-              strokeDasharray: "3 3"
+              strokeDasharray: "3 3",
+              stroke: "hsl(var(--border))"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_12__.XAxis, {
-              dataKey: "name"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_13__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_14__.Tooltip, {
+              dataKey: "name",
+              tick: {
+                fill: 'hsl(var(--foreground))'
+              },
+              axisLine: {
+                stroke: 'hsl(var(--border))'
+              }
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_13__.YAxis, {
+              tick: {
+                fill: 'hsl(var(--foreground))'
+              },
+              axisLine: {
+                stroke: 'hsl(var(--border))'
+              }
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_14__.Tooltip, {
               formatter: function formatter(value, name) {
                 if (name === "sales") return [formatCurrency(Number(value)), "Ventas"];
                 if (name === "objective") return [formatCurrency(Number(value)), "Objetivo"];
                 if (name === "progressPercentage") return [formatPercentage(Number(value)), "Progreso"];
                 return [value, name];
+              },
+              contentStyle: {
+                backgroundColor: 'hsl(var(--popover))',
+                border: '1px solid hsl(var(--border))',
+                borderRadius: '8px',
+                color: 'hsl(var(--foreground))'
               }
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_15__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_18__.Line, {
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_15__.Legend, {
+              wrapperStyle: {
+                color: 'hsl(var(--foreground))'
+              }
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_18__.Line, {
               type: "monotone",
               dataKey: "sales",
               name: "Ventas",
-              stroke: "#3B82F6",
+              stroke: "hsl(var(--primary))",
               strokeWidth: 2
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_18__.Line, {
               type: "monotone",
               dataKey: "objective",
               name: "Objetivo",
-              stroke: "#22C55E",
+              stroke: "hsl(var(--accent))",
               strokeWidth: 2
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_18__.Line, {
               type: "monotone",
               dataKey: "progressPercentage",
               name: "Progreso %",
-              stroke: "#F59E0B",
+              stroke: "hsl(var(--destructive))",
               strokeWidth: 2
             })]
           })
         })
       })]
     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "bg-white rounded-lg shadow overflow-hidden",
+      className: "bg-card dark:bg-card border border-border dark:border-border rounded-lg shadow overflow-hidden",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "px-5 py-4 border-b",
+        className: "px-5 py-4 border-b border-border dark:border-border",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-          className: "text-lg font-semibold text-gray-800",
+          className: "text-lg font-semibold text-foreground dark:text-foreground",
           children: "Detalle Mensual de Ventas vs Objetivos"
         })
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "overflow-x-auto",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", {
-          className: "min-w-full divide-y divide-gray-200",
+          className: "min-w-full divide-y divide-border dark:divide-border",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", {
-            className: "bg-gray-50",
+            className: "bg-muted dark:bg-muted",
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
                 scope: "col",
-                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                className: "px-6 py-3 text-left text-xs font-medium text-muted-foreground dark:text-muted-foreground uppercase tracking-wider",
                 children: "Mes"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
                 scope: "col",
-                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                className: "px-6 py-3 text-left text-xs font-medium text-muted-foreground dark:text-muted-foreground uppercase tracking-wider",
                 children: "Ventas"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
                 scope: "col",
-                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                className: "px-6 py-3 text-left text-xs font-medium text-muted-foreground dark:text-muted-foreground uppercase tracking-wider",
                 children: "Objetivo"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
                 scope: "col",
-                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                className: "px-6 py-3 text-left text-xs font-medium text-muted-foreground dark:text-muted-foreground uppercase tracking-wider",
                 children: "Progreso"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
                 scope: "col",
-                className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                className: "px-6 py-3 text-left text-xs font-medium text-muted-foreground dark:text-muted-foreground uppercase tracking-wider",
                 children: "Estado"
               })]
             })
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", {
-            className: "bg-white divide-y divide-gray-200",
+            className: "bg-card dark:bg-card divide-y divide-border dark:divide-border",
             children: annual_projection.monthly_breakdown.map(function (month, index) {
               return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                className: selectedMonth === month.month ? "bg-blue-50" : "",
+                className: selectedMonth === month.month ? "bg-primary/10 dark:bg-primary/20" : "",
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900",
+                  className: "px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground dark:text-foreground",
                   children: month.month_name
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "px-6 py-4 whitespace-nowrap text-sm text-gray-500",
+                  className: "px-6 py-4 whitespace-nowrap text-sm text-muted-foreground dark:text-muted-foreground",
                   children: formatCurrency(month.sales)
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "px-6 py-4 whitespace-nowrap text-sm text-gray-500",
+                  className: "px-6 py-4 whitespace-nowrap text-sm text-muted-foreground dark:text-muted-foreground",
                   children: formatCurrency(month.objective)
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "px-6 py-4 whitespace-nowrap text-sm text-gray-500",
+                  className: "px-6 py-4 whitespace-nowrap text-sm text-muted-foreground dark:text-muted-foreground",
                   children: formatPercentage(month.progress)
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
                   className: "px-6 py-4 whitespace-nowrap",
                   children: month.progress >= 100 ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                    className: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800",
+                    className: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400",
                     children: "Completado"
                   }) : month.progress >= 85 ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                    className: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800",
+                    className: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400",
                     children: "En Meta"
                   }) : month.progress >= 70 ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                    className: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800",
+                    className: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400",
                     children: "En Progreso"
                   }) : month.progress > 0 ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                    className: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800",
+                    className: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400",
                     children: "Atrasado"
                   }) : (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                    className: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800",
+                    className: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-muted dark:bg-muted text-muted-foreground dark:text-muted-foreground",
                     children: "Sin Datos"
                   })
                 })]
@@ -148811,14 +149756,11 @@ __webpack_require__.r(__webpack_exports__);
 
 // import PanelAnalisisComparativo from './PanelAnalisisComparativo';
 var Realizar = function Realizar() {
-  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_dashboard_DashboardLayout__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "flex flex-col p-4 bg-gray-50 text-gray-800",
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
-        className: "text-2xl font-bold mb-4",
-        children: "Panel de KPIs"
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_SalesProjection__WEBPACK_IMPORTED_MODULE_3__["default"], {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_Proveedores__WEBPACK_IMPORTED_MODULE_2__["default"], {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_PanelGastosAnalisis__WEBPACK_IMPORTED_MODULE_4__["default"], {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_CostMetricsPanel__WEBPACK_IMPORTED_MODULE_5__["default"], {})]
-    })
+  return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_dashboard_DashboardLayout__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
+      className: "text-2xl font-bold mb-4",
+      children: "Panel de KPIs"
+    }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_SalesProjection__WEBPACK_IMPORTED_MODULE_3__["default"], {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_Proveedores__WEBPACK_IMPORTED_MODULE_2__["default"], {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_PanelGastosAnalisis__WEBPACK_IMPORTED_MODULE_4__["default"], {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_CostMetricsPanel__WEBPACK_IMPORTED_MODULE_5__["default"], {})]
   });
 };
 /* harmony default export */ __webpack_exports__["default"] = (Realizar);
@@ -149216,9 +150158,17 @@ var PanelLoginTiempo = function PanelLoginTiempo() {
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
           className: "text-xl font-semibold mb-3 text-blue-800",
           children: "Tu \xDAltima Sesi\xF3n"
-        }), loading && userLoginTime === null ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-          className: "text-gray-600",
-          children: "Cargando datos de sesi\xF3n..."
+        }), loading && userLoginTime === null ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+          className: "flex items-center justify-center p-8 min-h-[400px] dark:bg-background",
+          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            className: "text-center",
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+              className: "w-12 h-12 border-4 border-t-dashboard-blue dark:border-t-primary rounded-full animate-spin mx-auto mb-4"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+              className: "text-foreground dark:text-foreground",
+              children: "sobreprima....."
+            })]
+          })
         }) : error ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
           className: "text-red-500",
           children: error
@@ -149506,16 +150456,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/ResponsiveContainer.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/LineChart.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/CartesianGrid.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/XAxis.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/YAxis.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Tooltip.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Legend.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Line.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/BarChart.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Bar.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
@@ -149554,7 +150494,6 @@ var __awaiter = undefined && undefined.__awaiter || function (thisArg, _argument
     step((generator = generator.apply(thisArg, _arguments || [])).next());
   });
 };
-
 
 
 // Componente principal
@@ -149792,18 +150731,18 @@ var PanelAnalisisVentas = function PanelAnalisisVentas() {
   // Preparar colores para el gráfico
   var colores = ["#3B82F6", "#10B981", "#F59E0B", "#EF4444", "#8B5CF6", "#14B8A6", "#6366F1", "#06B6D4"];
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "p-6 max-w-7xl mx-auto bg-white rounded-lg shadow-md",
+    className: "p-6 max-w-7xl mx-auto bg-white dark:bg-card rounded-lg shadow-md",
     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
-      className: "text-2xl font-bold mb-6 text-gray-800",
+      className: "text-2xl font-bold mb-6 text-gray-800 dark:text-foreground",
       children: "Panel de An\xE1lisis de Ventas"
     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "mb-6 border-b border-gray-200",
+      className: "mb-6 border-b border-gray-200 dark:border-border",
       children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ul", {
         className: "flex flex-wrap -mb-px",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
           className: "mr-2",
           children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-            className: "inline-block p-4 ".concat(pestanaActiva === "analisis" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500 hover:text-gray-700"),
+            className: "inline-block p-4 ".concat(pestanaActiva === "analisis" ? "text-blue-600 dark:text-primary border-b-2 border-blue-600 dark:border-primary" : "text-gray-500 dark:text-muted-foreground hover:text-gray-700 dark:hover:text-foreground"),
             onClick: function onClick() {
               return cambiarPestana("analisis");
             },
@@ -149812,7 +150751,7 @@ var PanelAnalisisVentas = function PanelAnalisisVentas() {
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
           className: "mr-2",
           children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-            className: "inline-block p-4 ".concat(pestanaActiva === "correlacion" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500 hover:text-gray-700"),
+            className: "inline-block p-4 ".concat(pestanaActiva === "correlacion" ? "text-blue-600 dark:text-primary border-b-2 border-blue-600 dark:border-primary" : "text-gray-500 dark:text-muted-foreground hover:text-gray-700 dark:hover:text-foreground"),
             onClick: function onClick() {
               return cambiarPestana("correlacion");
             },
@@ -149826,7 +150765,7 @@ var PanelAnalisisVentas = function PanelAnalisisVentas() {
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "mb-4",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-          className: "block text-gray-700 text-sm font-bold mb-2",
+          className: "block text-gray-700 dark:text-foreground text-sm font-bold mb-2",
           htmlFor: "fechaInicio",
           children: "Fecha Inicio"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
@@ -149835,13 +150774,13 @@ var PanelAnalisisVentas = function PanelAnalisisVentas() {
           name: "fechaInicio",
           value: parametros.fechaInicio,
           onChange: handleInputChange,
-          className: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+          className: "shadow appearance-none border dark:border-border rounded w-full py-2 px-3 text-gray-700 dark:text-foreground dark:bg-input leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring",
           required: true
         })]
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "mb-4",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-          className: "block text-gray-700 text-sm font-bold mb-2",
+          className: "block text-gray-700 dark:text-foreground text-sm font-bold mb-2",
           htmlFor: "fechaFin",
           children: "Fecha Fin"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
@@ -149850,14 +150789,14 @@ var PanelAnalisisVentas = function PanelAnalisisVentas() {
           name: "fechaFin",
           value: parametros.fechaFin,
           onChange: handleInputChange,
-          className: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+          className: "shadow appearance-none border dark:border-border rounded w-full py-2 px-3 text-gray-700 dark:text-foreground dark:bg-input leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring",
           required: true
         })]
       }), pestanaActiva === "analisis" && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "mb-4",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-            className: "block text-gray-700 text-sm font-bold mb-2",
+            className: "block text-gray-700 dark:text-foreground text-sm font-bold mb-2",
             htmlFor: "tipoPeriodo",
             children: "Tipo de Periodo"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
@@ -149865,7 +150804,7 @@ var PanelAnalisisVentas = function PanelAnalisisVentas() {
             name: "tipoPeriodo",
             value: parametros.tipoPeriodo,
             onChange: handleInputChange,
-            className: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+            className: "shadow appearance-none border dark:border-border rounded w-full py-2 px-3 text-gray-700 dark:text-foreground dark:bg-input leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
               value: "diario",
               children: "Diario"
@@ -149880,7 +150819,7 @@ var PanelAnalisisVentas = function PanelAnalisisVentas() {
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "mb-4",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-            className: "block text-gray-700 text-sm font-bold mb-2",
+            className: "block text-gray-700 dark:text-foreground text-sm font-bold mb-2",
             htmlFor: "local",
             children: "Local"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
@@ -149888,7 +150827,7 @@ var PanelAnalisisVentas = function PanelAnalisisVentas() {
             name: "local",
             value: parametros.local || "",
             onChange: handleInputChange,
-            className: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+            className: "shadow appearance-none border dark:border-border rounded w-full py-2 px-3 text-gray-700 dark:text-foreground dark:bg-input leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
               value: "",
               children: "Todos"
@@ -149903,7 +150842,7 @@ var PanelAnalisisVentas = function PanelAnalisisVentas() {
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "mb-4",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-            className: "block text-gray-700 text-sm font-bold mb-2",
+            className: "block text-gray-700 dark:text-foreground text-sm font-bold mb-2",
             htmlFor: "clima",
             children: "Clima"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
@@ -149911,7 +150850,7 @@ var PanelAnalisisVentas = function PanelAnalisisVentas() {
             name: "clima",
             value: parametros.clima || "",
             onChange: handleInputChange,
-            className: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+            className: "shadow appearance-none border dark:border-border rounded w-full py-2 px-3 text-gray-700 dark:text-foreground dark:bg-input leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
               value: "",
               children: "Todos"
@@ -149925,7 +150864,7 @@ var PanelAnalisisVentas = function PanelAnalisisVentas() {
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "mb-4",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-            className: "block text-gray-700 text-sm font-bold mb-2",
+            className: "block text-gray-700 dark:text-foreground text-sm font-bold mb-2",
             htmlFor: "tipoGrafico",
             children: "Tipo de Gr\xE1fico"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
@@ -149935,7 +150874,7 @@ var PanelAnalisisVentas = function PanelAnalisisVentas() {
             onChange: function onChange(e) {
               return setTipoGrafico(e.target.value);
             },
-            className: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+            className: "shadow appearance-none border dark:border-border rounded w-full py-2 px-3 text-gray-700 dark:text-foreground dark:bg-input leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring",
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
               value: "linea",
               children: "L\xEDnea"
@@ -149949,13 +150888,13 @@ var PanelAnalisisVentas = function PanelAnalisisVentas() {
         className: "col-span-1 md:col-span-2 lg:col-span-3 flex justify-end",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
           type: "submit",
-          className: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline",
+          className: "bg-blue-500 dark:bg-primary hover:bg-blue-700 dark:hover:bg-primary/90 text-white dark:text-primary-foreground font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring",
           disabled: cargando,
           children: cargando ? "Cargando..." : "Analizar"
         })
       })]
     }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6",
+      className: "bg-red-100 dark:bg-destructive/20 border border-red-400 dark:border-destructive text-red-700 dark:text-destructive-foreground px-4 py-3 rounded relative mb-6",
       role: "alert",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", {
         className: "font-bold",
@@ -149967,123 +150906,86 @@ var PanelAnalisisVentas = function PanelAnalisisVentas() {
     }), pestanaActiva === "analisis" && resultadoAnalisis && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "mt-8",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", {
-        className: "text-xl font-semibold mb-4",
+        className: "text-xl font-semibold mb-4 text-foreground dark:text-foreground",
         children: ["An\xE1lisis de Ventas (", resultadoAnalisis.parametros.fecha_inicio, " a ", resultadoAnalisis.parametros.fecha_fin, ")"]
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "mb-4 p-4 bg-gray-50 rounded-lg",
+        className: "mb-4 p-4 bg-gray-50 dark:bg-muted rounded-lg",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-          className: "text-lg font-medium mb-2",
+          className: "text-lg font-medium mb-2 text-foreground dark:text-foreground",
           children: "Par\xE1metros"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "grid grid-cols-2 md:grid-cols-3 gap-4",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-              className: "font-semibold",
+              className: "font-semibold text-foreground dark:text-foreground",
               children: "Periodo:"
             }), " ", resultadoAnalisis.parametros.tipo_periodo]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-              className: "font-semibold",
+              className: "font-semibold text-foreground dark:text-foreground",
               children: "Local:"
             }), " ", resultadoAnalisis.parametros.local]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-              className: "font-semibold",
+              className: "font-semibold text-foreground dark:text-foreground",
               children: "Clima:"
             }), " ", resultadoAnalisis.parametros.clima]
           })]
         })]
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "h-96 w-full mb-8",
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_2__.ResponsiveContainer, {
-          width: "100%",
-          height: "100%",
-          children: tipoGrafico === "linea" ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_3__.LineChart, {
-            data: prepararDatosGrafico(),
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-              strokeDasharray: "3 3"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
-              dataKey: "nombre"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), resultadoAnalisis.datos_grafico.datasets.map(function (dataset, index) {
-              return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, {
-                type: "monotone",
-                dataKey: dataset.label,
-                name: dataset.label,
-                stroke: colores[index % colores.length],
-                activeDot: {
-                  r: 8
-                }
-              }, dataset.label);
-            })]
-          }) : (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_10__.BarChart, {
-            data: prepararDatosGrafico(),
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-              strokeDasharray: "3 3"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
-              dataKey: "nombre"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), resultadoAnalisis.datos_grafico.datasets.map(function (dataset, index) {
-              return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Bar, {
-                dataKey: dataset.label,
-                name: dataset.label,
-                fill: colores[index % colores.length]
-              }, dataset.label);
-            })]
-          })
-        })
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "overflow-x-auto",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-          className: "text-lg font-medium mb-2",
+          className: "text-lg font-medium mb-2 text-foreground dark:text-foreground",
           children: "Datos Detallados"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", {
-          className: "min-w-full bg-white border border-gray-300",
+          className: "min-w-full bg-white dark:bg-card border border-gray-300 dark:border-border",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", {
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b",
+                className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                 children: "Periodo"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b",
+                className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                 children: "Local"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b",
+                className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                 children: "Clima"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b",
+                className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                 children: "Ventas Totales"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b",
+                className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                 children: "Alimentos"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b",
+                className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                 children: "Bebidas"
               })]
             })
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", {
             children: resultadoAnalisis.datos_completos.map(function (dato, index) {
               return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                className: index % 2 === 0 ? "bg-gray-50" : "",
+                className: index % 2 === 0 ? "bg-gray-50 dark:bg-muted/50" : "bg-white dark:bg-card",
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-2 px-4 border-b",
+                  className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                   children: dato.periodo
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-2 px-4 border-b",
+                  className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                   children: dato.local
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-2 px-4 border-b",
+                  className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                   children: dato.clima
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("td", {
-                  className: "py-2 px-4 border-b text-right",
+                  className: "py-2 px-4 border-b dark:border-border text-right text-foreground dark:text-foreground",
                   children: ["$", dato.total_ventas.toLocaleString(undefined, {
                     minimumFractionDigits: 2
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("td", {
-                  className: "py-2 px-4 border-b text-right",
+                  className: "py-2 px-4 border-b dark:border-border text-right text-foreground dark:text-foreground",
                   children: ["$", dato.ventas_alimentos.toLocaleString(undefined, {
                     minimumFractionDigits: 2
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("td", {
-                  className: "py-2 px-4 border-b text-right",
+                  className: "py-2 px-4 border-b dark:border-border text-right text-foreground dark:text-foreground",
                   children: ["$", dato.ventas_bebidas.toLocaleString(undefined, {
                     minimumFractionDigits: 2
                   })]
@@ -150096,110 +150998,72 @@ var PanelAnalisisVentas = function PanelAnalisisVentas() {
     }), pestanaActiva === "correlacion" && correlacionClimaVentas && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "mt-8",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", {
-        className: "text-xl font-semibold mb-4",
+        className: "text-xl font-semibold mb-4 text-foreground dark:text-foreground",
         children: ["Correlaci\xF3n Clima-Ventas (", correlacionClimaVentas.periodo.fecha_inicio, " a ", correlacionClimaVentas.periodo.fecha_fin, ")"]
-      }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "h-96 w-full mb-8",
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_2__.ResponsiveContainer, {
-          width: "100%",
-          height: "100%",
-          children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(recharts__WEBPACK_IMPORTED_MODULE_10__.BarChart, {
-            data: correlacionClimaVentas.data,
-            margin: {
-              top: 20,
-              right: 30,
-              left: 20,
-              bottom: 5
-            },
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-              strokeDasharray: "3 3"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
-              dataKey: "clima"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
-              formatter: function formatter(value) {
-                return "$".concat(Number(value).toLocaleString(undefined, {
-                  minimumFractionDigits: 2
-                }));
-              }
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Bar, {
-              dataKey: "total_ventas",
-              name: "Ventas Totales",
-              fill: "#3B82F6"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Bar, {
-              dataKey: "ventas_alimentos",
-              name: "Ventas Alimentos",
-              fill: "#10B981"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_11__.Bar, {
-              dataKey: "ventas_bebidas",
-              name: "Ventas Bebidas",
-              fill: "#F59E0B"
-            })]
-          })
-        })
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "overflow-x-auto",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-          className: "text-lg font-medium mb-2",
+          className: "text-lg font-medium mb-2 text-foreground dark:text-foreground",
           children: "Detalle por Clima"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", {
-          className: "min-w-full bg-white border border-gray-300",
+          className: "min-w-full bg-white dark:bg-card border border-gray-300 dark:border-border",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", {
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b",
+                className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                 children: "Clima"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b",
+                className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                 children: "D\xEDas"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b",
+                className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                 children: "Ventas Totales"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b",
+                className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                 children: "Promedio Diario"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b",
+                className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                 children: "Alimentos"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b",
+                className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                 children: "Bebidas"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "py-2 px-4 border-b",
+                className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                 children: "Ratio A/B"
               })]
             })
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", {
             children: correlacionClimaVentas.data.map(function (dato, index) {
               return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                className: index % 2 === 0 ? "bg-gray-50" : "",
+                className: index % 2 === 0 ? "bg-gray-50 dark:bg-muted/50" : "bg-white dark:bg-card",
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-2 px-4 border-b",
+                  className: "py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground",
                   children: dato.clima
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-2 px-4 border-b text-center",
+                  className: "py-2 px-4 border-b dark:border-border text-center text-foreground dark:text-foreground",
                   children: dato.dias
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("td", {
-                  className: "py-2 px-4 border-b text-right",
+                  className: "py-2 px-4 border-b dark:border-border text-right text-foreground dark:text-foreground",
                   children: ["$", dato.total_ventas.toLocaleString(undefined, {
                     minimumFractionDigits: 2
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("td", {
-                  className: "py-2 px-4 border-b text-right",
+                  className: "py-2 px-4 border-b dark:border-border text-right text-foreground dark:text-foreground",
                   children: ["$", dato.promedio_ventas_por_dia.toLocaleString(undefined, {
                     minimumFractionDigits: 2
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("td", {
-                  className: "py-2 px-4 border-b text-right",
+                  className: "py-2 px-4 border-b dark:border-border text-right text-foreground dark:text-foreground",
                   children: ["$", dato.ventas_alimentos.toLocaleString(undefined, {
                     minimumFractionDigits: 2
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("td", {
-                  className: "py-2 px-4 border-b text-right",
+                  className: "py-2 px-4 border-b dark:border-border text-right text-foreground dark:text-foreground",
                   children: ["$", dato.ventas_bebidas.toLocaleString(undefined, {
                     minimumFractionDigits: 2
                   })]
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "py-2 px-4 border-b text-right",
+                  className: "py-2 px-4 border-b dark:border-border text-right text-foreground dark:text-foreground",
                   children: (dato.ventas_alimentos / dato.ventas_bebidas).toFixed(2)
                 })]
               }, index);
@@ -150207,12 +151071,12 @@ var PanelAnalisisVentas = function PanelAnalisisVentas() {
           })]
         })]
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "mt-8 p-4 bg-blue-50 rounded-lg",
+        className: "mt-8 p-4 bg-blue-50 dark:bg-accent/20 rounded-lg",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-          className: "text-lg font-medium mb-2",
+          className: "text-lg font-medium mb-2 text-foreground dark:text-foreground",
           children: "Insights"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ul", {
-          className: "list-disc pl-6",
+          className: "list-disc pl-6 text-foreground dark:text-foreground",
           children: [correlacionClimaVentas.data.length > 0 && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", {
               className: "mb-2",
@@ -150341,18 +151205,18 @@ var MetricCard = function MetricCard(_ref) {
     subvalue = _ref.subvalue,
     trend = _ref.trend;
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "bg-white rounded-lg shadow p-4 flex flex-col",
+    className: "bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 flex flex-col border dark:border-border",
     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "text-gray-500 text-sm mb-1",
+      className: "text-gray-500 dark:text-muted-foreground text-sm mb-1",
       children: title
     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "text-2xl font-semibold mb-1",
+      className: "text-2xl font-semibold mb-1 text-foreground dark:text-card-foreground",
       children: value
     }), subvalue && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "text-sm text-gray-600",
+      className: "text-sm text-gray-600 dark:text-muted-foreground",
       children: subvalue
     }), trend !== undefined && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "text-sm mt-2 ".concat(trend >= 0 ? 'text-green-500' : 'text-red-500', " flex items-center"),
+      className: "text-sm mt-2 flex items-center ".concat(trend >= 0 ? 'text-green-500 dark:text-green-400' : 'text-red-500 dark:text-red-400'),
       children: [trend >= 0 ? '↑' : '↓', " ", Math.abs(trend), "%"]
     })]
   });
@@ -150362,9 +151226,9 @@ var ProgressBar = function ProgressBar(_ref2) {
   var progress = _ref2.progress;
   var width = Math.min(100, Math.max(0, progress));
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-    className: "w-full bg-gray-200 rounded-full h-4 mt-2",
+    className: "w-full bg-gray-200 dark:bg-muted rounded-full h-4 mt-2 border dark:border-border",
     children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "h-4 rounded-full ".concat(width < 70 ? 'bg-yellow-500' : 'bg-green-500'),
+      className: "h-4 rounded-full transition-all duration-300 ".concat(width < 70 ? 'bg-yellow-500 dark:bg-yellow-400' : 'bg-green-500 dark:bg-green-400'),
       style: {
         width: "".concat(width, "%")
       }
@@ -150629,41 +151493,41 @@ var PanelVentas = function PanelVentas() {
   // Componente de navegación
   var Navigation = function Navigation() {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in",
+      className: "bg-white dark:bg-card rounded-lg shadow-lg p-4 md:p-6 animate-fade-in border dark:border-border",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
-        className: "text-2xl font-bold mb-4",
+        className: "text-2xl font-bold mb-4 text-foreground dark:text-card-foreground",
         children: "Panel Anal\xEDtico de Ventas"
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "flex flex-wrap gap-4 text-white",
+        className: "flex flex-wrap gap-4 text-white dark:text-card-foreground",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
           onClick: function onClick() {
             return handleViewChange('dashboard');
           },
-          className: "px-4 py-2 rounded ".concat(view === 'dashboard' ? 'bg-blue-600' : 'bg-gray-700'),
+          className: "px-4 py-2 rounded transition-colors ".concat(view === 'dashboard' ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground' : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'),
           children: "Dashboard"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
           onClick: function onClick() {
             return handleViewChange('sales');
           },
-          className: "px-4 py-2 rounded ".concat(view === 'sales' ? 'bg-blue-600' : 'bg-gray-700'),
+          className: "px-4 py-2 rounded transition-colors ".concat(view === 'sales' ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground' : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'),
           children: "Ventas por Per\xEDodo"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
           onClick: function onClick() {
             return handleViewChange('categories');
           },
-          className: "px-4 py-2 rounded ".concat(view === 'categories' ? 'bg-blue-600' : 'bg-gray-700'),
+          className: "px-4 py-2 rounded transition-colors ".concat(view === 'categories' ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground' : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'),
           children: "Ventas por Categor\xEDa"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
           onClick: function onClick() {
             return handleViewChange('targets');
           },
-          className: "px-4 py-2 rounded ".concat(view === 'targets' ? 'bg-blue-600' : 'bg-gray-700'),
+          className: "px-4 py-2 rounded transition-colors ".concat(view === 'targets' ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground' : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'),
           children: "Objetivos de Ventas"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
           onClick: function onClick() {
             return handleViewChange('comparison');
           },
-          className: "px-4 py-2 rounded ".concat(view === 'comparison' ? 'bg-blue-600' : 'bg-gray-700'),
+          className: "px-4 py-2 rounded transition-colors ".concat(view === 'comparison' ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground' : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'),
           children: "Comparativa"
         })]
       })]
@@ -150672,17 +151536,17 @@ var PanelVentas = function PanelVentas() {
   // Componente de filtros
   var Filters = function Filters() {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "bg-gray-100 p-4 mb-4 rounded-lg",
+      className: "bg-gray-100 dark:bg-muted p-4 mb-4 rounded-lg border dark:border-border",
       children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "flex flex-wrap gap-4 items-center",
         children: [view !== 'dashboard' && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-              className: "block text-sm font-medium text-gray-700 mb-1",
+              className: "block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1",
               children: "Desde"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
               type: "date",
-              className: "p-2 border rounded",
+              className: "p-2 border dark:border-border rounded bg-white dark:bg-card text-foreground dark:text-card-foreground focus:ring-2 focus:ring-primary dark:focus:ring-primary focus:border-transparent",
               value: startDate,
               onChange: function onChange(e) {
                 return setStartDate(e.target.value);
@@ -150690,11 +151554,11 @@ var PanelVentas = function PanelVentas() {
             })]
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-              className: "block text-sm font-medium text-gray-700 mb-1",
+              className: "block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1",
               children: "Hasta"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
               type: "date",
-              className: "p-2 border rounded",
+              className: "p-2 border dark:border-border rounded bg-white dark:bg-card text-foreground dark:text-card-foreground focus:ring-2 focus:ring-primary dark:focus:ring-primary focus:border-transparent",
               value: endDate,
               onChange: function onChange(e) {
                 return setEndDate(e.target.value);
@@ -150703,10 +151567,10 @@ var PanelVentas = function PanelVentas() {
           })]
         }), (view === 'sales' || view === 'comparison') && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
-            className: "block text-sm font-medium text-gray-700 mb-1",
+            className: "block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1",
             children: "Per\xEDodo"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", {
-            className: "p-2 border rounded",
+            className: "p-2 border dark:border-border rounded bg-white dark:bg-card text-foreground dark:text-card-foreground focus:ring-2 focus:ring-primary dark:focus:ring-primary focus:border-transparent",
             value: period,
             onChange: handlePeriodChange,
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", {
@@ -150721,7 +151585,7 @@ var PanelVentas = function PanelVentas() {
             })]
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
-          className: "bg-blue-600 text-white px-4 py-2 rounded mt-4 md:mt-0",
+          className: "bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground px-4 py-2 rounded mt-4 md:mt-0 hover:bg-blue-700 dark:hover:bg-primary/90 focus:ring-2 focus:ring-blue-500 dark:focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background transition-colors",
           onClick: function onClick() {
             if (view === 'dashboard') loadDashboard();else if (view === 'sales') loadSalesData();else if (view === 'categories') loadCategorySales();else if (view === 'targets') loadTargets();else if (view === 'comparison') loadComparison();
           },
@@ -150757,9 +151621,9 @@ var PanelVentas = function PanelVentas() {
           subvalue: "".concat(summary.days_left_in_month, " d\xEDas restantes")
         })]
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "bg-white rounded-lg shadow p-4",
+        className: "bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border dark:border-border",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-          className: "text-lg font-semibold mb-4",
+          className: "text-lg font-semibold mb-4 text-foreground dark:text-card-foreground",
           children: "Progreso hacia el objetivo"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(ProgressBar, {
           progress: summary.month_progress
@@ -150767,9 +151631,9 @@ var PanelVentas = function PanelVentas() {
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "grid grid-cols-1 md:grid-cols-2 gap-6",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-white rounded-lg shadow p-4",
+          className: "bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border dark:border-border",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-            className: "text-lg font-semibold mb-4",
+            className: "text-lg font-semibold mb-4 text-foreground dark:text-card-foreground",
             children: "Ventas Recientes"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "h-80",
@@ -150785,26 +151649,41 @@ var PanelVentas = function PanelVentas() {
                   bottom: 5
                 },
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-                  strokeDasharray: "3 3"
+                  strokeDasharray: "3 3",
+                  className: "stroke-gray-200 dark:stroke-border"
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
-                  dataKey: "period"
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
+                  dataKey: "period",
+                  className: "fill-gray-600 dark:fill-muted-foreground"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {
+                  className: "fill-gray-600 dark:fill-muted-foreground"
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
                   formatter: function formatter(value) {
                     return formatCurrency(Number(value));
+                  },
+                  contentStyle: {
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '6px',
+                    color: 'hsl(var(--card-foreground))'
                   }
-                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, {
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {
+                  wrapperStyle: {
+                    color: 'hsl(var(--foreground))'
+                  }
+                }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, {
                   type: "monotone",
                   dataKey: "total",
-                  stroke: "#8884d8",
-                  name: "Ventas Totales"
+                  stroke: "hsl(var(--primary))",
+                  name: "Ventas Totales",
+                  strokeWidth: 2
                 })]
               })
             })
           })]
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "bg-white rounded-lg shadow p-4",
+          className: "bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border dark:border-border",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-            className: "text-lg font-semibold mb-4",
+            className: "text-lg font-semibold mb-4 text-foreground dark:text-card-foreground",
             children: "M\xE9todos de Pago"
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "h-80",
@@ -150823,17 +151702,23 @@ var PanelVentas = function PanelVentas() {
                     return "".concat(name, ": ").concat((percent * 100).toFixed(0), "%");
                   },
                   outerRadius: 80,
-                  fill: "#8884d8",
+                  fill: "hsl(var(--primary))",
                   dataKey: "total",
                   nameKey: "name",
                   children: payment_methods.map(function (entry, index) {
                     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_12__.Cell, {
-                      fill: COLORS[index % COLORS.length]
+                      fill: "hsl(".concat(220 + index * 40, " 70% ").concat(50 + index * 10, "%)")
                     }, "cell-".concat(index));
                   })
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
                   formatter: function formatter(value) {
                     return formatCurrency(Number(value));
+                  },
+                  contentStyle: {
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '6px',
+                    color: 'hsl(var(--card-foreground))'
                   }
                 })]
               })
@@ -150846,9 +151731,9 @@ var PanelVentas = function PanelVentas() {
   // Componente para visualizar ventas por período
   var SalesByPeriod = function SalesByPeriod() {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "bg-white rounded-lg shadow p-4",
+      className: "bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border dark:border-border",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", {
-        className: "text-lg font-semibold mb-4",
+        className: "text-lg font-semibold mb-4 text-foreground dark:text-card-foreground",
         children: ["Ventas por ", period === 'day' ? 'Día' : period === 'week' ? 'Semana' : 'Mes']
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "h-96",
@@ -150864,28 +151749,45 @@ var PanelVentas = function PanelVentas() {
               bottom: 5
             },
             children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-              strokeDasharray: "3 3"
+              strokeDasharray: "3 3",
+              className: "stroke-gray-200 dark:stroke-border"
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
-              dataKey: "period"
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
+              dataKey: "period",
+              className: "fill-gray-600 dark:fill-muted-foreground"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {
+              className: "fill-gray-600 dark:fill-muted-foreground"
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
               formatter: function formatter(value) {
                 return formatCurrency(Number(value));
+              },
+              contentStyle: {
+                backgroundColor: 'hsl(var(--card))',
+                border: '1px solid hsl(var(--border))',
+                borderRadius: '6px',
+                color: 'hsl(var(--card-foreground))'
               }
-            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, {
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {
+              wrapperStyle: {
+                color: 'hsl(var(--foreground))'
+              }
+            }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, {
               type: "monotone",
               dataKey: "total",
-              stroke: "#8884d8",
-              name: "Ventas Totales"
+              stroke: "hsl(var(--primary))",
+              name: "Ventas Totales",
+              strokeWidth: 2
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, {
               type: "monotone",
               dataKey: "ventas_fiscal",
-              stroke: "#82ca9d",
-              name: "Ventas Fiscales"
+              stroke: "hsl(var(--accent))",
+              name: "Ventas Fiscales",
+              strokeWidth: 2
             }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, {
               type: "monotone",
               dataKey: "ventas_no_fiscal",
-              stroke: "#ff7300",
-              name: "Ventas No Fiscales"
+              stroke: "hsl(var(--destructive))",
+              name: "Ventas No Fiscales",
+              strokeWidth: 2
             })]
           })
         })
@@ -150922,9 +151824,9 @@ var PanelVentas = function PanelVentas() {
           value: formatCurrency(categorySales.beverages.total)
         })]
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "bg-white rounded-lg shadow p-4",
+        className: "bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border dark:border-border",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-          className: "text-lg font-semibold mb-4",
+          className: "text-lg font-semibold mb-4 text-foreground dark:text-card-foreground",
           children: "Ventas por Categor\xEDa"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
           className: "h-96",
@@ -150940,20 +151842,34 @@ var PanelVentas = function PanelVentas() {
                 bottom: 5
               },
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-                strokeDasharray: "3 3"
+                strokeDasharray: "3 3",
+                className: "stroke-gray-200 dark:stroke-border"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
-                dataKey: "period"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
+                dataKey: "period",
+                className: "fill-gray-600 dark:fill-muted-foreground"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {
+                className: "fill-gray-600 dark:fill-muted-foreground"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
                 formatter: function formatter(value) {
                   return formatCurrency(Number(value));
+                },
+                contentStyle: {
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))',
+                  borderRadius: '6px',
+                  color: 'hsl(var(--card-foreground))'
                 }
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_14__.Bar, {
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {
+                wrapperStyle: {
+                  color: 'hsl(var(--foreground))'
+                }
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_14__.Bar, {
                 dataKey: "alimentos",
-                fill: "#8884d8",
+                fill: "hsl(var(--primary))",
                 name: "Alimentos"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_14__.Bar, {
                 dataKey: "bebidas",
-                fill: "#82ca9d",
+                fill: "hsl(var(--accent))",
                 name: "Bebidas"
               })]
             })
@@ -150967,9 +151883,9 @@ var PanelVentas = function PanelVentas() {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "space-y-6",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "bg-white rounded-lg shadow p-4",
+        className: "bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border dark:border-border",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-          className: "text-lg font-semibold mb-4",
+          className: "text-lg font-semibold mb-4 text-foreground dark:text-card-foreground",
           children: "Objetivos de Ventas Mensuales"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
           className: "h-96",
@@ -150985,70 +151901,84 @@ var PanelVentas = function PanelVentas() {
                 bottom: 5
               },
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-                strokeDasharray: "3 3"
+                strokeDasharray: "3 3",
+                className: "stroke-gray-200 dark:stroke-border"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
-                dataKey: "month_name"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
+                dataKey: "month_name",
+                className: "fill-gray-600 dark:fill-muted-foreground"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {
+                className: "fill-gray-600 dark:fill-muted-foreground"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
                 formatter: function formatter(value) {
                   return formatCurrency(Number(value));
                 },
                 labelFormatter: function labelFormatter(label) {
                   return "Mes: ".concat(label);
+                },
+                contentStyle: {
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))',
+                  borderRadius: '6px',
+                  color: 'hsl(var(--card-foreground))'
                 }
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_14__.Bar, {
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {
+                wrapperStyle: {
+                  color: 'hsl(var(--foreground))'
+                }
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_14__.Bar, {
                 dataKey: "target",
-                fill: "#8884d8",
+                fill: "hsl(var(--primary))",
                 name: "Objetivo"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_14__.Bar, {
                 dataKey: "actual",
-                fill: "#82ca9d",
+                fill: "hsl(var(--accent))",
                 name: "Real"
               })]
             })
           })
         })]
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "overflow-x-auto",
+        className: "overflow-x-auto bg-white dark:bg-card rounded-lg shadow dark:shadow-lg border dark:border-border",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", {
           className: "w-full border-collapse",
           children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", {
             children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-              className: "bg-gray-200",
+              className: "bg-gray-200 dark:bg-muted",
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "p-2 text-left",
+                className: "p-2 text-left text-gray-800 dark:text-muted-foreground",
                 children: "Mes"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "p-2 text-right",
+                className: "p-2 text-right text-gray-800 dark:text-muted-foreground",
                 children: "Objetivo"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "p-2 text-right",
+                className: "p-2 text-right text-gray-800 dark:text-muted-foreground",
                 children: "Real"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "p-2 text-right",
+                className: "p-2 text-right text-gray-800 dark:text-muted-foreground",
                 children: "Diferencia"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", {
-                className: "p-2 text-right",
+                className: "p-2 text-right text-gray-800 dark:text-muted-foreground",
                 children: "% Cumplimiento"
               })]
             })
           }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", {
             children: targetsData.map(function (target, index) {
               return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
-                className: "border-b",
+                className: "border-b border-gray-200 dark:border-border hover:bg-gray-50 dark:hover:bg-muted/50 transition-colors",
                 children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "p-2",
+                  className: "p-2 text-foreground dark:text-card-foreground",
                   children: target.month_name
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "p-2 text-right",
+                  className: "p-2 text-right text-foreground dark:text-card-foreground",
                   children: formatCurrency(target.target)
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "p-2 text-right",
+                  className: "p-2 text-right text-foreground dark:text-card-foreground",
                   children: formatCurrency(target.actual)
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", {
-                  className: "p-2 text-right ".concat(target.difference >= 0 ? 'text-green-600' : 'text-red-600'),
+                  className: "p-2 text-right ".concat(target.difference >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'),
                   children: formatCurrency(target.difference)
                 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("td", {
-                  className: "p-2 text-right ".concat(target.achievement_percentage >= 100 ? 'text-green-600' : target.achievement_percentage >= 90 ? 'text-yellow-600' : 'text-red-600'),
+                  className: "p-2 text-right ".concat(target.achievement_percentage >= 100 ? 'text-green-600 dark:text-green-400' : target.achievement_percentage >= 90 ? 'text-yellow-600 dark:text-yellow-400' : 'text-red-600 dark:text-red-400'),
                   children: [target.achievement_percentage.toFixed(1), "%"]
                 })]
               }, index);
@@ -151091,9 +152021,9 @@ var PanelVentas = function PanelVentas() {
           trend: comparisonData.growth_percentage
         })]
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "bg-white rounded-lg shadow p-4",
+        className: "bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border dark:border-border",
         children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", {
-          className: "text-lg font-semibold mb-4",
+          className: "text-lg font-semibold mb-4 text-foreground dark:text-card-foreground",
           children: "Comparativa de Ventas"
         }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
           className: "h-96",
@@ -151109,24 +152039,40 @@ var PanelVentas = function PanelVentas() {
                 bottom: 5
               },
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_4__.CartesianGrid, {
-                strokeDasharray: "3 3"
+                strokeDasharray: "3 3",
+                className: "stroke-gray-200 dark:stroke-border"
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_5__.XAxis, {
-                dataKey: "period"
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
+                dataKey: "period",
+                className: "fill-gray-600 dark:fill-muted-foreground"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_6__.YAxis, {
+                className: "fill-gray-600 dark:fill-muted-foreground"
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_7__.Tooltip, {
                 formatter: function formatter(value) {
                   return formatCurrency(Number(value));
+                },
+                contentStyle: {
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))',
+                  borderRadius: '6px',
+                  color: 'hsl(var(--card-foreground))'
                 }
-              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, {
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_8__.Legend, {
+                wrapperStyle: {
+                  color: 'hsl(var(--foreground))'
+                }
+              }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, {
                 type: "monotone",
                 dataKey: "actual",
-                stroke: "#8884d8",
-                name: "Per\xEDodo Actual"
+                stroke: "hsl(var(--primary))",
+                name: "Per\xEDodo Actual",
+                strokeWidth: 2
               }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(recharts__WEBPACK_IMPORTED_MODULE_9__.Line, {
                 type: "monotone",
                 dataKey: "anterior",
-                stroke: "#82ca9d",
+                stroke: "hsl(var(--accent))",
                 name: "Per\xEDodo Anterior",
-                strokeDasharray: "3 3"
+                strokeDasharray: "3 3",
+                strokeWidth: 2
               })]
             })
           })
@@ -151135,16 +152081,22 @@ var PanelVentas = function PanelVentas() {
     });
   };
   return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "min-h-screen bg-gray-50",
+    className: "min-h-screen bg-gray-50 dark:bg-background",
     children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(Navigation, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "p-4 bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in mt-[50px]",
+      className: "p-4 bg-white dark:bg-card rounded-lg shadow-lg p-4 md:p-6 animate-fade-in mt-[50px] border dark:border-border",
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(Filters, {}), loading ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "flex justify-center items-center py-12",
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-          className: "animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
+        className: "flex items-center justify-center p-8 min-h-[400px] dark:bg-background",
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          className: "text-center",
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+            className: "w-12 h-12 border-4 border-t-dashboard-blue dark:border-t-primary rounded-full animate-spin mx-auto mb-4"
+          }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+            className: "text-foreground dark:text-foreground",
+            children: "sobreprima....."
+          })]
         })
       }) : error ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded",
+        className: "bg-red-100 dark:bg-destructive/10 border border-red-400 dark:border-destructive text-red-700 dark:text-destructive-foreground px-4 py-3 rounded",
         children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
           children: ["Error: ", error]
         })

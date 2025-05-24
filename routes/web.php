@@ -10,13 +10,25 @@ Auth::routes();
 require __DIR__ . '/auth.php';
 
 //Route::middleware('web')->middleware('auth')
+
 Route::middleware('web')
     ->group(function () {
         Route::get('/', 'HomeController@index')->name('inicio');
         //Route::get  ('/',                  'ReclamosController@inicio')                 ->name('inicio');
+    
 
+        // Route::get('/authUser', function () {
+        //     $userId = Auth::id();
+        //     return $userId
+        // });
+        Route::get('/authUserName', function () {
+            $userName = Auth::user()->name;
+            return $userName;
+        });
 
-        Route::view('/resumenVer', 'crm.graficos.resumenVer')->name('graficos.resumenVer');
+        Route::get('/{any}', function () {
+            return view('crm.plantillas.resumenVer');
+        })->where('any', '.*');
 
         Route::prefix('resultados')
             ->middleware('permission:ver_estadísticas')
@@ -31,12 +43,12 @@ Route::middleware('web')
                 Route::get('/detalle/{tipo}/{rango}/{unidad}/{anio}', 'DatosAnualController@detalleItems')->name('resultados.detalle');
             });
 
-            // Route::prefix('graficos')->group(function () {
-                // Route::get('/resumen', [GraficosController::class, 'resumen'])->name('graficos.resumen');
-                // Route::match(['get', 'post'], '/tablero', [GraficosController::class, 'tablero'])->name('graficos.tablero');
-                // Route::get('/consultar', [GraficosController::class, 'formulario'])->name('graficos.formulario');
-            // });
-
+        // Route::prefix('graficos')->group(function () {
+        // Route::get('/resumen', [GraficosController::class, 'resumen'])->name('graficos.resumen');
+        // Route::match(['get', 'post'], '/tablero', [GraficosController::class, 'tablero'])->name('graficos.tablero');
+        // Route::get('/consultar', [GraficosController::class, 'formulario'])->name('graficos.formulario');
+        // });
+    
 
         Route::prefix('graficos')
             ->middleware('permission:ver_gráficos')

@@ -128,78 +128,76 @@ const CostMetricsPanel: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-white rounded-lg bg-white shadow-lg p-4 md:p-6 animate-fade-in shadow mt-[50px]">
-      {/* Encabezado */}
-      <div className="px-6 py-4 border-b border-gray-200">
+    <div className="flex flex-col h-full bg-background dark:bg-card rounded-lg shadow-lg p-4 md:p-6 animate-fade-in shadow mt-[50px] transition-colors duration-200">
+      {/* Header */}
+      <div className="px-6 py-4 border-b border-border dark:border-border">
         <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-semibold text-gray-800">Métricas de Costos</h2>
+          <h2 className="text-2xl font-semibold text-foreground dark:text-foreground">Métricas de Costos</h2>
           <div className="flex items-center space-x-2">
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+              className="flex items-center px-3 py-2 text-sm font-medium text-foreground dark:text-foreground bg-background dark:bg-card border border-border dark:border-border rounded-md hover:bg-secondary dark:hover:bg-sidebar-accent transition-colors duration-200"
             >
               <Filter className="w-4 h-4 mr-2" />
               Filtros
-              <ChevronDown className={`w-4 h-4 ml-1 transform ${showFilters ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-4 h-4 ml-1 transform transition-transform duration-200 ${showFilters ? 'rotate-180' : ''}`} />
             </button>
             <button
               onClick={() => {
                 fetchCostMetrics();
                 fetchDetailedMetrics();
               }}
-              className="flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+              className="flex items-center px-3 py-2 text-sm font-medium text-primary-foreground dark:text-primary-foreground bg-primary dark:bg-primary rounded-md hover:bg-primary/90 dark:hover:bg-primary/90 transition-colors duration-200"
             >
               <RefreshCw className="w-4 h-4 mr-1" />
               Actualizar
             </button>
           </div>
         </div>
-        
-        {/* Filtros */}
+
+        {/* Filters */}
         {showFilters && (
-          <div className="mt-4 p-4 bg-gray-50 rounded-md border border-gray-200">
+          <div className="mt-4 p-4 bg-secondary dark:bg-sidebar-background rounded-md border border-border dark:border-border transition-colors duration-200">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Desde</label>
+                <label className="block text-sm font-medium text-muted-foreground dark:text-muted-foreground mb-1">Desde</label>
                 <div className="relative">
                   <input
                     type="date"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
-                    className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    className="block w-full px-3 py-2 border border-border dark:border-border rounded-md shadow-sm focus:ring-ring focus:border-ring dark:focus:ring-ring dark:focus:border-ring bg-background dark:bg-card text-foreground dark:text-foreground transition-colors duration-200"
                   />
-                  <Calendar className="absolute right-3 top-2.5 h-4 w-4 text-gray-400" />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Hasta</label>
+                <label className="block text-sm font-medium text-muted-foreground dark:text-muted-foreground mb-1">Hasta</label>
                 <div className="relative">
                   <input
                     type="date"
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
-                    className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    className="block w-full px-3 py-2 border border-border dark:border-border rounded-md shadow-sm focus:ring-ring focus:border-ring dark:focus:ring-ring dark:focus:border-ring bg-background dark:bg-card text-foreground dark:text-foreground transition-colors duration-200"
                   />
-                  <Calendar className="absolute right-3 top-2.5 h-4 w-4 text-gray-400" />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Temporalidad</label>
+                <label className="block text-sm font-medium text-muted-foreground dark:text-muted-foreground mb-1">Temporalidad</label>
                 <select
                   value={temporality}
                   onChange={(e) => setTemporality(e.target.value as TemporalityType)}
-                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  className="block w-full px-3 py-2 border border-border dark:border-border rounded-md shadow-sm focus:ring-ring focus:border-ring dark:focus:ring-ring dark:focus:border-ring bg-background dark:bg-card text-foreground dark:text-foreground transition-colors duration-200"
                 >
                   <option value="weekly">Semanal</option>
                   <option value="monthly">Mensual</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Métrica Detallada</label>
+                <label className="block text-sm font-medium text-muted-foreground dark:text-muted-foreground mb-1">Métrica Detallada</label>
                 <select
                   value={metricType}
                   onChange={(e) => setMetricType(e.target.value as MetricType)}
-                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  className="block w-full px-3 py-2 border border-border dark:border-border rounded-md shadow-sm focus:ring-ring focus:border-ring dark:focus:ring-ring dark:focus:border-ring bg-background dark:bg-card text-foreground dark:text-foreground transition-colors duration-200"
                 >
                   <option value="food">Food Cost</option>
                   <option value="beverage">Beverage Cost</option>
@@ -210,7 +208,7 @@ const CostMetricsPanel: React.FC = () => {
             <div className="mt-4 flex justify-end">
               <button
                 onClick={handleApplyFilters}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="px-4 py-2 bg-primary dark:bg-primary text-primary-foreground dark:text-primary-foreground rounded-md hover:bg-primary/90 dark:hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring dark:focus:ring-ring focus:ring-offset-2 dark:focus:ring-offset-background transition-colors duration-200"
               >
                 Aplicar Filtros
               </button>
@@ -219,19 +217,22 @@ const CostMetricsPanel: React.FC = () => {
         )}
       </div>
 
-      {/* Contenido */}
+      {/* Content */}
       <div className="flex-1 p-6 overflow-auto">
         {loading && (
-          <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          <div className="flex items-center justify-center p-8 min-h-[400px] dark:bg-background">
+            <div className="text-center">
+              <div className="w-12 h-12 border-4 border-t-dashboard-blue dark:border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-foreground dark:text-foreground">sobreprima.....</p>
+            </div>
           </div>
         )}
 
         {error && (
-          <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+          <div className="bg-destructive/10 dark:bg-destructive/20 border-l-4 border-destructive dark:border-destructive p-4 mb-6">
             <div className="flex">
               <div className="ml-3">
-                <p className="text-sm text-red-700">
+                <p className="text-sm text-destructive dark:text-destructive-foreground">
                   {error}
                 </p>
               </div>
@@ -241,32 +242,35 @@ const CostMetricsPanel: React.FC = () => {
 
         {!loading && !error && (
           <>
-            {/* Sección de indicadores principales */}
+            {/* Main indicators section */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               {(['food_cost', 'beverage_cost', 'mix_cost'] as const).map((metric) => {
-                // Calcular el promedio de la métrica
-                const avgValue = data.length 
-                  ? data.reduce((sum, item) => sum + (item[metric] as number), 0) / data.length 
+                // Calculate the metric average
+                const avgValue = data.length
+                  ? data.reduce((sum, item) => sum + (item[metric] as number), 0) / data.length
                   : 0;
-                
-                // Determinar la última tendencia (último valor vs penúltimo)
+
+                // Determine the last trend (last value vs second to last)
                 const lastValue = data.length >= 1 ? data[data.length - 1][metric] as number : 0;
                 const previousValue = data.length >= 2 ? data[data.length - 2][metric] as number : lastValue;
                 const trend = lastValue - previousValue;
 
                 return (
-                  <div key={metric} className="bg-white rounded-lg shadow p-6 border border-gray-100">
+                  <div key={metric} className="bg-card dark:bg-card rounded-lg shadow p-6 border border-border dark:border-border transition-colors duration-200">
                     <div className="flex justify-between items-start">
                       <div>
-                        <p className="text-sm font-medium text-gray-500">
+                        <p className="text-sm font-medium text-muted-foreground dark:text-muted-foreground">
                           {metric === 'food_cost' ? 'Food Cost' : metric === 'beverage_cost' ? 'Beverage Cost' : 'Mix Cost'}
                         </p>
-                        <h3 className="mt-1 text-3xl font-semibold text-gray-900">{formatPercentage(avgValue)}</h3>
+                        <h3 className="mt-1 text-3xl font-semibold text-foreground dark:text-foreground">{formatPercentage(avgValue)}</h3>
                       </div>
-                      <div 
-                        className={`flex items-center px-2.5 py-0.5 rounded text-xs font-medium ${
-                          trend < 0 ? 'bg-green-100 text-green-800' : trend > 0 ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
-                        }`}
+                      <div
+                        className={`flex items-center px-2.5 py-0.5 rounded text-xs font-medium ${trend < 0
+                          ? 'bg-dashboard-green/10 dark:bg-dashboard-green/20 text-dashboard-green dark:text-dashboard-green'
+                          : trend > 0
+                            ? 'bg-dashboard-red/10 dark:bg-dashboard-red/20 text-dashboard-red dark:text-dashboard-red'
+                            : 'bg-muted dark:bg-muted text-muted-foreground dark:text-muted-foreground'
+                          }`}
                       >
                         {trend !== 0 && (
                           <span className="mr-1">
@@ -276,66 +280,75 @@ const CostMetricsPanel: React.FC = () => {
                         {Math.abs(trend).toFixed(2)}%
                       </div>
                     </div>
-                    <p className="mt-1 text-sm text-gray-500">Promedio del período</p>
+                    <p className="mt-1 text-sm text-muted-foreground dark:text-muted-foreground">Promedio del período</p>
                   </div>
                 );
               })}
             </div>
 
-            {/* Gráfico de comparación */}
-            <div className="bg-white rounded-lg shadow p-6 border border-gray-100 mb-8">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Comparativa de Costos ({temporality === 'weekly' ? 'Semanal' : 'Mensual'})</h3>
+            {/* Comparison chart */}
+            <div className="bg-card dark:bg-card rounded-lg shadow p-6 border border-border dark:border-border mb-8 transition-colors duration-200">
+              <h3 className="text-lg font-medium text-foreground dark:text-foreground mb-4">Comparativa de Costos ({temporality === 'weekly' ? 'Semanal' : 'Mensual'})</h3>
               <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart
                     data={data}
                     margin={{ top: 5, right: 30, left: 20, bottom: 30 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="period" 
-                      angle={-45} 
-                      textAnchor="end" 
-                      height={70} 
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis
+                      dataKey="period"
+                      angle={-45}
+                      textAnchor="end"
+                      height={70}
                       interval={0}
-                      tick={{ fontSize: 12 }}
+                      tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }}
                     />
-                    <YAxis 
-                      tickFormatter={formatPercentage} 
-                      domain={[0, 'auto']} 
+                    <YAxis
+                      tickFormatter={formatPercentage}
+                      domain={[0, 'auto']}
                       label={{ value: 'Porcentaje (%)', angle: -90, position: 'insideLeft' }}
+                      tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }}
                     />
-                    <Tooltip formatter={(value) => [formatPercentage(value as number), 'Porcentaje']} />
+                    <Tooltip
+                      formatter={(value) => [formatPercentage(value as number), 'Porcentaje']}
+                      contentStyle={{
+                        backgroundColor: 'hsl(var(--popover))',
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '8px',
+                        color: 'hsl(var(--popover-foreground))'
+                      }}
+                    />
                     <Legend />
-                    <Line 
-                      type="monotone" 
-                      dataKey="food_cost" 
-                      name="Food Cost" 
-                      stroke={getChartColor('food_cost')} 
-                      activeDot={{ r: 8 }} 
+                    <Line
+                      type="monotone"
+                      dataKey="food_cost"
+                      name="Food Cost"
+                      stroke={getChartColor('food_cost')}
+                      activeDot={{ r: 8 }}
                     />
-                    <Line 
-                      type="monotone" 
-                      dataKey="beverage_cost" 
-                      name="Beverage Cost" 
-                      stroke={getChartColor('beverage_cost')} 
-                      activeDot={{ r: 8 }} 
+                    <Line
+                      type="monotone"
+                      dataKey="beverage_cost"
+                      name="Beverage Cost"
+                      stroke={getChartColor('beverage_cost')}
+                      activeDot={{ r: 8 }}
                     />
-                    <Line 
-                      type="monotone" 
-                      dataKey="mix_cost" 
-                      name="Mix Cost" 
-                      stroke={getChartColor('mix_cost')} 
-                      activeDot={{ r: 8 }} 
+                    <Line
+                      type="monotone"
+                      dataKey="mix_cost"
+                      name="Mix Cost"
+                      stroke={getChartColor('mix_cost')}
+                      activeDot={{ r: 8 }}
                     />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
             </div>
 
-            {/* Gráfico detallado */}
-            <div className="bg-white rounded-lg shadow p-6 border border-gray-100">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
+            {/* Detailed chart */}
+            <div className="bg-card dark:bg-card rounded-lg shadow p-6 border border-border dark:border-border transition-colors duration-200">
+              <h3 className="text-lg font-medium text-foreground dark:text-foreground mb-4">
                 Detalle Diario: {metricType === 'food' ? 'Food Cost' : metricType === 'beverage' ? 'Beverage Cost' : 'Mix Cost'}
               </h3>
               <div className="h-80">
@@ -344,31 +357,38 @@ const CostMetricsPanel: React.FC = () => {
                     data={detailedData}
                     margin={{ top: 5, right: 30, left: 20, bottom: 30 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="date" 
-                      angle={-45} 
-                      textAnchor="end" 
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis
+                      dataKey="date"
+                      angle={-45}
+                      textAnchor="end"
                       height={70}
-                      tick={{ fontSize: 12 }}
+                      tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }}
                     />
-                    <YAxis 
-                      tickFormatter={formatPercentage} 
-                      domain={[0, 'auto']} 
+                    <YAxis
+                      tickFormatter={formatPercentage}
+                      domain={[0, 'auto']}
                       label={{ value: 'Porcentaje (%)', angle: -90, position: 'insideLeft' }}
+                      tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }}
                     />
-                    <Tooltip 
+                    <Tooltip
                       formatter={(value, name) => [formatPercentage(value as number), name === 'value' ? 'Porcentaje' : name]}
                       labelFormatter={(label) => {
                         const item = detailedData.find(d => d.date === label);
                         return `${label} (${item?.day_name || ''})`;
                       }}
+                      contentStyle={{
+                        backgroundColor: 'hsl(var(--popover))',
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '8px',
+                        color: 'hsl(var(--popover-foreground))'
+                      }}
                     />
                     <Legend />
-                    <Bar 
-                      dataKey="value" 
-                      name={metricType === 'food' ? 'Food Cost' : metricType === 'beverage' ? 'Beverage Cost' : 'Mix Cost'} 
-                      fill={getChartColor(metricType === 'food' ? 'food_cost' : metricType === 'beverage' ? 'beverage_cost' : 'mix_cost')} 
+                    <Bar
+                      dataKey="value"
+                      name={metricType === 'food' ? 'Food Cost' : metricType === 'beverage' ? 'Beverage Cost' : 'Mix Cost'}
+                      fill={getChartColor(metricType === 'food' ? 'food_cost' : metricType === 'beverage' ? 'beverage_cost' : 'mix_cost')}
                     />
                   </BarChart>
                 </ResponsiveContainer>

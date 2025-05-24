@@ -12,33 +12,36 @@ import Pagar from "./pages/Pagar";
 import Realizar from "./pages/Realizar";
 import UserLoginVisualization from "./pages/UserLoginVisualization";
 import NotFound from "./pages/NotFound";
+import { ThemeProvider } from "./hooks/ThemeContext";
 
 const queryClient = new QueryClient();
 
 const App = () => {
     return (
-        <QueryClientProvider client={queryClient}>
-            <TooltipProvider>
-                <DashboardProvider>
-                    <Toaster />
-                    <Sonner />
-                    <BrowserRouter>
-                        <Routes>
-                            <Route path="/resumenVer" element={<Navigate to="/resumenVer/realizar"/>} />
-                            <Route path="/resumenVer/realizar" element={<Realizar />} />
-                            <Route path="/resumenVer/existentes" element={<Existentes />} />
-                            <Route path="/resumenVer/ventas" element={<Ventas />} />
-                            <Route path="/resumenVer/gastos" element={<Gastos />} />
-                            <Route path="/resumenVer/pinta" element={<Pinta />} />
-                            <Route path="/resumenVer/pagar" element={<Pagar />} />
-                            <Route path="/resumenVer/user" element={<UserLoginVisualization />} />
-                            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                            <Route path="*" element={<NotFound />} />
-                        </Routes>
-                    </BrowserRouter>
-                </DashboardProvider>
-            </TooltipProvider>
-        </QueryClientProvider>
+        <ThemeProvider>
+            <QueryClientProvider client={queryClient}>
+                <TooltipProvider>
+                    <DashboardProvider>
+                        <Toaster />
+                        <Sonner />
+                        <BrowserRouter>
+                            <Routes>
+                                <Route path="/resumenVer" element={<Navigate to="/resumenVer/realizar" />} />
+                                <Route path="/resumenVer/realizar" element={<Realizar />} />
+                                <Route path="/resumenVer/existentes" element={<Existentes />} />
+                                <Route path="/resumenVer/ventas" element={<Ventas />} />
+                                <Route path="/resumenVer/gastos" element={<Gastos />} />
+                                <Route path="/resumenVer/pinta" element={<Pinta />} />
+                                <Route path="/resumenVer/pagar" element={<Pagar />} />
+                                <Route path="/resumenVer/user" element={<UserLoginVisualization />} />
+                                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                                <Route path="*" element={<NotFound />} />
+                            </Routes>
+                        </BrowserRouter>
+                    </DashboardProvider>
+                </TooltipProvider>
+            </QueryClientProvider>
+        </ThemeProvider>
     )
 };
 

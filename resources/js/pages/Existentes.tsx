@@ -119,6 +119,7 @@ const FinancialDashboard: React.FC = () => {
                 const jsonData: FinancialData = await response.json();
                 setData(jsonData);
                 setLoading(false);
+                console.log(data);
             } catch (err) {
                 if (err instanceof Error) {
                     setError(err.message);
@@ -222,9 +223,14 @@ const FinancialDashboard: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center h-screen">
-                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-            </div>
+            <DashboardLayout>
+                <div className="flex items-center justify-center p-8 min-h-[400px] dark:bg-background">
+                    <div className="text-center">
+                        <div className="w-12 h-12 border-4 border-t-dashboard-blue dark:border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
+                        <p className="text-foreground dark:text-foreground">sobreprima.....</p>
+                    </div>
+                </div>
+            </DashboardLayout>
         );
     }
 
@@ -281,15 +287,15 @@ const FinancialDashboard: React.FC = () => {
 
     return (
         <DashboardLayout>
-            <div className="bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in">
-                <div className="bg-white shadow rounded-lg p-6 mb-8">
+            <div className="bg-background rounded-lg shadow-lg p-4 md:p-6 animate-fade-in">
+                <div className="bg-card shadow rounded-lg p-6 mb-8 border border-border">
                     <div className="flex justify-between items-center mb-6">
-                        <h1 className="text-2xl font-bold text-gray-800">Dashboard Financiero {data.year}</h1>
+                        <h1 className="text-2xl font-bold text-foreground">Dashboard Financiero {data.year}</h1>
                         <div className="flex space-x-2">
                             <select
                                 onChange={(e) => setSelectedYear(Number(e.target.value))}
                                 value={selectedYear}
-                                className="px-4 py-2 rounded"
+                                className="px-4 py-2 rounded bg-input border border-border text-foreground focus:ring-2 focus:ring-ring"
                             >
                                 {availableYears.map((year) => (
                                     <option key={year} value={year}>
@@ -302,63 +308,71 @@ const FinancialDashboard: React.FC = () => {
 
                     {/* Key metrics */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                        <div className="bg-blue-50 p-4 rounded-lg shadow">
-                            <h3 className="text-lg font-semibold text-blue-800">Ventas Totales</h3>
-                            <p className="text-3xl font-bold text-blue-600">{formatCurrency(data.totals.ventas_totales)}</p>
+                        <div className="bg-primary/5 dark:bg-primary/10 p-4 rounded-lg shadow border border-border">
+                            <h3 className="text-lg font-semibold text-primary">Ventas Totales</h3>
+                            <p className="text-3xl font-bold text-primary">{formatCurrency(data.totals.ventas_totales)}</p>
                         </div>
 
-                        <div className="bg-red-50 p-4 rounded-lg shadow">
-                            <h3 className="text-lg font-semibold text-red-800">Gastos Totales</h3>
-                            <p className="text-3xl font-bold text-red-600">{formatCurrency(data.totals.total_gastos)}</p>
+                        <div className="bg-destructive/5 dark:bg-destructive/10 p-4 rounded-lg shadow border border-border">
+                            <h3 className="text-lg font-semibold text-destructive">Gastos Totales</h3>
+                            <p className="text-3xl font-bold text-destructive">{formatCurrency(data.totals.total_gastos)}</p>
                         </div>
 
-                        <div className="bg-green-50 p-4 rounded-lg shadow">
-                            <h3 className="text-lg font-semibold text-green-800">Ganancia Neta</h3>
-                            <p className="text-3xl font-bold text-green-600">{formatCurrency(data.totals.ganancia_neta)}</p>
+                        <div className="bg-dashboard-green/10 dark:bg-dashboard-green/20 p-4 rounded-lg shadow border border-border dark:text-white">
+                            <h3 className="text-lg font-semibold text-dashboard-green">Ganancia Neta</h3>
+                            <p className="text-3xl font-bold text-dashboard-green">{formatCurrency(data.totals.ganancia_neta)}</p>
                         </div>
 
-                        <div className="bg-purple-50 p-4 rounded-lg shadow">
-                            <h3 className="text-lg font-semibold text-purple-800">Caja Final</h3>
-                            <p className="text-3xl font-bold text-purple-600">{formatCurrency(data.totals.caja_final)}</p>
+                        <div className="bg-dashboard-purple/10 dark:bg-dashboard-purple/20 p-4 rounded-lg shadow border border-border dark:text-white">
+                            <h3 className="text-lg font-semibold text-dashboard-purple">Caja Final</h3>
+                            <p className="text-3xl font-bold text-dashboard-purple">{formatCurrency(data.totals.caja_final)}</p>
                         </div>
                     </div>
 
                     {/* Efficiency metrics */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                        <div className="bg-yellow-50 p-4 rounded-lg shadow">
-                            <h3 className="text-lg font-semibold text-yellow-800">Ganancia %</h3>
-                            <p className="text-3xl font-bold text-yellow-600">{formatPercentage(data.totals.ganancia_porcentaje)}</p>
+                        <div className="bg-dashboard-amber/10 dark:bg-dashboard-amber/20 p-4 rounded-lg shadow border border-border dark:text-white">
+                            <h3 className="text-lg font-semibold text-dashboard-amber">Ganancia %</h3>
+                            <p className="text-3xl font-bold text-dashboard-amber">{formatPercentage(data.totals.ganancia_porcentaje)}</p>
                         </div>
 
-                        <div className="bg-orange-50 p-4 rounded-lg shadow">
-                            <h3 className="text-lg font-semibold text-orange-800">Costo Alimento %</h3>
-                            <p className="text-3xl font-bold text-orange-600">{formatPercentage(data.totals.costo_alimento_porcentaje)}</p>
+                        <div className="bg-orange-50 dark:bg-orange-950/50 p-4 rounded-lg shadow border border-border">
+                            <h3 className="text-lg font-semibold text-orange-800 dark:text-orange-300">Costo Alimento %</h3>
+                            <p className="text-3xl font-bold text-orange-600 dark:text-orange-400">{formatPercentage(data.totals.costo_alimento_porcentaje)}</p>
                         </div>
 
-                        <div className="bg-pink-50 p-4 rounded-lg shadow">
-                            <h3 className="text-lg font-semibold text-pink-800">Costo Bebida %</h3>
-                            <p className="text-3xl font-bold text-pink-600">{formatPercentage(data.totals.costo_bebida_porcentaje)}</p>
+                        <div className="bg-pink-50 dark:bg-pink-950/50 p-4 rounded-lg shadow border border-border">
+                            <h3 className="text-lg font-semibold text-pink-800 dark:text-pink-300">Costo Bebida %</h3>
+                            <p className="text-3xl font-bold text-pink-600 dark:text-pink-400">{formatPercentage(data.totals.costo_bebida_porcentaje)}</p>
                         </div>
 
-                        <div className="bg-indigo-50 p-4 rounded-lg shadow">
-                            <h3 className="text-lg font-semibold text-indigo-800">Costo Mixto %</h3>
-                            <p className="text-3xl font-bold text-indigo-600">{formatPercentage(data.totals.costo_mixto_porcentaje)}</p>
+                        <div className="bg-dashboard-indigo/10 dark:bg-dashboard-indigo/20 p-4 rounded-lg shadow border border-border dark:text-white">
+                            <h3 className="text-lg font-semibold text-dashboard-indigo">Costo Mixto %</h3>
+                            <p className="text-3xl font-bold text-dashboard-indigo">{formatPercentage(data.totals.costo_mixto_porcentaje)}</p>
                         </div>
                     </div>
 
                     {/* Main Chart */}
                     <div className="mb-8">
-                        <h2 className="text-xl font-bold text-gray-800 mb-4">Ventas, Gastos y Ganancias mensuales</h2>
-                        <div className="h-96">
+                        <h2 className="text-xl font-bold text-foreground mb-4">Ventas, Gastos y Ganancias mensuales</h2>
+                        <div className="h-96 bg-card border border-border rounded-lg p-4">
                             <ResponsiveContainer width="100%" height="100%">
                                 <LineChart
                                     data={chartData}
                                     margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                                 >
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                                    <XAxis stroke="hsl(var(--muted-foreground))" dataKey="name" />
+                                    <YAxis stroke="hsl(var(--muted-foreground))" />
+                                    <Tooltip
+                                        formatter={(value: number) => formatCurrency(value)}
+                                        contentStyle={{
+                                            backgroundColor: 'hsl(var(--card))',
+                                            border: '1px solid hsl(var(--border))',
+                                            borderRadius: '8px',
+                                            color: 'hsl(var(--foreground))'
+                                        }}
+                                    />
                                     <Legend />
                                     <Line type="monotone" dataKey="ventas" stroke="#3B82F6" activeDot={{ r: 8 }} name="Ventas" />
                                     <Line type="monotone" dataKey="gastos" stroke="#EF4444" name="Gastos" />
@@ -373,17 +387,26 @@ const FinancialDashboard: React.FC = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                         {/* Efficiency Chart */}
                         <div>
-                            <h2 className="text-xl font-bold text-gray-800 mb-4">Porcentajes de Eficiencia</h2>
-                            <div className="h-80">
+                            <h2 className="text-xl font-bold text-foreground mb-4">Porcentajes de Eficiencia</h2>
+                            <div className="h-80 bg-card border border-border rounded-lg p-4">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <LineChart
                                         data={efficiencyData}
                                         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                                     >
-                                        <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="name" />
-                                        <YAxis />
-                                        <Tooltip formatter={(value: number) => `${value.toFixed(2)}%`} />
+                                        <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                                        <XAxis stroke="hsl(var(--muted-foreground))" dataKey="name" />
+                                        <YAxis stroke="hsl(var(--muted-foreground))" />
+                                        <Tooltip
+                                            formatter={(value: number) => `${value.toFixed(2)}%`}
+                                            contentStyle={{
+                                                backgroundColor: 'hsl(var(--card))',
+                                                border: '1px solid hsl(var(--border))',
+                                                borderRadius: '8px',
+                                                color: 'hsl(var(--foreground))'
+                                            }}
+                                        // wrapperClassName="dark:text-white"
+                                        />
                                         <Legend />
                                         <Line type="monotone" dataKey="ganancia" stroke="#F59E0B" name="Ganancia %" />
                                         <Line type="monotone" dataKey="costoAlimento" stroke="#F97316" name="Costo Alimento %" />
@@ -396,8 +419,8 @@ const FinancialDashboard: React.FC = () => {
 
                         {/* Distribution Pie Chart */}
                         <div>
-                            <h2 className="text-xl font-bold text-gray-800 mb-4">Distribución de Fondos</h2>
-                            <div className="h-80">
+                            <h2 className="text-xl font-bold text-foreground mb-4">Distribución de Fondos</h2>
+                            <div className="h-80 bg-card border border-border rounded-lg p-4">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <PieChart>
                                         <Pie
@@ -414,7 +437,21 @@ const FinancialDashboard: React.FC = () => {
                                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                             ))}
                                         </Pie>
-                                        <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                                        <Tooltip
+                                            formatter={(value: number) => formatCurrency(value)}
+                                            contentStyle={{
+                                                backgroundColor: 'hsl(var(--card))',
+                                                border: '1px solid hsl(var(--border))',
+                                                borderRadius: '8px',
+                                                color: 'hsl(var(--foreground))'
+                                            }}
+                                            labelStyle={{
+                                                color: 'hsl(var(--foreground))'
+                                            }}
+                                            itemStyle={{
+                                                color: 'hsl(var(--foreground))'
+                                            }}
+                                        />
                                         <Legend />
                                     </PieChart>
                                 </ResponsiveContainer>
@@ -424,17 +461,25 @@ const FinancialDashboard: React.FC = () => {
 
                     {/* Financial Flows */}
                     <div>
-                        <h2 className="text-xl font-bold text-gray-800 mb-4">Flujos Financieros Mensuales</h2>
-                        <div className="h-80">
+                        <h2 className="text-xl font-bold text-foreground mb-4">Flujos Financieros Mensuales</h2>
+                        <div className="h-80 bg-card border border-border rounded-lg p-4">
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart
                                     data={flowsData}
                                     margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                                 >
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                                    <XAxis stroke="hsl(var(--muted-foreground))" dataKey="name" />
+                                    <YAxis stroke="hsl(var(--muted-foreground))" />
+                                    <Tooltip
+                                        formatter={(value: number) => formatCurrency(value)}
+                                        contentStyle={{
+                                            backgroundColor: 'hsl(var(--card))',
+                                            border: '1px solid hsl(var(--border))',
+                                            borderRadius: '8px',
+                                            color: 'hsl(var(--foreground))'
+                                        }}
+                                    />
                                     <Legend />
                                     <Bar dataKey="ingresos" stackId="a" fill="#10B981" name="Ingresos Propietarios" />
                                     <Bar dataKey="inversiones" stackId="a" fill="#3B82F6" name="Inversiones" />
@@ -448,11 +493,11 @@ const FinancialDashboard: React.FC = () => {
 
                     {/* Detailed Table */}
                     <div className="mt-8">
-                        <h2 className="text-xl font-bold text-gray-800 mb-4">Detalle Mensual</h2>
-                        <div className="overflow-x-auto">
-                            <table className="min-w-full bg-white">
+                        <h2 className="text-xl font-bold text-foreground mb-4">Detalle Mensual</h2>
+                        <div className="overflow-x-auto border border-border rounded-lg">
+                            <table className="min-w-full bg-card">
                                 <thead>
-                                    <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                    <tr className="bg-muted text-muted-foreground uppercase text-sm leading-normal">
                                         <th className="py-3 px-6 text-left">Concepto</th>
                                         {MONTHS.map((month, index) => (
                                             <th key={index} className="py-3 px-6 text-center">{month}</th>
@@ -460,92 +505,92 @@ const FinancialDashboard: React.FC = () => {
                                         <th className="py-3 px-6 text-center">Total</th>
                                     </tr>
                                 </thead>
-                                <tbody className="text-gray-600 text-sm">
-                                    <tr className="border-b border-gray-200 hover:bg-gray-100">
+                                <tbody className="text-foreground text-sm">
+                                    <tr className="border-b border-border hover:bg-muted/50">
                                         <td className="py-3 px-6 text-left whitespace-nowrap font-medium">Ventas Totales</td>
                                         {data.metrics.ventas_totales.map((value, index) => (
                                             <td key={index} className="py-3 px-6 text-center">{formatCurrency(value)}</td>
                                         ))}
                                         <td className="py-3 px-6 text-center font-bold">{formatCurrency(data.totals.ventas_totales)}</td>
                                     </tr>
-                                    <tr className="border-b border-gray-200 hover:bg-gray-100">
+                                    <tr className="border-b border-border hover:bg-muted/50">
                                         <td className="py-3 px-6 text-left whitespace-nowrap font-medium">Gastos Totales</td>
                                         {data.metrics.total_gastos.map((value, index) => (
                                             <td key={index} className="py-3 px-6 text-center">{formatCurrency(value)}</td>
                                         ))}
                                         <td className="py-3 px-6 text-center font-bold">{formatCurrency(data.totals.total_gastos)}</td>
                                     </tr>
-                                    <tr className="border-b border-gray-200 hover:bg-gray-100 bg-green-50">
+                                    <tr className="border-b border-border hover:bg-muted/50 bg-dashboard-green/10 dark:bg-dashboard-green/20">
                                         <td className="py-3 px-6 text-left whitespace-nowrap font-medium">Ganancia Bruta</td>
                                         {data.metrics.ganancia_bruta.map((value, index) => (
                                             <td key={index} className="py-3 px-6 text-center">{formatCurrency(value)}</td>
                                         ))}
                                         <td className="py-3 px-6 text-center font-bold">{formatCurrency(data.totals.ganancia_bruta)}</td>
                                     </tr>
-                                    <tr className="border-b border-gray-200 hover:bg-gray-100">
+                                    <tr className="border-b border-border hover:bg-muted/50">
                                         <td className="py-3 px-6 text-left whitespace-nowrap font-medium">IIBB</td>
                                         {data.metrics.iibb.map((value, index) => (
                                             <td key={index} className="py-3 px-6 text-center">{formatCurrency(value)}</td>
                                         ))}
                                         <td className="py-3 px-6 text-center font-bold">{formatCurrency(data.totals.iibb)}</td>
                                     </tr>
-                                    <tr className="border-b border-gray-200 hover:bg-gray-100">
+                                    <tr className="border-b border-border hover:bg-muted/50">
                                         <td className="py-3 px-6 text-left whitespace-nowrap font-medium">IVA</td>
                                         {data.metrics.iva.map((value, index) => (
                                             <td key={index} className="py-3 px-6 text-center">{formatCurrency(value)}</td>
                                         ))}
                                         <td className="py-3 px-6 text-center font-bold">{formatCurrency(data.totals.iva)}</td>
                                     </tr>
-                                    <tr className="border-b border-gray-200 hover:bg-gray-100">
+                                    <tr className="border-b border-border hover:bg-muted/50">
                                         <td className="py-3 px-6 text-left whitespace-nowrap font-medium">Impuesto Ganancias</td>
                                         {data.metrics.impuesto_ganancia.map((value, index) => (
                                             <td key={index} className="py-3 px-6 text-center">{formatCurrency(value)}</td>
                                         ))}
                                         <td className="py-3 px-6 text-center font-bold">{formatCurrency(data.totals.impuesto_ganancia)}</td>
                                     </tr>
-                                    <tr className="border-b border-gray-200 hover:bg-gray-100 bg-green-100">
+                                    <tr className="border-b border-border hover:bg-muted/50 bg-dashboard-green/20 dark:bg-dashboard-green/30">
                                         <td className="py-3 px-6 text-left whitespace-nowrap font-medium">Ganancia Neta</td>
                                         {data.metrics.ganancia_neta.map((value, index) => (
                                             <td key={index} className="py-3 px-6 text-center">{formatCurrency(value)}</td>
                                         ))}
                                         <td className="py-3 px-6 text-center font-bold">{formatCurrency(data.totals.ganancia_neta)}</td>
                                     </tr>
-                                    <tr className="border-b border-gray-200 hover:bg-gray-100">
+                                    <tr className="border-b border-border hover:bg-muted/50">
                                         <td className="py-3 px-6 text-left whitespace-nowrap font-medium">Ingresos Propietarios</td>
                                         {data.metrics.ingresos_propietarios.map((value, index) => (
                                             <td key={index} className="py-3 px-6 text-center">{formatCurrency(value)}</td>
                                         ))}
                                         <td className="py-3 px-6 text-center font-bold">{formatCurrency(data.totals.ingresos_propietarios)}</td>
                                     </tr>
-                                    <tr className="border-b border-gray-200 hover:bg-gray-100">
+                                    <tr className="border-b border-border hover:bg-muted/50">
                                         <td className="py-3 px-6 text-left whitespace-nowrap font-medium">Inversiones</td>
                                         {data.metrics.inversiones.map((value, index) => (
                                             <td key={index} className="py-3 px-6 text-center">{formatCurrency(value)}</td>
                                         ))}
                                         <td className="py-3 px-6 text-center font-bold">{formatCurrency(data.totals.inversiones)}</td>
                                     </tr>
-                                    <tr className="border-b border-gray-200 hover:bg-gray-100">
+                                    <tr className="border-b border-border hover:bg-muted/50">
                                         <td className="py-3 px-6 text-left whitespace-nowrap font-medium">Pago Deuda Atrasada</td>
                                         {data.metrics.pago_deuda_atrasada.map((value, index) => (
                                             <td key={index} className="py-3 px-6 text-center">{formatCurrency(value)}</td>
                                         ))}
                                         <td className="py-3 px-6 text-center font-bold">{formatCurrency(data.totals.pago_deuda_atrasada)}</td>
                                     </tr>
-                                    <tr className="border-b border-gray-200 hover:bg-gray-100">
+                                    <tr className="border-b border-border hover:bg-muted/50">
                                         <td className="py-3 px-6 text-left whitespace-nowrap font-medium">Retiro Dividendos</td>
                                         {data.metrics.retiro_dividendos.map((value, index) => (
                                             <td key={index} className="py-3 px-6 text-center">{formatCurrency(value)}</td>
                                         ))}
                                         <td className="py-3 px-6 text-center font-bold">{formatCurrency(data.totals.retiro_dividendos)}</td>
                                     </tr>
-                                    <tr className="border-b border-gray-200 hover:bg-gray-100">
+                                    <tr className="border-b border-border hover:bg-muted/50">
                                         <td className="py-3 px-6 text-left whitespace-nowrap font-medium">Gastos Cta. Cte.</td>
                                         {data.metrics.gastos_cta_cte.map((value, index) => (
                                             <td key={index} className="py-3 px-6 text-center">{formatCurrency(value)}</td>
                                         ))}
                                         <td className="py-3 px-6 text-center font-bold">{formatCurrency(data.totals.gastos_cta_cte)}</td>
                                     </tr>
-                                    <tr className="border-b border-gray-200 hover:bg-gray-100 bg-purple-100">
+                                    <tr className="border-b border-border hover:bg-muted/50 bg-dashboard-purple/20 dark:bg-dashboard-purple/30">
                                         <td className="py-3 px-6 text-left whitespace-nowrap font-medium">Caja Final</td>
                                         {data.metrics.caja_final.map((value, index) => (
                                             <td key={index} className="py-3 px-6 text-center">{formatCurrency(value)}</td>
@@ -558,7 +603,7 @@ const FinancialDashboard: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="text-center text-sm text-gray-500 mt-8">
+                <div className="text-center text-sm text-muted-foreground mt-8">
                     <p>Dashboard Financiero © {new Date().getFullYear()} - Todos los datos son actualizados automáticamente</p>
                 </div>
             </div>

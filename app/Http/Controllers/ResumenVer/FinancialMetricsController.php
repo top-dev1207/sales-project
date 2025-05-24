@@ -50,8 +50,14 @@ class FinancialMetricsController extends Controller
         // Calculate net profit
         $netProfitByMonth = $this->calculateNetProfit($grossProfitByMonth, $taxDataByMonth);
         
+        // Get food and beverage sales data
+        $foodAndBeverageSales = $this->getFoodAndBeverageSales($year);
+        
+        // Get food and beverage costs
+        $foodAndBeverageCosts = $this->getFoodAndBeverageCosts($year);
+        
         // Calculate efficiency percentages
-        $percentagesByMonth = $this->calculatePercentages($salesByMonth, $expensesByMonth, $netProfitByMonth);
+        $percentagesByMonth = $this->calculatePercentages($salesByMonth, $expensesByMonth, $netProfitByMonth, $foodAndBeverageSales, $foodAndBeverageCosts);
         
         // Get additional financial data
         $additionalData = $this->getAdditionalFinancialData($year);
@@ -68,7 +74,9 @@ class FinancialMetricsController extends Controller
             $netProfitByMonth,
             $percentagesByMonth,
             $additionalData,
-            $finalCash
+            $finalCash,
+            $foodAndBeverageSales,
+            $foodAndBeverageCosts
         );
         
         // Prepare response data
@@ -239,9 +247,9 @@ class FinancialMetricsController extends Controller
         
         // Populate tax arrays
         foreach ($taxes as $tax) {
-            $taxData['iibb'][$tax->month_index] = (float) $tax->iibb;
-            $taxData['iva'][$tax->month_index] = (float) $tax->iva;
-            $taxData['impuesto_ganancia'][$tax->month_index] = (float) $tax->impuestoGanancias;
+            $taxData['iibb'][$tax->month_index] = (float) ($tax->iibb ?? 0);
+            $taxData['iva'][$tax->month_index] = (float) ($tax->iva ?? 0);
+            $taxData['impuesto_ganancia'][$tax->month_index] = (float) ($tax->impuestoGanancias ?? 0);
         }
         
         return $taxData;
@@ -271,9 +279,11 @@ class FinancialMetricsController extends Controller
      * @param array $sales
      * @param array $expenses
      * @param array $netProfit
+     * @param array $foodAndBeverageSales
+     * @param array $foodAndBeverageCosts
      * @return array
      */
-    private function calculatePercentages($sales, $expenses, $netProfit)
+    private function calculatePercentages($sales, $expenses, $netProfit, $foodAndBeverageSales, $foodAndBeverageCosts)
     {
         $percentages = [
             'ganancia' => array_fill(0, 12, 0),
@@ -282,12 +292,6 @@ class FinancialMetricsController extends Controller
             'costo_mixto' => array_fill(0, 12, 0)
         ];
         
-        // Get food and beverage sales data
-        $foodAndBeverageSales = $this->getFoodAndBeverageSales($sales[0]);
-        
-        // Get food and beverage costs
-        $foodAndBeverageCosts = $this->getFoodAndBeverageCosts($expenses[0]);
-        
         for ($i = 0; $i < 12; $i++) {
             // Calculate profit percentage
             if ($sales[$i] > 0) {
@@ -295,12 +299,12 @@ class FinancialMetricsController extends Controller
             }
             
             // Calculate food cost percentage
-            if (isset($foodAndBeverageSales[$i]['food']) && $foodAndBeverageSales[$i]['food'] > 0) {
+            if ($foodAndBeverageSales[$i]['food'] > 0) {
                 $percentages['costo_alimento'][$i] = round(($foodAndBeverageCosts[$i]['food'] / $foodAndBeverageSales[$i]['food']) * 100, 2);
             }
             
             // Calculate beverage cost percentage
-            if (isset($foodAndBeverageSales[$i]['beverage']) && $foodAndBeverageSales[$i]['beverage'] > 0) {
+            if ($foodAndBeverageSales[$i]['beverage'] > 0) {
                 $percentages['costo_bebida'][$i] = round(($foodAndBeverageCosts[$i]['beverage'] / $foodAndBeverageSales[$i]['beverage']) * 100, 2);
             }
             
@@ -324,12 +328,20 @@ class FinancialMetricsController extends Controller
     {
         $salesData = [];
         
+        // Initialize array with zeros for all months
+        for ($i = 0; $i < 12; $i++) {
+            $salesData[$i] = [
+                'food' => 0,
+                'beverage' => 0
+            ];
+        }
+        
         // Get food and beverage sales data from database
         $sales = DB::select(DB::raw("
             SELECT 
                 MONTH(v.fecha_venta) - 1 as month_index,
-                SUM(v.venta_alimentos) as food_sales,
-                SUM(v.venta_bebidas) as beverage_sales
+                SUM(COALESCE(v.venta_alimentos, 0)) as food_sales,
+                SUM(COALESCE(v.venta_bebidas, 0)) as beverage_sales
             FROM (
                 SELECT v1.*
                 FROM ventas AS v1
@@ -344,14 +356,6 @@ class FinancialMetricsController extends Controller
             AND v.estado_venta != 6
             GROUP BY MONTH(v.fecha_venta)
         "), [$year]);
-        
-        // Initialize array with zeros for all months
-        for ($i = 0; $i < 12; $i++) {
-            $salesData[$i] = [
-                'food' => 0,
-                'beverage' => 0
-            ];
-        }
         
         // Populate sales data array
         foreach ($sales as $sale) {
@@ -372,12 +376,23 @@ class FinancialMetricsController extends Controller
     {
         $costsData = [];
         
+        // Initialize array with zeros for all months
+        for ($i = 0; $i < 12; $i++) {
+            $costsData[$i] = [
+                'food' => 0,
+                'beverage' => 0
+            ];
+        }
+        
         // Get food (rubro=1) and beverage (rubro=2) costs from database
+        // Based on the migration files, it appears rubro values start from 0 or 1
+        // According to the ResultadosController, rubro 2 = Alimentos and rubro 3 = Bebidas (with +1 indexing)
+        // But let's check with both possibilities
         $costs = DB::select(DB::raw("
             SELECT 
                 MONTH(f.fecha_limite) - 1 as month_index,
                 f.rubro,
-                SUM(f.total) as total
+                SUM(COALESCE(f.total, 0)) as total
             FROM (
                 SELECT f1.*
                 FROM facturas AS f1
@@ -394,20 +409,58 @@ class FinancialMetricsController extends Controller
             GROUP BY MONTH(f.fecha_limite), f.rubro
         "), [$year]);
         
-        // Initialize array with zeros for all months
-        for ($i = 0; $i < 12; $i++) {
-            $costsData[$i] = [
-                'food' => 0,
-                'beverage' => 0
-            ];
-        }
-        
         // Populate costs data array
         foreach ($costs as $cost) {
             if ($cost->rubro == 1) { // Alimentos
                 $costsData[$cost->month_index]['food'] = (float) $cost->total;
             } else if ($cost->rubro == 2) { // Bebidas
                 $costsData[$cost->month_index]['beverage'] = (float) $cost->total;
+            }
+        }
+        
+        // If no data found with rubro 1,2 - try with adjusted values (2,3) based on ResultadosController pattern
+        $totalCosts = array_sum(array_map(function($month) {
+            return $month['food'] + $month['beverage'];
+        }, $costsData));
+        
+        if ($totalCosts == 0) {
+            // Try with rubro 2,3 (zero-indexed would be 1,2 but stored as 2,3)
+            $costs = DB::select(DB::raw("
+                SELECT 
+                    MONTH(f.fecha_limite) - 1 as month_index,
+                    f.rubro,
+                    SUM(COALESCE(f.total, 0)) as total
+                FROM (
+                    SELECT f1.*
+                    FROM facturas AS f1
+                    INNER JOIN (
+                        SELECT nro_documento, MAX(id) as idMax
+                        FROM facturas
+                        GROUP BY nro_documento
+                    ) AS max
+                    ON f1.id = max.idMax
+                ) AS f
+                WHERE YEAR(f.fecha_limite) = ?
+                AND f.estadoDocumento != 6
+                AND (f.rubro = 2 OR f.rubro = 3)
+                GROUP BY MONTH(f.fecha_limite), f.rubro
+            "), [$year]);
+            
+            // Reset array
+            for ($i = 0; $i < 12; $i++) {
+                $costsData[$i] = [
+                    'food' => 0,
+                    'beverage' => 0
+                ];
+            }
+            
+            // Populate costs data array with adjusted rubro values
+            foreach ($costs as $cost) {
+                if ($cost->rubro == 2) { // Alimentos (based on ResultadosController: $dia['egresos'][2][1])
+                    $costsData[$cost->month_index]['food'] = (float) $cost->total;
+                } else if ($cost->rubro == 3) { // Bebidas (based on ResultadosController: $dia['egresos'][3][1])
+                    $costsData[$cost->month_index]['beverage'] = (float) $cost->total;
+                }
             }
         }
         
@@ -442,17 +495,17 @@ class FinancialMetricsController extends Controller
         
         // Populate data arrays
         foreach ($additionalData as $item) {
-            $data['ingresos_propietarios'][$item->month_index] = (float) $item->ingresoPropietarios;
-            $data['inversiones'][$item->month_index] = (float) $item->inversiones;
-            $data['pago_deuda_atrasada'][$item->month_index] = (float) $item->pagoDeudaAtrasada;
-            $data['gastos_cta_cte'][$item->month_index] = (float) $item->gastosCtaCte;
+            $data['ingresos_propietarios'][$item->month_index] = (float) ($item->ingresoPropietarios ?? 0);
+            $data['inversiones'][$item->month_index] = (float) ($item->inversiones ?? 0);
+            $data['pago_deuda_atrasada'][$item->month_index] = (float) ($item->pagoDeudaAtrasada ?? 0);
+            $data['gastos_cta_cte'][$item->month_index] = (float) ($item->gastosCtaCte ?? 0);
         }
         
         // Get dividend withdrawals from transactions
         $dividends = DB::select(DB::raw("
             SELECT 
                 MONTH(fecha) - 1 as month_index,
-                SUM(importeOrigen) as total
+                SUM(COALESCE(importeOrigen, 0)) as total
             FROM transacciones
             WHERE YEAR(fecha) = ?
             AND destino = 200
@@ -470,7 +523,7 @@ class FinancialMetricsController extends Controller
         $investments = DB::select(DB::raw("
             SELECT 
                 MONTH(f.fecha_limite) - 1 as month_index,
-                SUM(f.total) as total
+                SUM(COALESCE(f.total, 0)) as total
             FROM (
                 SELECT f1.*
                 FROM facturas AS f1
@@ -529,6 +582,8 @@ class FinancialMetricsController extends Controller
      * @param array $percentagesByMonth
      * @param array $additionalData
      * @param array $finalCash
+     * @param array $foodAndBeverageSales
+     * @param array $foodAndBeverageCosts
      * @return array
      */
     private function calculateTotals(
@@ -539,7 +594,9 @@ class FinancialMetricsController extends Controller
         $netProfitByMonth,
         $percentagesByMonth,
         $additionalData,
-        $finalCash
+        $finalCash,
+        $foodAndBeverageSales,
+        $foodAndBeverageCosts
     ) {
         $totals = [
             'ventas_totales' => array_sum($salesByMonth),
@@ -557,47 +614,42 @@ class FinancialMetricsController extends Controller
             'caja_final' => array_sum($finalCash)
         ];
         
+        // Calculate totals for food and beverage sales/costs
+        $foodSalesTotal = 0;
+        $beverageSalesTotal = 0;
+        $foodCostsTotal = 0;
+        $beverageCostsTotal = 0;
+        
+        foreach ($foodAndBeverageSales as $month) {
+            $foodSalesTotal += $month['food'];
+            $beverageSalesTotal += $month['beverage'];
+        }
+        
+        foreach ($foodAndBeverageCosts as $month) {
+            $foodCostsTotal += $month['food'];
+            $beverageCostsTotal += $month['beverage'];
+        }
+        
         // Calculate percentage totals
         if ($totals['ventas_totales'] > 0) {
             $totals['ganancia_porcentaje'] = round(($totals['ganancia_neta'] / $totals['ventas_totales']) * 100, 2);
-            
-            // Get food and beverage sales totals
-            $foodSalesTotal = 0;
-            $beverageSalesTotal = 0;
-            $foodBeverageSales = $this->getFoodAndBeverageSales($salesByMonth[0]);
-            foreach ($foodBeverageSales as $month) {
-                $foodSalesTotal += $month['food'];
-                $beverageSalesTotal += $month['beverage'];
-            }
-            
-            // Get food and beverage costs totals
-            $foodCostsTotal = 0;
-            $beverageCostsTotal = 0;
-            $foodBeverageCosts = $this->getFoodAndBeverageCosts($expensesByMonth[0]);
-            foreach ($foodBeverageCosts as $month) {
-                $foodCostsTotal += $month['food'];
-                $beverageCostsTotal += $month['beverage'];
-            }
-            
-            // Calculate cost percentages
-            if ($foodSalesTotal > 0) {
-                $totals['costo_alimento_porcentaje'] = round(($foodCostsTotal / $foodSalesTotal) * 100, 2);
-            } else {
-                $totals['costo_alimento_porcentaje'] = 0;
-            }
-            
-            if ($beverageSalesTotal > 0) {
-                $totals['costo_bebida_porcentaje'] = round(($beverageCostsTotal / $beverageSalesTotal) * 100, 2);
-            } else {
-                $totals['costo_bebida_porcentaje'] = 0;
-            }
-            
             $totals['costo_mixto_porcentaje'] = round((($foodCostsTotal + $beverageCostsTotal) / $totals['ventas_totales']) * 100, 2);
         } else {
             $totals['ganancia_porcentaje'] = 0;
-            $totals['costo_alimento_porcentaje'] = 0;
-            $totals['costo_bebida_porcentaje'] = 0;
             $totals['costo_mixto_porcentaje'] = 0;
+        }
+        
+        // Calculate cost percentages
+        if ($foodSalesTotal > 0) {
+            $totals['costo_alimento_porcentaje'] = round(($foodCostsTotal / $foodSalesTotal) * 100, 2);
+        } else {
+            $totals['costo_alimento_porcentaje'] = 0;
+        }
+        
+        if ($beverageSalesTotal > 0) {
+            $totals['costo_bebida_porcentaje'] = round(($beverageCostsTotal / $beverageSalesTotal) * 100, 2);
+        } else {
+            $totals['costo_bebida_porcentaje'] = 0;
         }
         
         return $totals;

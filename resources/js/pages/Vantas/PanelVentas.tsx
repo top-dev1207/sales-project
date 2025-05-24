@@ -102,12 +102,15 @@ const MetricCard: React.FC<{
   trend?: number;
 }> = ({ title, value, subvalue, trend }) => {
   return (
-    <div className="bg-white rounded-lg shadow p-4 flex flex-col">
-      <div className="text-gray-500 text-sm mb-1">{title}</div>
-      <div className="text-2xl font-semibold mb-1">{value}</div>
-      {subvalue && <div className="text-sm text-gray-600">{subvalue}</div>}
+    <div className="bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 flex flex-col border dark:border-border">
+      <div className="text-gray-500 dark:text-muted-foreground text-sm mb-1">{title}</div>
+      <div className="text-2xl font-semibold mb-1 text-foreground dark:text-card-foreground">{value}</div>
+      {subvalue && <div className="text-sm text-gray-600 dark:text-muted-foreground">{subvalue}</div>}
       {trend !== undefined && (
-        <div className={`text-sm mt-2 ${trend >= 0 ? 'text-green-500' : 'text-red-500'} flex items-center`}>
+        <div className={`text-sm mt-2 flex items-center ${trend >= 0
+            ? 'text-green-500 dark:text-green-400'
+            : 'text-red-500 dark:text-red-400'
+          }`}>
           {trend >= 0 ? '↑' : '↓'} {Math.abs(trend)}%
         </div>
       )}
@@ -119,9 +122,12 @@ const MetricCard: React.FC<{
 const ProgressBar: React.FC<{ progress: number }> = ({ progress }) => {
   const width = Math.min(100, Math.max(0, progress));
   return (
-    <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
-      <div 
-        className={`h-4 rounded-full ${width < 70 ? 'bg-yellow-500' : 'bg-green-500'}`} 
+    <div className="w-full bg-gray-200 dark:bg-muted rounded-full h-4 mt-2 border dark:border-border">
+      <div
+        className={`h-4 rounded-full transition-all duration-300 ${width < 70
+            ? 'bg-yellow-500 dark:bg-yellow-400'
+            : 'bg-green-500 dark:bg-green-400'
+          }`}
         style={{ width: `${width}%` }}
       ></div>
     </div>
@@ -153,16 +159,16 @@ const PanelVentas: React.FC = () => {
   const fetchData = async (endpoint: string, params = {}) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       // Construir URL con parámetros de consulta
       const queryParams = new URLSearchParams();
       Object.entries(params).forEach(([key, value]) => {
         queryParams.append(key, String(value));
       });
-      
+
       const url = `/api/sales-analytics/${endpoint}?${queryParams.toString()}`;
-      
+
       const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -172,11 +178,11 @@ const PanelVentas: React.FC = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
-      
+
       if (!response.ok) {
         throw new Error(`Error de API: ${response.status}`);
       }
-      
+
       const data = await response.json();
       return data;
     } catch (err) {
@@ -254,75 +260,89 @@ const PanelVentas: React.FC = () => {
 
   // Componente de navegación
   const Navigation = () => (
-    <div className="bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in">
-      <h1 className="text-2xl font-bold mb-4">Panel Analítico de Ventas</h1>
-      <div className="flex flex-wrap gap-4 text-white">
-        <button 
+    <div className="bg-white dark:bg-card rounded-lg shadow-lg p-4 md:p-6 animate-fade-in border dark:border-border">
+      <h1 className="text-2xl font-bold mb-4 text-foreground dark:text-card-foreground">Panel Analítico de Ventas</h1>
+      <div className="flex flex-wrap gap-4 text-white dark:text-card-foreground">
+        <button
           onClick={() => handleViewChange('dashboard')}
-          className={`px-4 py-2 rounded ${view === 'dashboard' ? 'bg-blue-600' : 'bg-gray-700'}`}
+          className={`px-4 py-2 rounded transition-colors ${view === 'dashboard'
+              ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground'
+              : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'
+            }`}
         >
           Dashboard
         </button>
-        <button 
+        <button
           onClick={() => handleViewChange('sales')}
-          className={`px-4 py-2 rounded ${view === 'sales' ? 'bg-blue-600' : 'bg-gray-700'}`}
+          className={`px-4 py-2 rounded transition-colors ${view === 'sales'
+              ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground'
+              : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'
+            }`}
         >
           Ventas por Período
         </button>
-        <button 
+        <button
           onClick={() => handleViewChange('categories')}
-          className={`px-4 py-2 rounded ${view === 'categories' ? 'bg-blue-600' : 'bg-gray-700'}`}
+          className={`px-4 py-2 rounded transition-colors ${view === 'categories'
+              ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground'
+              : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'
+            }`}
         >
           Ventas por Categoría
         </button>
-        <button 
+        <button
           onClick={() => handleViewChange('targets')}
-          className={`px-4 py-2 rounded ${view === 'targets' ? 'bg-blue-600' : 'bg-gray-700'}`}
+          className={`px-4 py-2 rounded transition-colors ${view === 'targets'
+              ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground'
+              : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'
+            }`}
         >
           Objetivos de Ventas
         </button>
-        <button 
+        <button
           onClick={() => handleViewChange('comparison')}
-          className={`px-4 py-2 rounded ${view === 'comparison' ? 'bg-blue-600' : 'bg-gray-700'}`}
+          className={`px-4 py-2 rounded transition-colors ${view === 'comparison'
+              ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground'
+              : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'
+            }`}
         >
           Comparativa
         </button>
       </div>
     </div>
   );
-
   // Componente de filtros
   const Filters = () => (
-    <div className="bg-gray-100 p-4 mb-4 rounded-lg">
+    <div className="bg-gray-100 dark:bg-muted p-4 mb-4 rounded-lg border dark:border-border">
       <div className="flex flex-wrap gap-4 items-center">
         {view !== 'dashboard' && (
           <>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Desde</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1">Desde</label>
               <input
                 type="date"
-                className="p-2 border rounded"
+                className="p-2 border dark:border-border rounded bg-white dark:bg-card text-foreground dark:text-card-foreground focus:ring-2 focus:ring-primary dark:focus:ring-primary focus:border-transparent"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Hasta</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1">Hasta</label>
               <input
                 type="date"
-                className="p-2 border rounded"
+                className="p-2 border dark:border-border rounded bg-white dark:bg-card text-foreground dark:text-card-foreground focus:ring-2 focus:ring-primary dark:focus:ring-primary focus:border-transparent"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
               />
             </div>
           </>
         )}
-        
+
         {(view === 'sales' || view === 'comparison') && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Período</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1">Período</label>
             <select
-              className="p-2 border rounded"
+              className="p-2 border dark:border-border rounded bg-white dark:bg-card text-foreground dark:text-card-foreground focus:ring-2 focus:ring-primary dark:focus:ring-primary focus:border-transparent"
               value={period}
               onChange={handlePeriodChange}
             >
@@ -332,9 +352,9 @@ const PanelVentas: React.FC = () => {
             </select>
           </div>
         )}
-        
+
         <button
-          className="bg-blue-600 text-white px-4 py-2 rounded mt-4 md:mt-0"
+          className="bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground px-4 py-2 rounded mt-4 md:mt-0 hover:bg-blue-700 dark:hover:bg-primary/90 focus:ring-2 focus:ring-blue-500 dark:focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background transition-colors"
           onClick={() => {
             if (view === 'dashboard') loadDashboard();
             else if (view === 'sales') loadSalesData();
@@ -352,9 +372,9 @@ const PanelVentas: React.FC = () => {
   // Componente de visualización del dashboard
   const Dashboard = () => {
     if (!dashboardData) return null;
-    
+
     const { summary, recent_sales, payment_methods } = dashboardData;
-    
+
     return (
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -378,34 +398,60 @@ const PanelVentas: React.FC = () => {
             subvalue={`${summary.days_left_in_month} días restantes`}
           />
         </div>
-        
-        <div className="bg-white rounded-lg shadow p-4">
-          <h2 className="text-lg font-semibold mb-4">Progreso hacia el objetivo</h2>
+
+        <div className="bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border dark:border-border">
+          <h2 className="text-lg font-semibold mb-4 text-foreground dark:text-card-foreground">Progreso hacia el objetivo</h2>
           <ProgressBar progress={summary.month_progress} />
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white rounded-lg shadow p-4">
-            <h2 className="text-lg font-semibold mb-4">Ventas Recientes</h2>
+          <div className="bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border dark:border-border">
+            <h2 className="text-lg font-semibold mb-4 text-foreground dark:text-card-foreground">Ventas Recientes</h2>
             <div className="h-80">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                   data={recent_sales}
                   margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="period" />
-                  <YAxis />
-                  <Tooltip formatter={(value) => formatCurrency(Number(value))} />
-                  <Legend />
-                  <Line type="monotone" dataKey="total" stroke="#8884d8" name="Ventas Totales" />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    className="stroke-gray-200 dark:stroke-border"
+                  />
+                  <XAxis
+                    dataKey="period"
+                    className="fill-gray-600 dark:fill-muted-foreground"
+                  />
+                  <YAxis
+                    className="fill-gray-600 dark:fill-muted-foreground"
+                  />
+                  <Tooltip
+                    formatter={(value) => formatCurrency(Number(value))}
+                    contentStyle={{
+                      backgroundColor: 'hsl(var(--card))',
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '6px',
+                      color: 'hsl(var(--card-foreground))'
+                    }}
+                  />
+                  <Legend
+                    wrapperStyle={{
+                      color: 'hsl(var(--foreground))'
+                    }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="total"
+                    stroke="hsl(var(--primary))"
+                    name="Ventas Totales"
+                    strokeWidth={2}
+                  />
                 </LineChart>
               </ResponsiveContainer>
             </div>
           </div>
-          
-          <div className="bg-white rounded-lg shadow p-4">
-            <h2 className="text-lg font-semibold mb-4">Métodos de Pago</h2>
+
+          <div className="bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border dark:border-border">
+            <h2 className="text-lg font-semibold mb-4 text-foreground dark:text-card-foreground">Métodos de Pago</h2>
             <div className="h-80">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -416,15 +462,26 @@ const PanelVentas: React.FC = () => {
                     labelLine={false}
                     label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                     outerRadius={80}
-                    fill="#8884d8"
+                    fill="hsl(var(--primary))"
                     dataKey="total"
                     nameKey="name"
                   >
                     {payment_methods.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={`hsl(${220 + (index * 40)} 70% ${50 + (index * 10)}%)`}
+                      />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(value) => formatCurrency(Number(value))} />
+                  <Tooltip
+                    formatter={(value) => formatCurrency(Number(value))}
+                    contentStyle={{
+                      backgroundColor: 'hsl(var(--card))',
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '6px',
+                      color: 'hsl(var(--card-foreground))'
+                    }}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -437,22 +494,62 @@ const PanelVentas: React.FC = () => {
   // Componente para visualizar ventas por período
   const SalesByPeriod = () => {
     return (
-      <div className="bg-white rounded-lg shadow p-4">
-        <h2 className="text-lg font-semibold mb-4">Ventas por {period === 'day' ? 'Día' : period === 'week' ? 'Semana' : 'Mes'}</h2>
+      <div className="bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border dark:border-border">
+        <h2 className="text-lg font-semibold mb-4 text-foreground dark:text-card-foreground">
+          Ventas por {period === 'day' ? 'Día' : period === 'week' ? 'Semana' : 'Mes'}
+        </h2>
         <div className="h-96">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               data={salesData}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="period" />
-              <YAxis />
-              <Tooltip formatter={(value) => formatCurrency(Number(value))} />
-              <Legend />
-              <Line type="monotone" dataKey="total" stroke="#8884d8" name="Ventas Totales" />
-              <Line type="monotone" dataKey="ventas_fiscal" stroke="#82ca9d" name="Ventas Fiscales" />
-              <Line type="monotone" dataKey="ventas_no_fiscal" stroke="#ff7300" name="Ventas No Fiscales" />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                className="stroke-gray-200 dark:stroke-border"
+              />
+              <XAxis
+                dataKey="period"
+                className="fill-gray-600 dark:fill-muted-foreground"
+              />
+              <YAxis
+                className="fill-gray-600 dark:fill-muted-foreground"
+              />
+              <Tooltip
+                formatter={(value) => formatCurrency(Number(value))}
+                contentStyle={{
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))',
+                  borderRadius: '6px',
+                  color: 'hsl(var(--card-foreground))'
+                }}
+              />
+              <Legend
+                wrapperStyle={{
+                  color: 'hsl(var(--foreground))'
+                }}
+              />
+              <Line
+                type="monotone"
+                dataKey="total"
+                stroke="hsl(var(--primary))"
+                name="Ventas Totales"
+                strokeWidth={2}
+              />
+              <Line
+                type="monotone"
+                dataKey="ventas_fiscal"
+                stroke="hsl(var(--accent))"
+                name="Ventas Fiscales"
+                strokeWidth={2}
+              />
+              <Line
+                type="monotone"
+                dataKey="ventas_no_fiscal"
+                stroke="hsl(var(--destructive))"
+                name="Ventas No Fiscales"
+                strokeWidth={2}
+              />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -463,13 +560,13 @@ const PanelVentas: React.FC = () => {
   // Componente para visualizar ventas por categoría
   const SalesByCategory = () => {
     if (!categorySales) return null;
-    
+
     // Combinar datos para gráfico
     const combinedData = categorySales.food.data.map(foodItem => {
       const beverageItem = categorySales.beverages.data.find(
         bevItem => bevItem.period === foodItem.period
       ) || { period: foodItem.period, total: 0 };
-      
+
       return {
         period: foodItem.period,
         alimentos: foodItem.total,
@@ -477,7 +574,7 @@ const PanelVentas: React.FC = () => {
         total: foodItem.total + beverageItem.total
       };
     });
-    
+
     return (
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -490,22 +587,42 @@ const PanelVentas: React.FC = () => {
             value={formatCurrency(categorySales.beverages.total)}
           />
         </div>
-        
-        <div className="bg-white rounded-lg shadow p-4">
-          <h2 className="text-lg font-semibold mb-4">Ventas por Categoría</h2>
+
+        <div className="bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border dark:border-border">
+          <h2 className="text-lg font-semibold mb-4 text-foreground dark:text-card-foreground">Ventas por Categoría</h2>
           <div className="h-96">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={combinedData}
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
               >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="period" />
-                <YAxis />
-                <Tooltip formatter={(value) => formatCurrency(Number(value))} />
-                <Legend />
-                <Bar dataKey="alimentos" fill="#8884d8" name="Alimentos" />
-                <Bar dataKey="bebidas" fill="#82ca9d" name="Bebidas" />
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  className="stroke-gray-200 dark:stroke-border"
+                />
+                <XAxis
+                  dataKey="period"
+                  className="fill-gray-600 dark:fill-muted-foreground"
+                />
+                <YAxis
+                  className="fill-gray-600 dark:fill-muted-foreground"
+                />
+                <Tooltip
+                  formatter={(value) => formatCurrency(Number(value))}
+                  contentStyle={{
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '6px',
+                    color: 'hsl(var(--card-foreground))'
+                  }}
+                />
+                <Legend
+                  wrapperStyle={{
+                    color: 'hsl(var(--foreground))'
+                  }}
+                />
+                <Bar dataKey="alimentos" fill="hsl(var(--primary))" name="Alimentos" />
+                <Bar dataKey="bebidas" fill="hsl(var(--accent))" name="Bebidas" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -518,50 +635,76 @@ const PanelVentas: React.FC = () => {
   const SalesTargets = () => {
     return (
       <div className="space-y-6">
-        <div className="bg-white rounded-lg shadow p-4">
-          <h2 className="text-lg font-semibold mb-4">Objetivos de Ventas Mensuales</h2>
+        <div className="bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border dark:border-border">
+          <h2 className="text-lg font-semibold mb-4 text-foreground dark:text-card-foreground">Objetivos de Ventas Mensuales</h2>
           <div className="h-96">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={targetsData}
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
               >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month_name" />
-                <YAxis />
-                <Tooltip 
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  className="stroke-gray-200 dark:stroke-border"
+                />
+                <XAxis
+                  dataKey="month_name"
+                  className="fill-gray-600 dark:fill-muted-foreground"
+                />
+                <YAxis
+                  className="fill-gray-600 dark:fill-muted-foreground"
+                />
+                <Tooltip
                   formatter={(value) => formatCurrency(Number(value))}
                   labelFormatter={(label) => `Mes: ${label}`}
+                  contentStyle={{
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '6px',
+                    color: 'hsl(var(--card-foreground))'
+                  }}
                 />
-                <Legend />
-                <Bar dataKey="target" fill="#8884d8" name="Objetivo" />
-                <Bar dataKey="actual" fill="#82ca9d" name="Real" />
+                <Legend
+                  wrapperStyle={{
+                    color: 'hsl(var(--foreground))'
+                  }}
+                />
+                <Bar dataKey="target" fill="hsl(var(--primary))" name="Objetivo" />
+                <Bar dataKey="actual" fill="hsl(var(--accent))" name="Real" />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
-        
-        <div className="overflow-x-auto">
+
+        <div className="overflow-x-auto bg-white dark:bg-card rounded-lg shadow dark:shadow-lg border dark:border-border">
           <table className="w-full border-collapse">
             <thead>
-              <tr className="bg-gray-200">
-                <th className="p-2 text-left">Mes</th>
-                <th className="p-2 text-right">Objetivo</th>
-                <th className="p-2 text-right">Real</th>
-                <th className="p-2 text-right">Diferencia</th>
-                <th className="p-2 text-right">% Cumplimiento</th>
+              <tr className="bg-gray-200 dark:bg-muted">
+                <th className="p-2 text-left text-gray-800 dark:text-muted-foreground">Mes</th>
+                <th className="p-2 text-right text-gray-800 dark:text-muted-foreground">Objetivo</th>
+                <th className="p-2 text-right text-gray-800 dark:text-muted-foreground">Real</th>
+                <th className="p-2 text-right text-gray-800 dark:text-muted-foreground">Diferencia</th>
+                <th className="p-2 text-right text-gray-800 dark:text-muted-foreground">% Cumplimiento</th>
               </tr>
             </thead>
             <tbody>
               {targetsData.map((target, index) => (
-                <tr key={index} className="border-b">
-                  <td className="p-2">{target.month_name}</td>
-                  <td className="p-2 text-right">{formatCurrency(target.target)}</td>
-                  <td className="p-2 text-right">{formatCurrency(target.actual)}</td>
-                  <td className={`p-2 text-right ${target.difference >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                <tr key={index} className="border-b border-gray-200 dark:border-border hover:bg-gray-50 dark:hover:bg-muted/50 transition-colors">
+                  <td className="p-2 text-foreground dark:text-card-foreground">{target.month_name}</td>
+                  <td className="p-2 text-right text-foreground dark:text-card-foreground">{formatCurrency(target.target)}</td>
+                  <td className="p-2 text-right text-foreground dark:text-card-foreground">{formatCurrency(target.actual)}</td>
+                  <td className={`p-2 text-right ${target.difference >= 0
+                      ? 'text-green-600 dark:text-green-400'
+                      : 'text-red-600 dark:text-red-400'
+                    }`}>
                     {formatCurrency(target.difference)}
                   </td>
-                  <td className={`p-2 text-right ${target.achievement_percentage >= 100 ? 'text-green-600' : target.achievement_percentage >= 90 ? 'text-yellow-600' : 'text-red-600'}`}>
+                  <td className={`p-2 text-right ${target.achievement_percentage >= 100
+                      ? 'text-green-600 dark:text-green-400'
+                      : target.achievement_percentage >= 90
+                        ? 'text-yellow-600 dark:text-yellow-400'
+                        : 'text-red-600 dark:text-red-400'
+                    }`}>
                     {target.achievement_percentage.toFixed(1)}%
                   </td>
                 </tr>
@@ -576,18 +719,18 @@ const PanelVentas: React.FC = () => {
   // Componente para visualizar comparativa
   const SalesComparison = () => {
     if (!comparisonData) return null;
-    
+
     // Procesamiento de datos para gráfico combinado
     const combinedData = comparisonData.current_data.map((current, index) => {
       const previous = comparisonData.previous_data[index] || { period: current.period, total: 0 };
-      
+
       return {
         period: current.period,
         actual: current.total,
         anterior: previous.total
       };
     });
-    
+
     return (
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -607,22 +750,55 @@ const PanelVentas: React.FC = () => {
             trend={comparisonData.growth_percentage}
           />
         </div>
-        
-        <div className="bg-white rounded-lg shadow p-4">
-          <h2 className="text-lg font-semibold mb-4">Comparativa de Ventas</h2>
+
+        <div className="bg-white dark:bg-card rounded-lg shadow dark:shadow-lg p-4 border dark:border-border">
+          <h2 className="text-lg font-semibold mb-4 text-foreground dark:text-card-foreground">Comparativa de Ventas</h2>
           <div className="h-96">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
                 data={combinedData}
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
               >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="period" />
-                <YAxis />
-                <Tooltip formatter={(value) => formatCurrency(Number(value))} />
-                <Legend />
-                <Line type="monotone" dataKey="actual" stroke="#8884d8" name="Período Actual" />
-                <Line type="monotone" dataKey="anterior" stroke="#82ca9d" name="Período Anterior" strokeDasharray="3 3" />
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  className="stroke-gray-200 dark:stroke-border"
+                />
+                <XAxis
+                  dataKey="period"
+                  className="fill-gray-600 dark:fill-muted-foreground"
+                />
+                <YAxis
+                  className="fill-gray-600 dark:fill-muted-foreground"
+                />
+                <Tooltip
+                  formatter={(value) => formatCurrency(Number(value))}
+                  contentStyle={{
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '6px',
+                    color: 'hsl(var(--card-foreground))'
+                  }}
+                />
+                <Legend
+                  wrapperStyle={{
+                    color: 'hsl(var(--foreground))'
+                  }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="actual"
+                  stroke="hsl(var(--primary))"
+                  name="Período Actual"
+                  strokeWidth={2}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="anterior"
+                  stroke="hsl(var(--accent))"
+                  name="Período Anterior"
+                  strokeDasharray="3 3"
+                  strokeWidth={2}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -632,18 +808,21 @@ const PanelVentas: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-background">
       <Navigation />
-      
-      <div className="p-4 bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in mt-[50px]" >
+
+      <div className="p-4 bg-white dark:bg-card rounded-lg shadow-lg p-4 md:p-6 animate-fade-in mt-[50px] border dark:border-border" >
         <Filters />
-        
+
         {loading ? (
-          <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          <div className="flex items-center justify-center p-8 min-h-[400px] dark:bg-background">
+            <div className="text-center">
+              <div className="w-12 h-12 border-4 border-t-dashboard-blue dark:border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-foreground dark:text-foreground">sobreprima.....</p>
+            </div>
           </div>
         ) : error ? (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          <div className="bg-red-100 dark:bg-destructive/10 border border-red-400 dark:border-destructive text-red-700 dark:text-destructive-foreground px-4 py-3 rounded">
             <p>Error: {error}</p>
           </div>
         ) : (

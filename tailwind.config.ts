@@ -135,14 +135,14 @@
 import type { Config } from "tailwindcss";
 
 export default {
-	darkMode: ["class"],
-    content: [
-                        './resources/**/*.blade.php',
-                        './resources/js/**/*.tsx',
-                        './resources/js/**/*.ts',
-                        './resources/js/**/*.jsx',
-                        './resources/js/**/*.js'
-                      ],
+	darkMode: "class", // use 'class' instead of 'media' for manual control
+	content: [
+		'./resources/**/*.blade.php',
+		'./resources/js/**/*.tsx',
+		'./resources/js/**/*.ts',
+		'./resources/js/**/*.jsx',
+		'./resources/js/**/*.js'
+	],
 	prefix: "",
 	theme: {
 		container: {
@@ -197,16 +197,44 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Updated dashboard colors with a more cohesive palette
+				// Enhanced dashboard color palette
 				dashboard: {
-					blue: '#3B82F6',
-					green: '#10B981',
-					amber: '#F59E0B',
-					red: '#EF4444',
-					purple: '#8B5CF6',
-					teal: '#14B8A6',
-					indigo: '#6366F1',
-					cyan: '#06B6D4'
+					blue: {
+						50: '#eff6ff',
+						500: '#3b82f6',
+						600: '#2563eb',
+						700: '#1d4ed8'
+					},
+					green: {
+						50: '#f0fdf4',
+						500: '#22c55e',
+						600: '#16a34a',
+						700: '#15803d'
+					},
+					amber: {
+						50: '#fffbeb',
+						500: '#f59e0b',
+						600: '#d97706',
+						700: '#b45309'
+					},
+					red: {
+						50: '#fef2f2',
+						500: '#ef4444',
+						600: '#dc2626',
+						700: '#b91c1c'
+					},
+					purple: {
+						50: '#faf5ff',
+						500: '#a855f7',
+						600: '#9333ea',
+						700: '#7c3aed'
+					},
+					teal: {
+						50: '#f0fdfa',
+						500: '#14b8a6',
+						600: '#0d9488',
+						700: '#0f766e'
+					}
 				}
 			},
 			borderRadius: {
@@ -240,16 +268,22 @@ export default {
 						opacity: "1",
 						transform: "translateY(0)"
 					}
+				},
+				"theme-switch": {
+					"0%": { transform: "rotate(0deg)" },
+					"100%": { transform: "rotate(180deg)" }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				"fade-in": "fade-in 0.3s ease-out",
+				"theme-switch": "theme-switch 0.5s ease-in-out",
 			},
 			boxShadow: {
 				'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-				'header': '0 1px 3px rgba(0, 0, 0, 0.05)'
+				'header': '0 1px 3px rgba(0, 0, 0, 0.05)',
+				'dark-card': '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)',
 			}
 		}
 	},

@@ -217,7 +217,12 @@ const PanelLoginTiempo = () => {
                 <div className="bg-blue-50 p-4 rounded-lg mb-6">
                     <h2 className="text-xl font-semibold mb-3 text-blue-800">Tu Última Sesión</h2>
                     {loading && userLoginTime === null ? (
-                        <p className="text-gray-600">Cargando datos de sesión...</p>
+                        <div className="flex items-center justify-center p-8 min-h-[400px] dark:bg-background">
+                            <div className="text-center">
+                                <div className="w-12 h-12 border-4 border-t-dashboard-blue dark:border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
+                                <p className="text-foreground dark:text-foreground">sobreprima.....</p>
+                            </div>
+                        </div>
                     ) : error ? (
                         <p className="text-red-500">{error}</p>
                     ) : userLoginTime ? (
@@ -242,8 +247,8 @@ const PanelLoginTiempo = () => {
                         <button
                             onClick={() => handleTabChange('diario')}
                             className={`py-2 px-4 text-center border-b-2 font-medium text-sm ${activeTab === 'diario'
-                                    ? 'border-blue-500 text-blue-600'
-                                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                ? 'border-blue-500 text-blue-600'
+                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                                 }`}
                         >
                             Estadísticas Diarias
@@ -251,8 +256,8 @@ const PanelLoginTiempo = () => {
                         <button
                             onClick={() => handleTabChange('semanal')}
                             className={`py-2 px-4 text-center border-b-2 font-medium text-sm ${activeTab === 'semanal'
-                                    ? 'border-blue-500 text-blue-600'
-                                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                ? 'border-blue-500 text-blue-600'
+                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                                 }`}
                         >
                             Estadísticas Semanales
@@ -260,8 +265,8 @@ const PanelLoginTiempo = () => {
                         <button
                             onClick={() => handleTabChange('mensual')}
                             className={`py-2 px-4 text-center border-b-2 font-medium text-sm ${activeTab === 'mensual'
-                                    ? 'border-blue-500 text-blue-600'
-                                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                ? 'border-blue-500 text-blue-600'
+                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                                 }`}
                         >
                             Estadísticas Mensuales
@@ -269,8 +274,8 @@ const PanelLoginTiempo = () => {
                         <button
                             onClick={() => handleTabChange('personalizado')}
                             className={`py-2 px-4 text-center border-b-2 font-medium text-sm ${activeTab === 'personalizado'
-                                    ? 'border-blue-500 text-blue-600'
-                                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                ? 'border-blue-500 text-blue-600'
+                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                                 }`}
                         >
                             Informe Personalizado

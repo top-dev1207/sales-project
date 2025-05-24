@@ -1,6 +1,7 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useDashboard } from '@/context/DashboardContext';
+import { useTheme } from '@/hooks/ThemeContext';
 import { cn } from '@/lib/utils';
 import {
   Select,
@@ -10,6 +11,8 @@ import {
   SelectItem
 } from '@/components/ui/select';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Moon, Sun } from 'lucide-react';
+import { ThemeToggle } from '../ui/theme-toggle';
 
 const Header = () => {
   const { dateRange, setDateRange, sidebarWidth } = useDashboard();
@@ -27,33 +30,20 @@ const Header = () => {
   return (
     <header
       className={cn(
-        "fixed top-0 right-0 h-16 border-b border-gray-200 bg-white z-20 shadow-header transition-all duration-300",
+        "fixed top-0 right-0 h-16 border-b border-b-[hsl(var(--sidebar-border))] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-20 shadow-sm theme-transition",
         getHeaderLeftClass()
       )}
     >
       <div className="flex items-center justify-between h-full px-6">
         <div>
-          <h1 className="text-xl font-semibold text-gray-800">Dashboard</h1>
+          <h1 className="text-xl font-semibold text-foreground theme-transition">Dashboard</h1>
         </div>
 
         <div className="flex items-center gap-4">
-          {/* <Select
-            value={dateRange}
-            onValueChange={(value) => setDateRange(value as 'daily' | 'weekly' | 'monthly')}
-          >
-            <SelectTrigger className="w-40 border-gray-200">
-              <SelectValue placeholder="Select date range" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="daily">Daily</SelectItem>
-              <SelectItem value="weekly">Weekly</SelectItem>
-              <SelectItem value="monthly">Monthly</SelectItem>
-            </SelectContent>
-          </Select> */}
-
+          <ThemeToggle />
           <Avatar>
             <AvatarImage src="" />
-            <AvatarFallback className="bg-primary text-primary-foreground">JD</AvatarFallback>
+            <AvatarFallback className="bg-primary text-primary-foreground theme-transition">JD</AvatarFallback>
           </Avatar>
         </div>
       </div>

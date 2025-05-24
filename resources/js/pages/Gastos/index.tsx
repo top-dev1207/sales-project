@@ -261,13 +261,13 @@ const Gastos: React.FC = () => {
     const renderIncidenceTab = () => {
         return (
             <div className="space-y-6">
-                <div className="bg-white rounded-lg shadow p-4">
-                    <h3 className="text-lg font-medium mb-4">Analysis Parameters</h3>
+                <div className="bg-card rounded-lg shadow border-border p-4 theme-transition">
+                    <h3 className="text-lg font-medium mb-4 text-card-foreground theme-transition">Analysis Parameters</h3>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Period Type</label>
+                            <label className="block text-sm font-medium text-card-foreground mb-1 theme-transition">Period Type</label>
                             <select
-                                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
                                 value={periodType}
                                 onChange={(e) => setPeriodType(e.target.value as PeriodType)}
                             >
@@ -277,28 +277,28 @@ const Gastos: React.FC = () => {
                             </select>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                            <label className="block text-sm font-medium text-card-foreground mb-1 theme-transition">Start Date</label>
                             <input
                                 type="date"
-                                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
                                 value={dateRange.startDate}
                                 onChange={(e) => setDateRange({ ...dateRange, startDate: e.target.value })}
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                            <label className="block text-sm font-medium text-card-foreground mb-1 theme-transition">End Date</label>
                             <input
                                 type="date"
-                                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
                                 value={dateRange.endDate}
                                 onChange={(e) => setDateRange({ ...dateRange, endDate: e.target.value })}
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Item Limit</label>
+                            <label className="block text-sm font-medium text-card-foreground mb-1 theme-transition">Item Limit</label>
                             <input
                                 type="number"
-                                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
                                 value={limit}
                                 min={3}
                                 max={50}
@@ -308,42 +308,42 @@ const Gastos: React.FC = () => {
                     </div>
                     <div className="mt-4">
                         <button
-                            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                            className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors theme-transition"
                             onClick={fetchExpensesByIncidence}
                             disabled={loading}
                         >
-                            {loading ? 'Loading...' : 'Analyze'}
+                            {loading ? 'sobreprima...' : 'Analyze'}
                         </button>
                     </div>
                 </div>
 
                 {error && (
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                    <div className="bg-destructive/10 border border-destructive text-destructive px-4 py-3 rounded theme-transition">
                         {error}
                     </div>
                 )}
 
                 {incidenceData.length > 0 && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div className="bg-white rounded-lg shadow p-4">
-                            <h3 className="text-lg font-medium mb-4">Analyzed Periods</h3>
+                        <div className="bg-card rounded-lg shadow border-border p-4 theme-transition">
+                            <h3 className="text-lg font-medium mb-4 text-card-foreground theme-transition">Analyzed Periods</h3>
                             <div className="overflow-x-auto h-72 max-h-72 overflow-y-auto">
-                                <table className="min-w-full divide-y divide-gray-200">
-                                    <thead className="bg-gray-50 sticky top-0 z-10">
+                                <table className="min-w-full divide-y divide-border">
+                                    <thead className="bg-muted sticky top-0 z-10 theme-transition">
                                         <tr>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Period</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition">Period</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition">Total</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition">Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="bg-white divide-y divide-gray-200">
+                                    <tbody className="bg-card divide-y divide-border theme-transition">
                                         {incidenceData.map((period, idx) => (
-                                            <tr key={idx} className={selectedPeriod === idx ? 'bg-blue-50' : ''}>
-                                                <td className="px-6 py-4 whitespace-nowrap">{period.period.display}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap">{formatCurrency(period.total)}</td>
+                                            <tr key={idx} className={selectedPeriod === idx ? 'bg-accent theme-transition' : 'theme-transition'}>
+                                                <td className="px-6 py-4 whitespace-nowrap text-card-foreground theme-transition">{period.period.display}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-card-foreground theme-transition">{formatCurrency(period.total)}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     <button
-                                                        className="text-blue-600 hover:text-blue-900"
+                                                        className="text-primary hover:text-primary/80 theme-transition"
                                                         onClick={() => setSelectedPeriod(idx)}
                                                     >
                                                         View Details
@@ -357,8 +357,8 @@ const Gastos: React.FC = () => {
                         </div>
 
                         {incidenceData[selectedPeriod] && (
-                            <div className="bg-white rounded-lg shadow p-4 flex flex-col h-full">
-                                <h3 className="text-lg font-medium mb-4">
+                            <div className="bg-card rounded-lg shadow border-border p-4 flex flex-col h-full theme-transition">
+                                <h3 className="text-lg font-medium mb-4 text-card-foreground theme-transition">
                                     Period Details: {incidenceData[selectedPeriod].period.display}
                                 </h3>
 
@@ -388,20 +388,20 @@ const Gastos: React.FC = () => {
                                 </div>
 
                                 <div className="overflow-x-auto overflow-y-auto flex-1" style={{ maxHeight: '300px' }}>
-                                    <table className="min-w-full divide-y divide-gray-200">
-                                        <thead className="bg-gray-50 sticky top-0 z-10">
+                                    <table className="min-w-full divide-y divide-border">
+                                        <thead className="bg-muted sticky top-0 z-10 theme-transition">
                                             <tr>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item</th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Percentage</th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition">Item</th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition">Amount</th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition">Percentage</th>
                                             </tr>
                                         </thead>
-                                        <tbody className="bg-white divide-y divide-gray-200">
+                                        <tbody className="bg-card divide-y divide-border theme-transition">
                                             {incidenceData[selectedPeriod].expenses.map((expense, idx) => (
-                                                <tr key={idx}>
-                                                    <td className="px-6 py-4 whitespace-nowrap">{expense.rubro_nombre}</td>
-                                                    <td className="px-6 py-4 whitespace-nowrap">{formatCurrency(expense.importe)}</td>
-                                                    <td className="px-6 py-4 whitespace-nowrap">{expense.porcentaje.toFixed(1)}%</td>
+                                                <tr key={idx} className="theme-transition">
+                                                    <td className="px-6 py-4 whitespace-nowrap text-card-foreground theme-transition">{expense.rubro_nombre}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-card-foreground theme-transition">{formatCurrency(expense.importe)}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-card-foreground theme-transition">{expense.porcentaje.toFixed(1)}%</td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -425,26 +425,26 @@ const Gastos: React.FC = () => {
 
         return (
             <div className="space-y-6">
-                <div className="bg-white rounded-lg shadow p-4">
-                    <h3 className="text-lg font-medium mb-4">Comparison Parameters</h3>
+                <div className="bg-card rounded-lg shadow border-border p-4 theme-transition">
+                    <h3 className="text-lg font-medium mb-4 text-card-foreground theme-transition">Comparison Parameters</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                         <div>
-                            <h4 className="font-medium mb-2">Period 1</h4>
+                            <h4 className="font-medium mb-2 text-card-foreground theme-transition">Period 1</h4>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                                    <label className="block text-sm font-medium text-card-foreground mb-1 theme-transition">Start Date</label>
                                     <input
                                         type="date"
-                                        className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                        className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
                                         value={period1.startDate}
                                         onChange={(e) => setPeriod1({ ...period1, startDate: e.target.value })}
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                                    <label className="block text-sm font-medium text-card-foreground mb-1 theme-transition">End Date</label>
                                     <input
                                         type="date"
-                                        className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                        className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
                                         value={period1.endDate}
                                         onChange={(e) => setPeriod1({ ...period1, endDate: e.target.value })}
                                     />
@@ -452,22 +452,22 @@ const Gastos: React.FC = () => {
                             </div>
                         </div>
                         <div>
-                            <h4 className="font-medium mb-2">Period 2</h4>
+                            <h4 className="font-medium mb-2 text-card-foreground theme-transition">Period 2</h4>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                                    <label className="block text-sm font-medium text-card-foreground mb-1 theme-transition">Start Date</label>
                                     <input
                                         type="date"
-                                        className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                        className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
                                         value={period2.startDate}
                                         onChange={(e) => setPeriod2({ ...period2, startDate: e.target.value })}
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                                    <label className="block text-sm font-medium text-card-foreground mb-1 theme-transition">End Date</label>
                                     <input
                                         type="date"
-                                        className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                        className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
                                         value={period2.endDate}
                                         onChange={(e) => setPeriod2({ ...period2, endDate: e.target.value })}
                                     />
@@ -477,9 +477,9 @@ const Gastos: React.FC = () => {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Period Type</label>
+                            <label className="block text-sm font-medium text-card-foreground mb-1 theme-transition">Period Type</label>
                             <select
-                                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
                                 value={comparisonPeriodType}
                                 onChange={(e) => setComparisonPeriodType(e.target.value as PeriodType)}
                             >
@@ -489,9 +489,9 @@ const Gastos: React.FC = () => {
                             </select>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Group By</label>
+                            <label className="block text-sm font-medium text-card-foreground mb-1 theme-transition">Group By</label>
                             <select
-                                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
                                 value={groupBy}
                                 onChange={(e) => setGroupBy(e.target.value as 'rubro' | 'category')}
                             >
@@ -501,7 +501,7 @@ const Gastos: React.FC = () => {
                         </div>
                         <div className="flex items-end">
                             <button
-                                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                                className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors theme-transition"
                                 onClick={compareExpensesPeriods}
                                 disabled={loading}
                             >
@@ -512,25 +512,25 @@ const Gastos: React.FC = () => {
                 </div>
 
                 {error && (
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                    <div className="bg-destructive/10 border border-destructive text-destructive px-4 py-3 rounded theme-transition">
                         {error}
                     </div>
                 )}
 
                 {comparisonData.length > 0 && (
                     <div className="space-y-6">
-                        <div className="bg-white rounded-lg shadow p-4">
-                            <h3 className="text-lg font-medium mb-4">Comparison Summary</h3>
+                        <div className="bg-card rounded-lg shadow border-border p-4 theme-transition">
+                            <h3 className="text-lg font-medium mb-4 text-card-foreground theme-transition">Comparison Summary</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <h4 className="font-medium mb-2">Period Totals</h4>
-                                    <p className="mb-1">
+                                    <h4 className="font-medium mb-2 text-card-foreground theme-transition">Period Totals</h4>
+                                    <p className="mb-1 text-card-foreground theme-transition">
                                         <span className="font-medium">Period 1 ({period1Label}):</span> {formatCurrency(periodTotals.period1)}
                                     </p>
-                                    <p className="mb-1">
+                                    <p className="mb-1 text-card-foreground theme-transition">
                                         <span className="font-medium">Period 2 ({period2Label}):</span> {formatCurrency(periodTotals.period2)}
                                     </p>
-                                    <p className="mb-1">
+                                    <p className="mb-1 text-card-foreground theme-transition">
                                         <span className="font-medium">Difference:</span> {formatCurrency(periodTotals.period2 - periodTotals.period1)}
                                         {" "}
                                         ({periodTotals.period1 > 0
@@ -557,8 +557,8 @@ const Gastos: React.FC = () => {
                             </div>
                         </div>
 
-                        <div className="bg-white rounded-lg shadow p-4">
-                            <h3 className="text-lg font-medium mb-4">Comparison by {groupBy === 'rubro' ? 'Item' : 'Category'}</h3>
+                        <div className="bg-card rounded-lg shadow border-border p-4 theme-transition">
+                            <h3 className="text-lg font-medium mb-4 text-card-foreground theme-transition">Comparison by {groupBy === 'rubro' ? 'Item' : 'Category'}</h3>
 
                             <div className="mb-6">
                                 <div className="h-64">
@@ -579,46 +579,46 @@ const Gastos: React.FC = () => {
                             </div>
 
                             <div className="overflow-x-auto overflow-y-auto" style={{ maxHeight: '300px' }}>
-                                <table className="min-w-full divide-y divide-gray-200">
-                                    <thead className="bg-gray-50 sticky top-0 z-10">
+                                <table className="min-w-full divide-y divide-border">
+                                    <thead className="bg-muted sticky top-0 z-10 theme-transition">
                                         <tr>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition">
                                                 {groupBy === 'rubro' ? 'Item' : 'Category'}
                                             </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition">
                                                 {period1Label}
                                             </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition">
                                                 {period2Label}
                                             </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Difference</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Change %</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition">Difference</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider theme-transition">Change %</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="bg-white divide-y divide-gray-200">
+                                    <tbody className="bg-card divide-y divide-border theme-transition">
                                         {comparisonData.map((item, idx) => (
-                                            <tr key={idx}>
-                                                <td className="px-6 py-4 whitespace-nowrap">{item.group_name}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap">{formatCurrency(item.period1_amount)}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap">{formatCurrency(item.period2_amount)}</td>
+                                            <tr key={idx} className="theme-transition">
+                                                <td className="px-6 py-4 whitespace-nowrap text-card-foreground theme-transition">{item.group_name}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-card-foreground theme-transition">{formatCurrency(item.period1_amount)}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-card-foreground theme-transition">{formatCurrency(item.period2_amount)}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
-                                                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full 
+                                                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full theme-transition
                             ${item.difference > 0
-                                                            ? 'bg-red-100 text-red-800'
+                                                            ? 'bg-destructive/10 text-destructive'
                                                             : item.difference < 0
-                                                                ? 'bg-green-100 text-green-800'
-                                                                : 'bg-gray-100 text-gray-800'}`}>
+                                                                ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
+                                                                : 'bg-muted text-muted-foreground'}`}>
                                                         {formatCurrency(item.difference)}
                                                     </span>
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     {item.difference_percentage !== null
-                                                        ? <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full 
+                                                        ? <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full theme-transition
                                 ${item.difference_percentage > 0
-                                                                ? 'bg-red-100 text-red-800'
+                                                                ? 'bg-destructive/10 text-destructive'
                                                                 : item.difference_percentage < 0
-                                                                    ? 'bg-green-100 text-green-800'
-                                                                    : 'bg-gray-100 text-gray-800'}`}>
+                                                                    ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
+                                                                    : 'bg-muted text-muted-foreground'}`}>
                                                             {item.difference_percentage > 0 ? '+' : ''}{item.difference_percentage.toFixed(1)}%
                                                         </span>
                                                         : 'N/A'
@@ -638,25 +638,25 @@ const Gastos: React.FC = () => {
 
     return (
         <DashboardLayout>
-            <div className="bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in">
-                <h2 className="text-2xl font-bold mb-6 text-gray-800">Expense Analysis Dashboard</h2>
+            <div className="bg-card rounded-lg shadow-lg border-border p-4 md:p-6 animate-fade-in theme-transition">
+                <h2 className="text-2xl font-bold mb-6 text-card-foreground theme-transition">Expense Analysis Dashboard</h2>
 
                 <div className="mb-6">
-                    <div className="border-b border-gray-200">
+                    <div className="border-b border-border theme-transition">
                         <nav className="-mb-px flex">
                             <button
-                                className={`py-4 px-6 font-medium text-sm ${activeTab === 'incidence'
-                                        ? 'border-b-2 border-blue-500 text-blue-600'
-                                        : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                className={`py-4 px-6 font-medium text-sm theme-transition ${activeTab === 'incidence'
+                                        ? 'border-b-2 border-primary text-primary'
+                                        : 'text-muted-foreground hover:text-foreground hover:border-muted-foreground'
                                     }`}
                                 onClick={() => handleTabChange('incidence')}
                             >
                                 Incidence Analysis
                             </button>
                             <button
-                                className={`py-4 px-6 font-medium text-sm ${activeTab === 'comparison'
-                                        ? 'border-b-2 border-blue-500 text-blue-600'
-                                        : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                className={`py-4 px-6 font-medium text-sm theme-transition ${activeTab === 'comparison'
+                                        ? 'border-b-2 border-primary text-primary'
+                                        : 'text-muted-foreground hover:text-foreground hover:border-muted-foreground'
                                     }`}
                                 onClick={() => handleTabChange('comparison')}
                             >

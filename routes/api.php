@@ -27,14 +27,12 @@ use App\Http\Controllers\ResumenVer\IndicePintaController;
 */
 
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return response()->json([
-//             'success' => true
-//             ]);
-// });
-Route::middleware('auth:api')->group(function () {
-    // Route::get('realizar', [ResumenVerController::class, "getRealizarData"] );
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+   return response()->json([
+            'success' => true
+            ]);
 });
+
 Route::prefix('gastos-analisis')->group(function () {
     Route::get('/sobre-ventas', [GastosAnalisisController::class, 'gastosSobreVentas']);
     Route::get('/sobre-total', [GastosAnalisisController::class, 'gastosSobreTotalGastos']);
@@ -124,3 +122,4 @@ Route::prefix('indice-pinta')->group(function () {
     // Comparativo entre períodos 
     Route::get('/comparativo', [IndicePintaController::class, 'getComparativoIndicePinta']);
 });
+

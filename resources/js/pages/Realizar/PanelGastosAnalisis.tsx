@@ -63,7 +63,7 @@ const PanelGastosAnalisis: React.FC = () => {
     // Establecer fechas predeterminadas (mes actual)
     const hoy = new Date();
     const inicioMes = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
-    
+
     setFechaInicio(inicioMes.toISOString().split('T')[0]);
     setFechaFin(hoy.toISOString().split('T')[0]);
 
@@ -73,24 +73,24 @@ const PanelGastosAnalisis: React.FC = () => {
 
   const cargarDatos = async (endpoint: string) => {
     if (!fechaInicio || !fechaFin) return;
-    
+
     setCargando(true);
     setError(null);
-    
+
     try {
       // Construir la URL con los parámetros de consulta
       const url = new URL(`/api/gastos-analisis/${endpoint}`, window.location.origin);
       url.searchParams.append('fecha_inicio', fechaInicio);
       url.searchParams.append('fecha_fin', fechaFin);
-      
+
       const response = await fetch(url.toString());
-      
+
       if (!response.ok) {
         throw new Error(`Error HTTP: ${response.status}`);
       }
-      
+
       const data = await response.json();
-      
+
       setDashboard(data);
       setVistaActiva(endpoint as any);
     } catch (err) {
@@ -110,7 +110,7 @@ const PanelGastosAnalisis: React.FC = () => {
     if (!dashboard || !dashboard.data || dashboard.status !== 'success' || !('porcentaje_ventas' in (dashboard.data as RubroGasto[])[0])) {
       return (
         <div className="text-center p-4">
-          <p>No hay datos disponibles para mostrar.</p>
+          <p className="text-foreground dark:text-foreground">No hay datos disponibles para mostrar.</p>
         </div>
       );
     }
@@ -120,44 +120,64 @@ const PanelGastosAnalisis: React.FC = () => {
 
     return (
       <div className="mt-4">
-        <h3 className="text-lg font-medium mb-2">Gastos como porcentaje de ventas totales</h3>
+        <h3 className="text-lg font-medium mb-2 text-foreground dark:text-foreground">Gastos como porcentaje de ventas totales</h3>
         <div className="mb-2">
-          <p className="text-sm">Ventas totales: {formatoMoneda(dashboard.ventas_totales || 0)}</p>
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground">Ventas totales: {formatoMoneda(dashboard.ventas_totales || 0)}</p>
         </div>
-        <div className="h-96">
+        <div className="h-96 bg-card dark:bg-card border border-border dark:border-border rounded-lg p-2">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={data}
               layout="vertical"
               margin={{ top: 20, right: 30, left: 150, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis type="number" domain={[0, Math.max(...data.map(d => d.porcentaje_ventas || 0)) * 1.1]} unit="%" />
-              <YAxis dataKey="rubro_nombre" type="category" width={140} />
-              <Tooltip 
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+              <XAxis
+                type="number"
+                domain={[0, Math.max(...data.map(d => d.porcentaje_ventas || 0)) * 1.1]}
+                unit="%"
+                tick={{ fill: 'hsl(var(--foreground))' }}
+                axisLine={{ stroke: 'hsl(var(--border))' }}
+              />
+              <YAxis
+                dataKey="rubro_nombre"
+                type="category"
+                width={140}
+                tick={{ fill: 'hsl(var(--foreground))' }}
+                axisLine={{ stroke: 'hsl(var(--border))' }}
+              />
+              <Tooltip
                 formatter={(value: any) => [`${value.toFixed(2)}%`, 'Porcentaje']}
                 labelFormatter={(label) => `Rubro: ${label}`}
+                contentStyle={{
+                  backgroundColor: 'hsl(var(--popover))',
+                  border: '1px solid hsl(var(--border))',
+                  borderRadius: '8px',
+                  color: 'hsl(var(--foreground))'
+                }}
               />
-              <Legend />
-              <Bar dataKey="porcentaje_ventas" name="% de Ventas" fill="#8884d8" />
+              <Legend
+                wrapperStyle={{ color: 'hsl(var(--foreground))' }}
+              />
+              <Bar dataKey="porcentaje_ventas" name="% de Ventas" fill="hsl(var(--primary))" />
             </BarChart>
           </ResponsiveContainer>
         </div>
         <div className="mt-4 overflow-x-auto">
-          <table className="min-w-full bg-white border rounded-lg">
-            <thead className="bg-gray-100">
+          <table className="min-w-full bg-card dark:bg-card border border-border dark:border-border rounded-lg">
+            <thead className="bg-muted dark:bg-muted">
               <tr>
-                <th className="py-2 px-4 border-b text-left">Rubro</th>
-                <th className="py-2 px-4 border-b text-right">Importe</th>
-                <th className="py-2 px-4 border-b text-right">% de Ventas</th>
+                <th className="py-2 px-4 border-b border-border dark:border-border text-left text-foreground dark:text-foreground">Rubro</th>
+                <th className="py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground">Importe</th>
+                <th className="py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground">% de Ventas</th>
               </tr>
             </thead>
             <tbody>
               {data.map((item, index) => (
-                <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
-                  <td className="py-2 px-4 border-b">{item.rubro_nombre}</td>
-                  <td className="py-2 px-4 border-b text-right">{formatoMoneda(item.importe)}</td>
-                  <td className="py-2 px-4 border-b text-right">{item.porcentaje_ventas?.toFixed(2)}%</td>
+                <tr key={index} className={index % 2 === 0 ? 'bg-muted/50 dark:bg-muted/50' : 'bg-card dark:bg-card'}>
+                  <td className="py-2 px-4 border-b border-border dark:border-border text-foreground dark:text-foreground">{item.rubro_nombre}</td>
+                  <td className="py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground">{formatoMoneda(item.importe)}</td>
+                  <td className="py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground">{item.porcentaje_ventas?.toFixed(2)}%</td>
                 </tr>
               ))}
             </tbody>
@@ -171,14 +191,14 @@ const PanelGastosAnalisis: React.FC = () => {
     if (!dashboard || !dashboard.data || dashboard.status !== 'success' || !('porcentaje_gastos_totales' in (dashboard.data as RubroGasto[])[0])) {
       return (
         <div className="text-center p-4">
-          <p>No hay datos disponibles para mostrar.</p>
+          <p className="text-foreground dark:text-foreground">No hay datos disponibles para mostrar.</p>
         </div>
       );
     }
 
     const data = dashboard.data as RubroGasto[];
     data.sort((a, b) => (b.porcentaje_gastos_totales || 0) - (a.porcentaje_gastos_totales || 0));
-    
+
     // Filtramos solo los primeros 10 para el gráfico circular
     const pieData = data.slice(0, 10);
     // Agrupamos el resto como "Otros" si hay más de 10 rubros
@@ -194,12 +214,12 @@ const PanelGastosAnalisis: React.FC = () => {
 
     return (
       <div className="mt-4">
-        <h3 className="text-lg font-medium mb-2">Distribución de gastos por rubro</h3>
+        <h3 className="text-lg font-medium mb-2 text-foreground dark:text-foreground">Distribución de gastos por rubro</h3>
         <div className="mb-2">
-          <p className="text-sm">Gastos totales: {formatoMoneda(dashboard.gastos_totales || 0)}</p>
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground">Gastos totales: {formatoMoneda(dashboard.gastos_totales || 0)}</p>
         </div>
-        <div className="flex flex-col md:flex-row">
-          <div className="w-full md:w-1/2 h-80">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="w-full md:w-1/2 h-80 bg-card dark:bg-card border border-border dark:border-border rounded-lg p-2">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -208,7 +228,7 @@ const PanelGastosAnalisis: React.FC = () => {
                   cy="50%"
                   labelLine={false}
                   outerRadius={80}
-                  fill="#8884d8"
+                  fill="hsl(var(--primary))"
                   dataKey="porcentaje_gastos_totales"
                   nameKey="rubro_nombre"
                   label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(1)}%`}
@@ -217,49 +237,76 @@ const PanelGastosAnalisis: React.FC = () => {
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip 
+                <Tooltip
                   formatter={(value: any) => [`${value.toFixed(2)}%`, 'Porcentaje']}
                   labelFormatter={(name) => `Rubro: ${name}`}
+                  contentStyle={{
+                    backgroundColor: 'hsl(var(--popover))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '8px',
+                    color: 'hsl(var(--foreground))'
+                  }}
                 />
-                <Legend />
+                <Legend
+                  wrapperStyle={{ color: 'hsl(var(--foreground))' }}
+                />
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <div className="w-full md:w-1/2 h-80">
+          <div className="w-full md:w-1/2 h-80 bg-card dark:bg-card border border-border dark:border-border rounded-lg p-2">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={data.slice(0, 8)} // Mostramos solo los 8 más relevantes
                 layout="vertical"
                 margin={{ top: 20, right: 30, left: 150, bottom: 5 }}
               >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" unit="%" />
-                <YAxis dataKey="rubro_nombre" type="category" width={140} />
-                <Tooltip 
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <XAxis
+                  type="number"
+                  unit="%"
+                  tick={{ fill: 'hsl(var(--foreground))' }}
+                  axisLine={{ stroke: 'hsl(var(--border))' }}
+                />
+                <YAxis
+                  dataKey="rubro_nombre"
+                  type="category"
+                  width={140}
+                  tick={{ fill: 'hsl(var(--foreground))' }}
+                  axisLine={{ stroke: 'hsl(var(--border))' }}
+                />
+                <Tooltip
                   formatter={(value: any) => [`${value.toFixed(2)}%`, 'Porcentaje']}
                   labelFormatter={(label) => `Rubro: ${label}`}
+                  contentStyle={{
+                    backgroundColor: 'hsl(var(--popover))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '8px',
+                    color: 'hsl(var(--foreground))'
+                  }}
                 />
-                <Legend />
-                <Bar dataKey="porcentaje_gastos_totales" name="% del Total" fill="#82ca9d" />
+                <Legend
+                  wrapperStyle={{ color: 'hsl(var(--foreground))' }}
+                />
+                <Bar dataKey="porcentaje_gastos_totales" name="% del Total" fill="hsl(var(--accent))" />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
         <div className="mt-4 overflow-x-auto">
-          <table className="min-w-full bg-white border rounded-lg">
-            <thead className="bg-gray-100">
+          <table className="min-w-full bg-card dark:bg-card border border-border dark:border-border rounded-lg">
+            <thead className="bg-muted dark:bg-muted">
               <tr>
-                <th className="py-2 px-4 border-b text-left">Rubro</th>
-                <th className="py-2 px-4 border-b text-right">Importe</th>
-                <th className="py-2 px-4 border-b text-right">% del Total</th>
+                <th className="py-2 px-4 border-b border-border dark:border-border text-left text-foreground dark:text-foreground">Rubro</th>
+                <th className="py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground">Importe</th>
+                <th className="py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground">% del Total</th>
               </tr>
             </thead>
             <tbody>
               {data.map((item, index) => (
-                <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
-                  <td className="py-2 px-4 border-b">{item.rubro_nombre}</td>
-                  <td className="py-2 px-4 border-b text-right">{formatoMoneda(item.importe)}</td>
-                  <td className="py-2 px-4 border-b text-right">{item.porcentaje_gastos_totales?.toFixed(2)}%</td>
+                <tr key={index} className={index % 2 === 0 ? 'bg-muted/50 dark:bg-muted/50' : 'bg-card dark:bg-card'}>
+                  <td className="py-2 px-4 border-b border-border dark:border-border text-foreground dark:text-foreground">{item.rubro_nombre}</td>
+                  <td className="py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground">{formatoMoneda(item.importe)}</td>
+                  <td className="py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground">{item.porcentaje_gastos_totales?.toFixed(2)}%</td>
                 </tr>
               ))}
             </tbody>
@@ -273,7 +320,7 @@ const PanelGastosAnalisis: React.FC = () => {
     if (!dashboard || !dashboard.data || dashboard.status !== 'success' || !('porcentaje_gastos_totales' in (dashboard.data as RubroGasto[])[0])) {
       return (
         <div className="text-center p-4">
-          <p>No hay datos disponibles para mostrar.</p>
+          <p className="text-foreground dark:text-foreground">No hay datos disponibles para mostrar.</p>
         </div>
       );
     }
@@ -282,48 +329,63 @@ const PanelGastosAnalisis: React.FC = () => {
 
     return (
       <div className="mt-4">
-        <h3 className="text-lg font-medium mb-2">Rubros de gastos más relevantes</h3>
+        <h3 className="text-lg font-medium mb-2 text-foreground dark:text-foreground">Rubros de gastos más relevantes</h3>
         <div className="mb-2">
-          <p className="text-sm">Gastos totales: {formatoMoneda(dashboard.gastos_totales || 0)}</p>
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground">Gastos totales: {formatoMoneda(dashboard.gastos_totales || 0)}</p>
         </div>
-        <div className="h-80">
+        <div className="h-80 bg-card dark:bg-card border border-border dark:border-border rounded-lg p-2">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={data}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="rubro_nombre" />
-              <YAxis />
-              <Tooltip 
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+              <XAxis
+                dataKey="rubro_nombre"
+                tick={{ fill: 'hsl(var(--foreground))' }}
+                axisLine={{ stroke: 'hsl(var(--border))' }}
+              />
+              <YAxis
+                tick={{ fill: 'hsl(var(--foreground))' }}
+                axisLine={{ stroke: 'hsl(var(--border))' }}
+              />
+              <Tooltip
                 formatter={(value: any, name: string) => [
                   name === "importe" ? formatoMoneda(value) : `${value.toFixed(2)}%`,
                   name === "importe" ? "Importe" : "% del Total"
                 ]}
+                contentStyle={{
+                  backgroundColor: 'hsl(var(--popover))',
+                  border: '1px solid hsl(var(--border))',
+                  borderRadius: '8px',
+                  color: 'hsl(var(--foreground))'
+                }}
               />
-              <Legend />
-              <Bar dataKey="importe" name="Importe" fill="#8884d8" />
-              <Bar dataKey="porcentaje_gastos_totales" name="% del Total" fill="#82ca9d" />
+              <Legend
+                wrapperStyle={{ color: 'hsl(var(--foreground))' }}
+              />
+              <Bar dataKey="importe" name="Importe" fill="hsl(var(--primary))" />
+              <Bar dataKey="porcentaje_gastos_totales" name="% del Total" fill="hsl(var(--accent))" />
             </BarChart>
           </ResponsiveContainer>
         </div>
         <div className="mt-4 overflow-x-auto">
-          <table className="min-w-full bg-white border rounded-lg">
-            <thead className="bg-gray-100">
+          <table className="min-w-full bg-card dark:bg-card border border-border dark:border-border rounded-lg">
+            <thead className="bg-muted dark:bg-muted">
               <tr>
-                <th className="py-2 px-4 border-b text-center">#</th>
-                <th className="py-2 px-4 border-b text-left">Rubro</th>
-                <th className="py-2 px-4 border-b text-right">Importe</th>
-                <th className="py-2 px-4 border-b text-right">% del Total</th>
+                <th className="py-2 px-4 border-b border-border dark:border-border text-center text-foreground dark:text-foreground">#</th>
+                <th className="py-2 px-4 border-b border-border dark:border-border text-left text-foreground dark:text-foreground">Rubro</th>
+                <th className="py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground">Importe</th>
+                <th className="py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground">% del Total</th>
               </tr>
             </thead>
             <tbody>
               {data.map((item, index) => (
-                <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
-                  <td className="py-2 px-4 border-b text-center">{index + 1}</td>
-                  <td className="py-2 px-4 border-b">{item.rubro_nombre}</td>
-                  <td className="py-2 px-4 border-b text-right">{formatoMoneda(item.importe)}</td>
-                  <td className="py-2 px-4 border-b text-right">{item.porcentaje_gastos_totales?.toFixed(2)}%</td>
+                <tr key={index} className={index % 2 === 0 ? 'bg-muted/50 dark:bg-muted/50' : 'bg-card dark:bg-card'}>
+                  <td className="py-2 px-4 border-b border-border dark:border-border text-center text-foreground dark:text-foreground">{index + 1}</td>
+                  <td className="py-2 px-4 border-b border-border dark:border-border text-foreground dark:text-foreground">{item.rubro_nombre}</td>
+                  <td className="py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground">{formatoMoneda(item.importe)}</td>
+                  <td className="py-2 px-4 border-b border-border dark:border-border text-right text-foreground dark:text-foreground">{item.porcentaje_gastos_totales?.toFixed(2)}%</td>
                 </tr>
               ))}
             </tbody>
@@ -337,7 +399,7 @@ const PanelGastosAnalisis: React.FC = () => {
     if (!dashboard || !dashboard.data || dashboard.status !== 'success' || !('gastos_sobre_ventas' in dashboard.data)) {
       return (
         <div className="text-center p-4">
-          <p>No hay datos disponibles para mostrar en el dashboard.</p>
+          <p className="text-foreground dark:text-foreground">No hay datos disponibles para mostrar en el dashboard.</p>
         </div>
       );
     }
@@ -354,56 +416,56 @@ const PanelGastosAnalisis: React.FC = () => {
     return (
       <div className="mt-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="text-lg font-medium mb-2">Resumen General</h3>
+          <div className="bg-white dark:bg-card p-4 rounded-lg shadow dark:shadow-lg">
+            <h3 className="text-lg font-medium mb-2 text-foreground dark:text-foreground">Resumen General</h3>
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-blue-50 p-3 rounded-lg">
-                <p className="text-sm text-blue-500">Ventas Totales</p>
-                <p className="text-xl font-bold">{formatoMoneda(dashboard.ventas_totales || 0)}</p>
+              <div className="bg-blue-50 dark:bg-blue-950/20 p-3 rounded-lg border dark:border-blue-800/30">
+                <p className="text-sm text-blue-500 dark:text-blue-400">Ventas Totales</p>
+                <p className="text-xl font-bold text-foreground dark:text-foreground">{formatoMoneda(dashboard.ventas_totales || 0)}</p>
               </div>
-              <div className="bg-red-50 p-3 rounded-lg">
-                <p className="text-sm text-red-500">Gastos Totales</p>
-                <p className="text-xl font-bold">{formatoMoneda(dashboard.gastos_totales || 0)}</p>
+              <div className="bg-red-50 dark:bg-red-950/20 p-3 rounded-lg border dark:border-red-800/30">
+                <p className="text-sm text-red-500 dark:text-red-400">Gastos Totales</p>
+                <p className="text-xl font-bold text-foreground dark:text-foreground">{formatoMoneda(dashboard.gastos_totales || 0)}</p>
               </div>
-              <div className="bg-green-50 p-3 rounded-lg">
-                <p className="text-sm text-green-500">Rentabilidad</p>
-                <p className="text-xl font-bold">
+              <div className="bg-green-50 dark:bg-green-950/20 p-3 rounded-lg border dark:border-green-800/30">
+                <p className="text-sm text-green-500 dark:text-green-400">Rentabilidad</p>
+                <p className="text-xl font-bold text-foreground dark:text-foreground">
                   {formatoMoneda((dashboard.ventas_totales || 0) - (dashboard.gastos_totales || 0))}
                 </p>
               </div>
-              <div className="bg-purple-50 p-3 rounded-lg">
-                <p className="text-sm text-purple-500">Margen</p>
-                <p className="text-xl font-bold">
+              <div className="bg-purple-50 dark:bg-purple-950/20 p-3 rounded-lg border dark:border-purple-800/30">
+                <p className="text-sm text-purple-500 dark:text-purple-400">Margen</p>
+                <p className="text-xl font-bold text-foreground dark:text-foreground">
                   {(((dashboard.ventas_totales || 0) - (dashboard.gastos_totales || 0)) / (dashboard.ventas_totales || 1) * 100).toFixed(2)}%
                 </p>
               </div>
             </div>
           </div>
-          
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="text-lg font-medium mb-2">Período de Análisis</h3>
+
+          <div className="bg-white dark:bg-card p-4 rounded-lg shadow dark:shadow-lg">
+            <h3 className="text-lg font-medium mb-2 text-foreground dark:text-foreground">Período de Análisis</h3>
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <p className="text-sm text-gray-500">Fecha Inicio</p>
-                <p className="text-lg font-semibold">{formatoFecha(dashboard.periodo.fecha_inicio)}</p>
+              <div className="bg-gray-50 dark:bg-muted p-3 rounded-lg">
+                <p className="text-sm text-gray-500 dark:text-muted-foreground">Fecha Inicio</p>
+                <p className="text-lg font-semibold text-foreground dark:text-foreground">{formatoFecha(dashboard.periodo.fecha_inicio)}</p>
               </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <p className="text-sm text-gray-500">Fecha Fin</p>
-                <p className="text-lg font-semibold">{formatoFecha(dashboard.periodo.fecha_fin)}</p>
+              <div className="bg-gray-50 dark:bg-muted p-3 rounded-lg">
+                <p className="text-sm text-gray-500 dark:text-muted-foreground">Fecha Fin</p>
+                <p className="text-lg font-semibold text-foreground dark:text-foreground">{formatoFecha(dashboard.periodo.fecha_fin)}</p>
               </div>
             </div>
             <div className="mt-4">
-              <p className="text-sm text-gray-500">
-                El análisis muestra los gastos clasificados por rubro, permitiendo identificar 
+              <p className="text-sm text-gray-500 dark:text-muted-foreground">
+                El análisis muestra los gastos clasificados por rubro, permitiendo identificar
                 patrones y áreas de oportunidad para la optimización de recursos.
               </p>
             </div>
           </div>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="text-lg font-medium mb-2">Top 5 Gastos sobre Ventas</h3>
+          <div className="bg-white dark:bg-card p-4 rounded-lg shadow dark:shadow-lg">
+            <h3 className="text-lg font-medium mb-2 text-foreground dark:text-foreground">Top 5 Gastos sobre Ventas</h3>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -411,28 +473,34 @@ const PanelGastosAnalisis: React.FC = () => {
                   layout="vertical"
                   margin={{ top: 5, right: 30, left: 100, bottom: 5 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" unit="%" />
-                  <YAxis dataKey="rubro_nombre" type="category" width={90} />
-                  <Tooltip 
+                  <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-border dark:text-border opacity-30" />
+                  <XAxis type="number" unit="%" stroke="currentColor" className="text-muted-foreground dark:text-muted-foreground" />
+                  <YAxis dataKey="rubro_nombre" type="category" width={90} stroke="currentColor" className="text-muted-foreground dark:text-muted-foreground" />
+                  <Tooltip
                     formatter={(value: any) => [`${value.toFixed(2)}%`, 'Porcentaje']}
+                    contentStyle={{
+                      backgroundColor: 'hsl(var(--card))',
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '6px',
+                      color: 'hsl(var(--foreground))'
+                    }}
                   />
                   <Bar dataKey="porcentaje_ventas" name="% de Ventas" fill="#8884d8" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
             <div className="text-right mt-2">
-              <button 
+              <button
                 onClick={() => cargarDatos('sobre-ventas')}
-                className="text-blue-500 hover:text-blue-700 text-sm"
+                className="text-blue-500 dark:text-primary hover:text-blue-700 dark:hover:text-primary/80 text-sm transition-colors"
               >
                 Ver análisis completo →
               </button>
             </div>
           </div>
-          
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="text-lg font-medium mb-2">Gastos Más Relevantes</h3>
+
+          <div className="bg-white dark:bg-card p-4 rounded-lg shadow dark:shadow-lg">
+            <h3 className="text-lg font-medium mb-2 text-foreground dark:text-foreground">Gastos Más Relevantes</h3>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -451,17 +519,23 @@ const PanelGastosAnalisis: React.FC = () => {
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip 
+                  <Tooltip
                     formatter={(value: any) => [`${value.toFixed(2)}%`, 'Porcentaje']}
                     labelFormatter={(name) => `Rubro: ${name}`}
+                    contentStyle={{
+                      backgroundColor: 'hsl(var(--card))',
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '6px',
+                      color: 'hsl(var(--foreground))'
+                    }}
                   />
                 </PieChart>
               </ResponsiveContainer>
             </div>
             <div className="text-right mt-2">
-              <button 
+              <button
                 onClick={() => cargarDatos('mas-relevantes')}
-                className="text-blue-500 hover:text-blue-700 text-sm"
+                className="text-blue-500 dark:text-primary hover:text-blue-700 dark:hover:text-primary/80 text-sm transition-colors"
               >
                 Ver análisis completo →
               </button>
@@ -476,15 +550,15 @@ const PanelGastosAnalisis: React.FC = () => {
     if (cargando) {
       return (
         <div className="text-center p-10">
-          <RefreshCw className="animate-spin h-10 w-10 text-blue-500 mx-auto mb-4" />
-          <p>Cargando datos...</p>
+          <RefreshCw className="animate-spin h-10 w-10 text-blue-500 dark:text-primary mx-auto mb-4" />
+          <p className="text-foreground dark:text-foreground">Cargando datos...</p>
         </div>
       );
     }
 
     if (error) {
       return (
-        <div className="text-center p-10 text-red-500">
+        <div className="text-center p-10 text-red-500 dark:text-destructive">
           <AlertCircle className="h-10 w-10 mx-auto mb-4" />
           <p>{error}</p>
         </div>
@@ -494,21 +568,21 @@ const PanelGastosAnalisis: React.FC = () => {
     if (!dashboard) {
       return (
         <div className="text-center p-10">
-          <p>Seleccione un período y haga clic en "Analizar" para ver los resultados.</p>
+          <p className="text-foreground dark:text-foreground">Seleccione un período y haga clic en "Analizar" para ver los resultados.</p>
         </div>
       );
     }
 
     if (dashboard.status === 'warning') {
       return (
-        <div className="text-center p-10 text-yellow-500">
+        <div className="text-center p-10 text-yellow-500 dark:text-yellow-400">
           <AlertCircle className="h-10 w-10 mx-auto mb-4" />
           <p>{dashboard.message || 'No hay datos disponibles para el período seleccionado.'}</p>
         </div>
       );
     }
 
-    switch(vistaActiva) {
+    switch (vistaActiva) {
       case 'sobre-ventas':
         return renderGastosSobreVentas();
       case 'sobre-total':
@@ -522,49 +596,47 @@ const PanelGastosAnalisis: React.FC = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in shadow mt-[50px]">
+    <div className="bg-white dark:bg-card rounded-lg shadow-lg p-4 md:p-6 animate-fade-in shadow mt-[50px]">
       <div className="mb-4">
-        <h2 className="text-2xl font-bold mb-4">Panel de Análisis de Gastos</h2>
-        
+        <h2 className="text-2xl font-bold mb-4 text-foreground dark:text-foreground">Panel de Análisis de Gastos</h2>
+
         <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4">
           <div className="flex-1">
-            <label htmlFor="fechaInicio" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="fechaInicio" className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1">
               Fecha Inicio
             </label>
             <div className="relative">
-              <Calendar className="absolute left-2 top-2 h-5 w-5 text-gray-400" />
               <input
                 type="date"
                 id="fechaInicio"
                 value={fechaInicio}
                 onChange={(e) => setFechaInicio(e.target.value)}
-                className="pl-9 w-full p-2 border border-gray-300 rounded-md"
+                className="pl-9 w-full p-2 border border-gray-300 dark:border-border rounded-md bg-white dark:bg-input text-foreground dark:text-foreground"
                 required
               />
             </div>
           </div>
-          
+
           <div className="flex-1">
-            <label htmlFor="fechaFin" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="fechaFin" className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1">
               Fecha Fin
             </label>
             <div className="relative">
-              <Calendar className="absolute left-2 top-2 h-5 w-5 text-gray-400" />
               <input
                 type="date"
                 id="fechaFin"
                 value={fechaFin}
                 onChange={(e) => setFechaFin(e.target.value)}
-                className="pl-9 w-full p-2 border border-gray-300 rounded-md"
+                className="pl-9 w-full p-2 border border-gray-300 dark:border-border rounded-md bg-white dark:bg-input text-foreground dark:text-foreground"
                 required
               />
             </div>
           </div>
-          
+
           <div className="flex items-end">
             <button
               type="submit"
-              className="w-full md:w-auto px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+              className="w-full md:w-auto px-4 py-2 bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground rounded-md hover:bg-blue-700 dark:hover:bg-primary/90 transition"
               disabled={cargando}
             >
               {cargando ? 'Analizando...' : 'Analizar'}
@@ -572,60 +644,56 @@ const PanelGastosAnalisis: React.FC = () => {
           </div>
         </form>
       </div>
-      
-      <div className="mb-4 bg-white p-2 rounded-lg shadow">
+
+      <div className="mb-4 bg-white dark:bg-card p-2 rounded-lg shadow dark:shadow-lg">
         <div className="flex overflow-x-auto">
           <button
             onClick={() => cargarDatos('dashboard')}
-            className={`flex items-center px-4 py-2 border-b-2 ${
-              vistaActiva === 'dashboard' 
-                ? 'border-blue-500 text-blue-600' 
-                : 'border-transparent hover:border-gray-300'
-            }`}
+            className={`flex items-center px-4 py-2 border-b-2 ${vistaActiva === 'dashboard'
+              ? 'border-blue-500 dark:border-primary text-blue-600 dark:text-primary'
+              : 'border-transparent hover:border-gray-300 dark:hover:border-border text-foreground dark:text-foreground'
+              }`}
           >
             <BarChart2 className="mr-2 h-5 w-5" />
             Dashboard
           </button>
-          
+
           <button
             onClick={() => cargarDatos('sobre-ventas')}
-            className={`flex items-center px-4 py-2 border-b-2 ${
-              vistaActiva === 'sobre-ventas' 
-                ? 'border-blue-500 text-blue-600' 
-                : 'border-transparent hover:border-gray-300'
-            }`}
+            className={`flex items-center px-4 py-2 border-b-2 ${vistaActiva === 'sobre-ventas'
+              ? 'border-blue-500 dark:border-primary text-blue-600 dark:text-primary'
+              : 'border-transparent hover:border-gray-300 dark:hover:border-border text-foreground dark:text-foreground'
+              }`}
           >
             <DollarSign className="mr-2 h-5 w-5" />
             Gastos sobre Ventas
           </button>
-          
+
           <button
             onClick={() => cargarDatos('sobre-total')}
-            className={`flex items-center px-4 py-2 border-b-2 ${
-              vistaActiva === 'sobre-total' 
-                ? 'border-blue-500 text-blue-600' 
-                : 'border-transparent hover:border-gray-300'
-            }`}
+            className={`flex items-center px-4 py-2 border-b-2 ${vistaActiva === 'sobre-total'
+              ? 'border-blue-500 dark:border-primary text-blue-600 dark:text-primary'
+              : 'border-transparent hover:border-gray-300 dark:hover:border-border text-foreground dark:text-foreground'
+              }`}
           >
             <PieChartIcon className="mr-2 h-5 w-5" />
             Distribución de Gastos
           </button>
-          
+
           <button
             onClick={() => cargarDatos('mas-relevantes')}
-            className={`flex items-center px-4 py-2 border-b-2 ${
-              vistaActiva === 'mas-relevantes' 
-                ? 'border-blue-500 text-blue-600' 
-                : 'border-transparent hover:border-gray-300'
-            }`}
+            className={`flex items-center px-4 py-2 border-b-2 ${vistaActiva === 'mas-relevantes'
+              ? 'border-blue-500 dark:border-primary text-blue-600 dark:text-primary'
+              : 'border-transparent hover:border-gray-300 dark:hover:border-border text-foreground dark:text-foreground'
+              }`}
           >
             <BarChart className="mr-2 h-5 w-5" />
             Gastos Más Relevantes
           </button>
         </div>
       </div>
-      
-      <div className="bg-white rounded-lg shadow">
+
+      <div className="bg-white dark:bg-card rounded-lg shadow dark:shadow-lg">
         {renderContent()}
       </div>
     </div>

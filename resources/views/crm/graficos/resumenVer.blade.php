@@ -1,5 +1,5 @@
-@extends("crm.plantillas.base")
+{{-- @extends("crm.plantillas.base")
 
 @section("content")
     <div id="resumenVer"></div>
-@endsection
+@endsection --}}

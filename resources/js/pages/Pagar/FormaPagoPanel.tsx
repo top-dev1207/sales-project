@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PlusCircle, Edit, Trash, AlertCircle, CheckCircle } from 'lucide-react';
+import { PlusCircle, Edit, Trash, AlertCircle, CheckCircle, Moon, Sun } from 'lucide-react';
 
 // Define interfaces for our data
 interface FormaPago {
@@ -31,12 +31,28 @@ const FormaPagoPanel: React.FC = () => {
   const [cargando, setCargando] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [exito, setExito] = useState<string | null>(null);
+  const [darkMode, setDarkMode] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<FormValues>({
     tipo: '',
     estado: 1,
     fiscal: 0,
     opciones: 0
   });
+  // Initialize dark mode from localStorage or system preference
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+      setDarkMode(true);
+      document.documentElement.classList.add('dark');
+    }
+  }, []);
+
+  // Save theme preference
+  useEffect(() => {
+    localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
 
   // Obtener formas de pago al cargar el componente
   useEffect(() => {
@@ -212,13 +228,13 @@ const FormaPagoPanel: React.FC = () => {
   const renderizarOpciones = (opciones: number): string => {
     const caracteristicas: string[] = [];
     
-    if (opciones & 1) { // Bitwise AND para verificar si el bit 1 está activado
+    if (opciones & 1) {
       caracteristicas.push('Impacta en caja');
     } else {
       caracteristicas.push('No impacta en caja');
     }
     
-    if (opciones & 2) { // Bitwise AND para verificar si el bit 2 está activado
+    if (opciones & 2) {
       caracteristicas.push('Medio electrónico');
     } else {
       caracteristicas.push('Medio no electrónico');
@@ -228,267 +244,111 @@ const FormaPagoPanel: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-6">
-      <h1 className="text-2xl font-bold mb-6">Gestión de Formas de Pago</h1>
-      
-      {/* Mensajes de error o éxito */}
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 flex items-center">
-          <AlertCircle className="w-5 h-5 mr-2" />
-          <span>{error}</span>
-        </div>
-      )}
-      
-      {exito && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 flex items-center">
-          <CheckCircle className="w-5 h-5 mr-2" />
-          <span>{exito}</span>
-        </div>
-      )}
-      
-      {/* Botón para agregar nueva forma de pago */}
-      {!modoEdicion && (
-        <button 
-          onClick={iniciarNueva} 
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center mb-4"
-        >
-          <PlusCircle className="w-5 h-5 mr-2" />
-          Nueva Forma de Pago
-        </button>
-      )}
-      
-      {/* Formulario de edición */}
-      {/* {modoEdicion && (
-        <div className="bg-white shadow-md rounded p-4 mb-6">
-          <h2 className="text-xl font-semibold mb-4">
-            {formaPagoSeleccionada ? 'Editar Forma de Pago' : 'Nueva Forma de Pago'}
-          </h2>
-          
-          <form onSubmit={guardarFormaPago}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="mb-4">
-                <label className="block text-gray-700 font-bold mb-2" htmlFor="tipo">
-                  Nombre de la Forma de Pago
-                </label>
-                <input
-                  type="text"
-                  id="tipo"
-                  name="tipo"
-                  value={formValues.tipo}
-                  onChange={handleInputChange}
-                  className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  required
-                />
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
+      <div className="container mx-auto px-4 py-6">
+        {/* Mensajes de error o éxito */}
+        {error && (
+          <div className="bg-destructive/10 border border-destructive/20 text-destructive px-4 py-3 rounded-lg mb-4 flex items-center">
+            <AlertCircle className="w-5 h-5 mr-2" />
+            <span>{error}</span>
+          </div>
+        )}
+        
+        {exito && (
+          <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 px-4 py-3 rounded-lg mb-4 flex items-center">
+            <CheckCircle className="w-5 h-5 mr-2" />
+            <span>{exito}</span>
+          </div>
+        )}
+        
+        {/* Botón para agregar nueva forma de pago */}
+        {!modoEdicion && (
+          <button 
+            onClick={iniciarNueva} 
+            className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg flex items-center mb-4 transition-colors duration-200"
+          >
+            <PlusCircle className="w-5 h-5 mr-2" />
+            Nueva Forma de Pago
+          </button>
+        )}
+
+        {!modoEdicion && (
+          <>
+            {cargando ? (
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-12 w-12 border-2 border-primary border-t-transparent mx-auto"></div>
+                <p className="mt-4 text-muted-foreground">Cargando formas de pago...</p>
               </div>
-              
-              <div className="mb-4">
-                <label className="block text-gray-700 font-bold mb-2" htmlFor="estado">
-                  Estado
-                </label>
-                <select
-                  id="estado"
-                  name="estado"
-                  value={formValues.estado}
-                  onChange={handleInputChange}
-                  className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                >
-                  <option value={1}>Activo</option>
-                  <option value={0}>Inactivo</option>
-                </select>
-              </div>
-              
-              <div className="mb-4">
-                <label className="block text-gray-700 font-bold mb-2" htmlFor="fiscal">
-                  Tipo Fiscal
-                </label>
-                <select
-                  id="fiscal"
-                  name="fiscal"
-                  value={formValues.fiscal}
-                  onChange={handleInputChange}
-                  className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                >
-                  <option value={1}>Fiscal (Blanco)</option>
-                  <option value={0}>No Fiscal (Negro)</option>
-                </select>
-              </div>
-              
-              <div className="mb-4">
-                <label className="block text-gray-700 font-bold mb-2">
-                  Opciones
-                </label>
-                <div className="flex flex-col space-y-2">
-                  <label className="inline-flex items-center">
-                    <input
-                      type="checkbox"
-                      name="impactaEnCaja"
-                      checked={!!(formValues.opciones & 1)}
-                      onChange={(e) => {
-                        const newOpciones = e.target.checked 
-                          ? formValues.opciones | 1  // Set bit 1
-                          : formValues.opciones & ~1; // Clear bit 1
-                        setFormValues({
-                          ...formValues,
-                          opciones: newOpciones
-                        });
-                      }}
-                      className="form-checkbox h-5 w-5 text-blue-600"
-                    />
-                    <span className="ml-2 text-gray-700">Impacta en caja</span>
-                  </label>
-                  
-                  <label className="inline-flex items-center">
-                    <input
-                      type="checkbox"
-                      name="medioElectronico"
-                      checked={!!(formValues.opciones & 2)}
-                      onChange={(e) => {
-                        const newOpciones = e.target.checked 
-                          ? formValues.opciones | 2  // Set bit 2
-                          : formValues.opciones & ~2; // Clear bit 2
-                        setFormValues({
-                          ...formValues,
-                          opciones: newOpciones
-                        });
-                      }}
-                      className="form-checkbox h-5 w-5 text-blue-600"
-                    />
-                    <span className="ml-2 text-gray-700">Medio electrónico</span>
-                  </label>
-                </div>
-              </div>
-              
-              <div className="mb-4">
-                <label className="block text-gray-700 font-bold mb-2" htmlFor="local_id">
-                  ID Local (Opcional)
-                </label>
-                <input
-                  type="number"
-                  id="local_id"
-                  name="local_id"
-                  value={formValues.local_id}
-                  onChange={handleInputChange}
-                  className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-              </div>
-              
-              <div className="mb-4">
-                <label className="block text-gray-700 font-bold mb-2" htmlFor="periodo_inicio">
-                  Fecha Inicio (Opcional)
-                </label>
-                <input
-                  type="date"
-                  id="periodo_inicio"
-                  name="periodo_inicio"
-                  value={formValues.periodo_inicio}
-                  onChange={handleInputChange}
-                  className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-              </div>
-              
-              <div className="mb-4">
-                <label className="block text-gray-700 font-bold mb-2" htmlFor="periodo_fin">
-                  Fecha Fin (Opcional)
-                </label>
-                <input
-                  type="date"
-                  id="periodo_fin"
-                  name="periodo_fin"
-                  value={formValues.periodo_fin}
-                  onChange={handleInputChange}
-                  className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-              </div>
-            </div>
-            
-            <div className="flex justify-end mt-4 space-x-2">
-              <button
-                type="button"
-                onClick={cancelarEdicion}
-                className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded"
-              >
-                Cancelar
-              </button>
-              <button
-                type="submit"
-                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
-              >
-                Guardar
-              </button>
-            </div>
-          </form>
-        </div>
-      )} */}
-      
-      {/* Tabla de formas de pago */}
-      {!modoEdicion && (
-        <>
-          {cargando ? (
-            <div className="text-center py-4">
-              <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500 mx-auto"></div>
-              <p className="mt-2">Cargando formas de pago...</p>
-            </div>
-          ) : formasPago.length > 0 ? (
-            <div className="overflow-x-auto">
-              <table className="min-w-full bg-white shadow-md rounded">
-                <thead className="bg-gray-200 text-gray-700">
-                  <tr>
-                    <th className="py-3 px-4 text-left">ID</th>
-                    <th className="py-3 px-4 text-left">Nombre</th>
-                    <th className="py-3 px-4 text-left">Estado</th>
-                    <th className="py-3 px-4 text-left">Fiscal</th>
-                    <th className="py-3 px-4 text-left">Opciones</th>
-                    <th className="py-3 px-4 text-left">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody className="text-gray-600">
-                  {formasPago.map((formaPago) => (
-                    <tr key={formaPago.id} className="border-b hover:bg-gray-50">
-                      <td className="py-3 px-4">{formaPago.id}</td>
-                      <td className="py-3 px-4">{formaPago.tipo}</td>
-                      <td className="py-3 px-4">
-                        <span className={`px-2 py-1 rounded text-white ${formaPago.estado ? 'bg-green-500' : 'bg-red-500'}`}>
-                          {formaPago.estado ? 'Activo' : 'Inactivo'}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4">
-                        <span className={`px-2 py-1 rounded text-white ${formaPago.fiscal ? 'bg-blue-500' : 'bg-yellow-500'}`}>
-                          {formaPago.fiscal ? 'Fiscal' : 'No Fiscal'}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4">
-                        {renderizarOpciones(formaPago.opciones)}
-                      </td>
-                      <td className="py-3 px-4">
-                        <div className="flex space-x-2">
-                          <button
-                            onClick={() => seleccionarParaEditar(formaPago)}
-                            className="text-blue-500 hover:text-blue-700"
-                            title="Editar"
-                          >
-                            <Edit className="w-5 h-5" />
-                          </button>
-                          <button
-                            onClick={() => eliminarFormaPago(formaPago.id)}
-                            className="text-red-500 hover:text-red-700"
-                            title="Eliminar"
-                          >
-                            <Trash className="w-5 h-5" />
-                          </button>
-                        </div>
-                      </td>
+            ) : formasPago.length > 0 ? (
+              <div className="overflow-x-auto rounded-lg border border-border bg-card shadow-sm">
+                <table className="min-w-full">
+                  <thead className="bg-muted/50">
+                    <tr>
+                      <th className="py-3 px-4 text-left text-sm font-medium text-muted-foreground">ID</th>
+                      <th className="py-3 px-4 text-left text-sm font-medium text-muted-foreground">Nombre</th>
+                      <th className="py-3 px-4 text-left text-sm font-medium text-muted-foreground">Estado</th>
+                      <th className="py-3 px-4 text-left text-sm font-medium text-muted-foreground">Fiscal</th>
+                      <th className="py-3 px-4 text-left text-sm font-medium text-muted-foreground">Opciones</th>
+                      <th className="py-3 px-4 text-left text-sm font-medium text-muted-foreground">Acciones</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="text-center py-4 bg-gray-100 rounded">
-              <p>No hay formas de pago disponibles.</p>
-            </div>
-          )}
-        </>
-      )}
+                  </thead>
+                  <tbody className="divide-y divide-border">
+                    {formasPago.map((formaPago) => (
+                      <tr key={formaPago.id} className="hover:bg-muted/25 transition-colors duration-150">
+                        <td className="py-3 px-4 text-sm">{formaPago.id}</td>
+                        <td className="py-3 px-4 text-sm font-medium">{formaPago.tipo}</td>
+                        <td className="py-3 px-4">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            formaPago.estado 
+                              ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-400' 
+                              : 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400'
+                          }`}>
+                            {formaPago.estado ? 'Activo' : 'Inactivo'}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            formaPago.fiscal 
+                              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400' 
+                              : 'bg-amber-100 text-amber-800 dark:bg-amber-900/20 dark:text-amber-400'
+                          }`}>
+                            {formaPago.fiscal ? 'Fiscal' : 'No Fiscal'}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4 text-sm text-muted-foreground">
+                          {renderizarOpciones(formaPago.opciones)}
+                        </td>
+                        <td className="py-3 px-4">
+                          <div className="flex space-x-2">
+                            <button
+                              onClick={() => seleccionarParaEditar(formaPago)}
+                              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-150"
+                              title="Editar"
+                            >
+                              <Edit className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => eliminarFormaPago(formaPago.id)}
+                              className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-150"
+                              title="Eliminar"
+                            >
+                              <Trash className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="text-center py-8 bg-muted/10 rounded-lg border border-dashed border-muted-foreground/25">
+                <p className="text-muted-foreground">No hay formas de pago disponibles.</p>
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Sidebar from '@/components/dashboard/Sidebar';
 import Header from '@/components/dashboard/Header';
@@ -23,17 +22,16 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background theme-transition">
       <Sidebar />
       <Header />
       <main className={cn(
-        "pt-16 min-h-screen transition-all duration-300",
+        "pt-16 min-h-screen transition-all duration-300 theme-transition",
         getMainPaddingClass()
       )}>
         <div className="p-6 max-w-7xl mx-auto">
           {children}
         </div>
-        {/* <div>ddd</div> */}
       </main>
     </div>
   );

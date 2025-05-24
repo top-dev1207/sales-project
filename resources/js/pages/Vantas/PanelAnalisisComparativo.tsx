@@ -211,363 +211,305 @@ const PanelAnalisisVentas: React.FC = () => {
   ];
 
   return (
-    <div className="p-6 max-w-7xl mx-auto bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">Panel de Análisis de Ventas</h1>
+    <div className="p-6 max-w-7xl mx-auto bg-white dark:bg-card rounded-lg shadow-md">
+  <h1 className="text-2xl font-bold mb-6 text-gray-800 dark:text-foreground">Panel de Análisis de Ventas</h1>
+  
+  {/* Pestañas */}
+  <div className="mb-6 border-b border-gray-200 dark:border-border">
+    <ul className="flex flex-wrap -mb-px">
+      <li className="mr-2">
+        <button
+          className={`inline-block p-4 ${
+            pestanaActiva === "analisis"
+              ? "text-blue-600 dark:text-primary border-b-2 border-blue-600 dark:border-primary"
+              : "text-gray-500 dark:text-muted-foreground hover:text-gray-700 dark:hover:text-foreground"
+          }`}
+          onClick={() => cambiarPestana("analisis")}
+        >
+          Análisis por Periodo
+        </button>
+      </li>
+      <li className="mr-2">
+        <button
+          className={`inline-block p-4 ${
+            pestanaActiva === "correlacion"
+              ? "text-blue-600 dark:text-primary border-b-2 border-blue-600 dark:border-primary"
+              : "text-gray-500 dark:text-muted-foreground hover:text-gray-700 dark:hover:text-foreground"
+          }`}
+          onClick={() => cambiarPestana("correlacion")}
+        >
+          Correlación Clima-Ventas
+        </button>
+      </li>
+    </ul>
+  </div>
+  
+  {/* Formulario */}
+  <form onSubmit={handleSubmit} className="mb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="mb-4">
+      <label className="block text-gray-700 dark:text-foreground text-sm font-bold mb-2" htmlFor="fechaInicio">
+        Fecha Inicio
+      </label>
+      <input
+        type="date"
+        id="fechaInicio"
+        name="fechaInicio"
+        value={parametros.fechaInicio}
+        onChange={handleInputChange}
+        className="shadow appearance-none border dark:border-border rounded w-full py-2 px-3 text-gray-700 dark:text-foreground dark:bg-input leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring"
+        required
+      />
+    </div>
+    
+    <div className="mb-4">
+      <label className="block text-gray-700 dark:text-foreground text-sm font-bold mb-2" htmlFor="fechaFin">
+        Fecha Fin
+      </label>
+      <input
+        type="date"
+        id="fechaFin"
+        name="fechaFin"
+        value={parametros.fechaFin}
+        onChange={handleInputChange}
+        className="shadow appearance-none border dark:border-border rounded w-full py-2 px-3 text-gray-700 dark:text-foreground dark:bg-input leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring"
+        required
+      />
+    </div>
+    
+    {pestanaActiva === "analisis" && (
+      <>
+        <div className="mb-4">
+          <label className="block text-gray-700 dark:text-foreground text-sm font-bold mb-2" htmlFor="tipoPeriodo">
+            Tipo de Periodo
+          </label>
+          <select
+            id="tipoPeriodo"
+            name="tipoPeriodo"
+            value={parametros.tipoPeriodo}
+            onChange={handleInputChange}
+            className="shadow appearance-none border dark:border-border rounded w-full py-2 px-3 text-gray-700 dark:text-foreground dark:bg-input leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring"
+          >
+            <option value="diario">Diario</option>
+            <option value="semanal">Semanal</option>
+            <option value="mensual">Mensual</option>
+          </select>
+        </div>
+        
+        <div className="mb-4">
+          <label className="block text-gray-700 dark:text-foreground text-sm font-bold mb-2" htmlFor="local">
+            Local
+          </label>
+          <select
+            id="local"
+            name="local"
+            value={parametros.local || ""}
+            onChange={handleInputChange}
+            className="shadow appearance-none border dark:border-border rounded w-full py-2 px-3 text-gray-700 dark:text-foreground dark:bg-input leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring"
+          >
+            <option value="">Todos</option>
+            <option value="1">Temple 1</option>
+            <option value="2">Temple 2</option>
+          </select>
+        </div>
+        
+        <div className="mb-4">
+          <label className="block text-gray-700 dark:text-foreground text-sm font-bold mb-2" htmlFor="clima">
+            Clima
+          </label>
+          <select
+            id="clima"
+            name="clima"
+            value={parametros.clima || ""}
+            onChange={handleInputChange}
+            className="shadow appearance-none border dark:border-border rounded w-full py-2 px-3 text-gray-700 dark:text-foreground dark:bg-input leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring"
+          >
+            <option value="">Todos</option>
+            {climas.map(clima => (
+              <option key={clima.id} value={clima.valor}>
+                {clima.tipo}
+              </option>
+            ))}
+          </select>
+        </div>
+        
+        <div className="mb-4">
+          <label className="block text-gray-700 dark:text-foreground text-sm font-bold mb-2" htmlFor="tipoGrafico">
+            Tipo de Gráfico
+          </label>
+          <select
+            id="tipoGrafico"
+            name="tipoGrafico"
+            value={tipoGrafico}
+            onChange={(e) => setTipoGrafico(e.target.value as "linea" | "barra")}
+            className="shadow appearance-none border dark:border-border rounded w-full py-2 px-3 text-gray-700 dark:text-foreground dark:bg-input leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring"
+          >
+            <option value="linea">Línea</option>
+            <option value="barra">Barra</option>
+          </select>
+        </div>
+      </>
+    )}
+    
+    <div className="col-span-1 md:col-span-2 lg:col-span-3 flex justify-end">
+      <button
+        type="submit"
+        className="bg-blue-500 dark:bg-primary hover:bg-blue-700 dark:hover:bg-primary/90 text-white dark:text-primary-foreground font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring"
+        disabled={cargando}
+      >
+        {cargando ? "Cargando..." : "Analizar"}
+      </button>
+    </div>
+  </form>
+  
+  {/* Mostrar error si existe */}
+  {error && (
+    <div className="bg-red-100 dark:bg-destructive/20 border border-red-400 dark:border-destructive text-red-700 dark:text-destructive-foreground px-4 py-3 rounded relative mb-6" role="alert">
+      <strong className="font-bold">Error: </strong>
+      <span className="block sm:inline">{error}</span>
+    </div>
+  )}
+  
+  {/* Resultados - Análisis por periodo */}
+  {pestanaActiva === "analisis" && resultadoAnalisis && (
+    <div className="mt-8">
+      <h2 className="text-xl font-semibold mb-4 text-foreground dark:text-foreground">
+        Análisis de Ventas ({resultadoAnalisis.parametros.fecha_inicio} a {resultadoAnalisis.parametros.fecha_fin})
+      </h2>
       
-      {/* Pestañas */}
-      <div className="mb-6 border-b border-gray-200">
-        <ul className="flex flex-wrap -mb-px">
-          <li className="mr-2">
-            <button
-              className={`inline-block p-4 ${
-                pestanaActiva === "analisis"
-                  ? "text-blue-600 border-b-2 border-blue-600"
-                  : "text-gray-500 hover:text-gray-700"
-              }`}
-              onClick={() => cambiarPestana("analisis")}
-            >
-              Análisis por Periodo
-            </button>
-          </li>
-          <li className="mr-2">
-            <button
-              className={`inline-block p-4 ${
-                pestanaActiva === "correlacion"
-                  ? "text-blue-600 border-b-2 border-blue-600"
-                  : "text-gray-500 hover:text-gray-700"
-              }`}
-              onClick={() => cambiarPestana("correlacion")}
-            >
-              Correlación Clima-Ventas
-            </button>
+      <div className="mb-4 p-4 bg-gray-50 dark:bg-muted rounded-lg">
+        <h3 className="text-lg font-medium mb-2 text-foreground dark:text-foreground">Parámetros</h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div>
+            <span className="font-semibold text-foreground dark:text-foreground">Periodo:</span> {resultadoAnalisis.parametros.tipo_periodo}
+          </div>
+          <div>
+            <span className="font-semibold text-foreground dark:text-foreground">Local:</span> {resultadoAnalisis.parametros.local}
+          </div>
+          <div>
+            <span className="font-semibold text-foreground dark:text-foreground">Clima:</span> {resultadoAnalisis.parametros.clima}
+          </div>
+        </div>
+      </div>
+      
+      <div className="overflow-x-auto">
+        <h3 className="text-lg font-medium mb-2 text-foreground dark:text-foreground">Datos Detallados</h3>
+        <table className="min-w-full bg-white dark:bg-card border border-gray-300 dark:border-border">
+          <thead>
+            <tr>
+              <th className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">Periodo</th>
+              <th className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">Local</th>
+              <th className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">Clima</th>
+              <th className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">Ventas Totales</th>
+              <th className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">Alimentos</th>
+              <th className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">Bebidas</th>
+            </tr>
+          </thead>
+          <tbody>
+            {resultadoAnalisis.datos_completos.map((dato, index) => (
+              <tr key={index} className={index % 2 === 0 ? "bg-gray-50 dark:bg-muted/50" : "bg-white dark:bg-card"}>
+                <td className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">{dato.periodo}</td>
+                <td className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">{dato.local}</td>
+                <td className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">{dato.clima}</td>
+                <td className="py-2 px-4 border-b dark:border-border text-right text-foreground dark:text-foreground">
+                  ${dato.total_ventas.toLocaleString(undefined, {minimumFractionDigits: 2})}
+                </td>
+                <td className="py-2 px-4 border-b dark:border-border text-right text-foreground dark:text-foreground">
+                  ${dato.ventas_alimentos.toLocaleString(undefined, {minimumFractionDigits: 2})}
+                </td>
+                <td className="py-2 px-4 border-b dark:border-border text-right text-foreground dark:text-foreground">
+                  ${dato.ventas_bebidas.toLocaleString(undefined, {minimumFractionDigits: 2})}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )}
+  
+  {/* Resultados - Correlación Clima-Ventas */}
+  {pestanaActiva === "correlacion" && correlacionClimaVentas && (
+    <div className="mt-8">
+      <h2 className="text-xl font-semibold mb-4 text-foreground dark:text-foreground">
+        Correlación Clima-Ventas ({correlacionClimaVentas.periodo.fecha_inicio} a {correlacionClimaVentas.periodo.fecha_fin})
+      </h2>
+      
+      <div className="overflow-x-auto">
+        <h3 className="text-lg font-medium mb-2 text-foreground dark:text-foreground">Detalle por Clima</h3>
+        <table className="min-w-full bg-white dark:bg-card border border-gray-300 dark:border-border">
+          <thead>
+            <tr>
+              <th className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">Clima</th>
+              <th className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">Días</th>
+              <th className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">Ventas Totales</th>
+              <th className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">Promedio Diario</th>
+              <th className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">Alimentos</th>
+              <th className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">Bebidas</th>
+              <th className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">Ratio A/B</th>
+            </tr>
+          </thead>
+          <tbody>
+            {correlacionClimaVentas.data.map((dato, index) => (
+              <tr key={index} className={index % 2 === 0 ? "bg-gray-50 dark:bg-muted/50" : "bg-white dark:bg-card"}>
+                <td className="py-2 px-4 border-b dark:border-border text-foreground dark:text-foreground">{dato.clima}</td>
+                <td className="py-2 px-4 border-b dark:border-border text-center text-foreground dark:text-foreground">{dato.dias}</td>
+                <td className="py-2 px-4 border-b dark:border-border text-right text-foreground dark:text-foreground">
+                  ${dato.total_ventas.toLocaleString(undefined, {minimumFractionDigits: 2})}
+                </td>
+                <td className="py-2 px-4 border-b dark:border-border text-right text-foreground dark:text-foreground">
+                  ${dato.promedio_ventas_por_dia.toLocaleString(undefined, {minimumFractionDigits: 2})}
+                </td>
+                <td className="py-2 px-4 border-b dark:border-border text-right text-foreground dark:text-foreground">
+                  ${dato.ventas_alimentos.toLocaleString(undefined, {minimumFractionDigits: 2})}
+                </td>
+                <td className="py-2 px-4 border-b dark:border-border text-right text-foreground dark:text-foreground">
+                  ${dato.ventas_bebidas.toLocaleString(undefined, {minimumFractionDigits: 2})}
+                </td>
+                <td className="py-2 px-4 border-b dark:border-border text-right text-foreground dark:text-foreground">
+                  {(dato.ventas_alimentos / dato.ventas_bebidas).toFixed(2)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
+      <div className="mt-8 p-4 bg-blue-50 dark:bg-accent/20 rounded-lg">
+        <h3 className="text-lg font-medium mb-2 text-foreground dark:text-foreground">Insights</h3>
+        <ul className="list-disc pl-6 text-foreground dark:text-foreground">
+          {correlacionClimaVentas.data.length > 0 && (
+            <>
+              <li className="mb-2">
+                El clima con mayores ventas totales es <strong>{correlacionClimaVentas.data[0].clima}</strong> con ${correlacionClimaVentas.data[0].total_ventas.toLocaleString()} en ventas.
+              </li>
+              
+              {correlacionClimaVentas.data
+                .sort((a, b) => b.promedio_ventas_por_dia - a.promedio_ventas_por_dia)[0] && (
+                <li className="mb-2">
+                  El clima con mayor promedio de ventas diarias es <strong>
+                    {correlacionClimaVentas.data.sort((a, b) => b.promedio_ventas_por_dia - a.promedio_ventas_por_dia)[0].clima}
+                  </strong> con ${correlacionClimaVentas.data.sort((a, b) => b.promedio_ventas_por_dia - a.promedio_ventas_por_dia)[0].promedio_ventas_por_dia.toLocaleString()} por día.
+                </li>
+              )}
+              
+              {correlacionClimaVentas.data
+                .sort((a, b) => (b.ventas_alimentos / b.ventas_bebidas) - (a.ventas_alimentos / a.ventas_bebidas))[0] && (
+                <li className="mb-2">
+                  El clima donde se venden proporcionalmente más alimentos que bebidas es <strong>
+                    {correlacionClimaVentas.data.sort((a, b) => (b.ventas_alimentos / b.ventas_bebidas) - (a.ventas_alimentos / a.ventas_bebidas))[0].clima}
+                  </strong>.
+                </li>
+              )}
+            </>
+          )}
+          <li className="mb-2">
+            Esta información puede ser útil para planificar el inventario y el personal según las previsiones meteorológicas.
           </li>
         </ul>
       </div>
-      
-      {/* Formulario */}
-      <form onSubmit={handleSubmit} className="mb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fechaInicio">
-            Fecha Inicio
-          </label>
-          <input
-            type="date"
-            id="fechaInicio"
-            name="fechaInicio"
-            value={parametros.fechaInicio}
-            onChange={handleInputChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-          />
-        </div>
-        
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fechaFin">
-            Fecha Fin
-          </label>
-          <input
-            type="date"
-            id="fechaFin"
-            name="fechaFin"
-            value={parametros.fechaFin}
-            onChange={handleInputChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-          />
-        </div>
-        
-        {pestanaActiva === "analisis" && (
-          <>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="tipoPeriodo">
-                Tipo de Periodo
-              </label>
-              <select
-                id="tipoPeriodo"
-                name="tipoPeriodo"
-                value={parametros.tipoPeriodo}
-                onChange={handleInputChange}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              >
-                <option value="diario">Diario</option>
-                <option value="semanal">Semanal</option>
-                <option value="mensual">Mensual</option>
-              </select>
-            </div>
-            
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="local">
-                Local
-              </label>
-              <select
-                id="local"
-                name="local"
-                value={parametros.local || ""}
-                onChange={handleInputChange}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              >
-                <option value="">Todos</option>
-                <option value="1">Temple 1</option>
-                <option value="2">Temple 2</option>
-              </select>
-            </div>
-            
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="clima">
-                Clima
-              </label>
-              <select
-                id="clima"
-                name="clima"
-                value={parametros.clima || ""}
-                onChange={handleInputChange}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              >
-                <option value="">Todos</option>
-                {climas.map(clima => (
-                  <option key={clima.id} value={clima.valor}>
-                    {clima.tipo}
-                  </option>
-                ))}
-              </select>
-            </div>
-            
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="tipoGrafico">
-                Tipo de Gráfico
-              </label>
-              <select
-                id="tipoGrafico"
-                name="tipoGrafico"
-                value={tipoGrafico}
-                onChange={(e) => setTipoGrafico(e.target.value as "linea" | "barra")}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              >
-                <option value="linea">Línea</option>
-                <option value="barra">Barra</option>
-              </select>
-            </div>
-          </>
-        )}
-        
-        <div className="col-span-1 md:col-span-2 lg:col-span-3 flex justify-end">
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            disabled={cargando}
-          >
-            {cargando ? "Cargando..." : "Analizar"}
-          </button>
-        </div>
-      </form>
-      
-      {/* Mostrar error si existe */}
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
-          <strong className="font-bold">Error: </strong>
-          <span className="block sm:inline">{error}</span>
-        </div>
-      )}
-      
-      {/* Resultados - Análisis por periodo */}
-      {pestanaActiva === "analisis" && resultadoAnalisis && (
-        <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-4">
-            Análisis de Ventas ({resultadoAnalisis.parametros.fecha_inicio} a {resultadoAnalisis.parametros.fecha_fin})
-          </h2>
-          
-          <div className="mb-4 p-4 bg-gray-50 rounded-lg">
-            <h3 className="text-lg font-medium mb-2">Parámetros</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              <div>
-                <span className="font-semibold">Periodo:</span> {resultadoAnalisis.parametros.tipo_periodo}
-              </div>
-              <div>
-                <span className="font-semibold">Local:</span> {resultadoAnalisis.parametros.local}
-              </div>
-              <div>
-                <span className="font-semibold">Clima:</span> {resultadoAnalisis.parametros.clima}
-              </div>
-            </div>
-          </div>
-          
-          <div className="h-96 w-full mb-8">
-            <ResponsiveContainer width="100%" height="100%">
-              {tipoGrafico === "linea" ? (
-                <LineChart data={prepararDatosGrafico()}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="nombre" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  {resultadoAnalisis.datos_grafico.datasets.map((dataset, index) => (
-                    <Line
-                      key={dataset.label}
-                      type="monotone"
-                      dataKey={dataset.label}
-                      name={dataset.label}
-                      stroke={colores[index % colores.length]}
-                      activeDot={{ r: 8 }}
-                    />
-                  ))}
-                </LineChart>
-              ) : (
-                <BarChart data={prepararDatosGrafico()}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="nombre" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  {resultadoAnalisis.datos_grafico.datasets.map((dataset, index) => (
-                    <Bar
-                      key={dataset.label}
-                      dataKey={dataset.label}
-                      name={dataset.label}
-                      fill={colores[index % colores.length]}
-                    />
-                  ))}
-                </BarChart>
-              )}
-            </ResponsiveContainer>
-          </div>
-          
-          <div className="overflow-x-auto">
-            <h3 className="text-lg font-medium mb-2">Datos Detallados</h3>
-            <table className="min-w-full bg-white border border-gray-300">
-              <thead>
-                <tr>
-                  <th className="py-2 px-4 border-b">Periodo</th>
-                  <th className="py-2 px-4 border-b">Local</th>
-                  <th className="py-2 px-4 border-b">Clima</th>
-                  <th className="py-2 px-4 border-b">Ventas Totales</th>
-                  <th className="py-2 px-4 border-b">Alimentos</th>
-                  <th className="py-2 px-4 border-b">Bebidas</th>
-                </tr>
-              </thead>
-              <tbody>
-                {resultadoAnalisis.datos_completos.map((dato, index) => (
-                  <tr key={index} className={index % 2 === 0 ? "bg-gray-50" : ""}>
-                    <td className="py-2 px-4 border-b">{dato.periodo}</td>
-                    <td className="py-2 px-4 border-b">{dato.local}</td>
-                    <td className="py-2 px-4 border-b">{dato.clima}</td>
-                    <td className="py-2 px-4 border-b text-right">
-                      ${dato.total_ventas.toLocaleString(undefined, {minimumFractionDigits: 2})}
-                    </td>
-                    <td className="py-2 px-4 border-b text-right">
-                      ${dato.ventas_alimentos.toLocaleString(undefined, {minimumFractionDigits: 2})}
-                    </td>
-                    <td className="py-2 px-4 border-b text-right">
-                      ${dato.ventas_bebidas.toLocaleString(undefined, {minimumFractionDigits: 2})}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-      
-      {/* Resultados - Correlación Clima-Ventas */}
-      {pestanaActiva === "correlacion" && correlacionClimaVentas && (
-        <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-4">
-            Correlación Clima-Ventas ({correlacionClimaVentas.periodo.fecha_inicio} a {correlacionClimaVentas.periodo.fecha_fin})
-          </h2>
-          
-          <div className="h-96 w-full mb-8">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={correlacionClimaVentas.data}
-                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="clima" />
-                <YAxis />
-                <Tooltip formatter={(value: any) => `$${Number(value).toLocaleString(undefined, {minimumFractionDigits: 2})}`} />
-                <Legend />
-                <Bar dataKey="total_ventas" name="Ventas Totales" fill="#3B82F6" />
-                <Bar dataKey="ventas_alimentos" name="Ventas Alimentos" fill="#10B981" />
-                <Bar dataKey="ventas_bebidas" name="Ventas Bebidas" fill="#F59E0B" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-          
-          <div className="overflow-x-auto">
-            <h3 className="text-lg font-medium mb-2">Detalle por Clima</h3>
-            <table className="min-w-full bg-white border border-gray-300">
-              <thead>
-                <tr>
-                  <th className="py-2 px-4 border-b">Clima</th>
-                  <th className="py-2 px-4 border-b">Días</th>
-                  <th className="py-2 px-4 border-b">Ventas Totales</th>
-                  <th className="py-2 px-4 border-b">Promedio Diario</th>
-                  <th className="py-2 px-4 border-b">Alimentos</th>
-                  <th className="py-2 px-4 border-b">Bebidas</th>
-                  <th className="py-2 px-4 border-b">Ratio A/B</th>
-                </tr>
-              </thead>
-              <tbody>
-                {correlacionClimaVentas.data.map((dato, index) => (
-                  <tr key={index} className={index % 2 === 0 ? "bg-gray-50" : ""}>
-                    <td className="py-2 px-4 border-b">{dato.clima}</td>
-                    <td className="py-2 px-4 border-b text-center">{dato.dias}</td>
-                    <td className="py-2 px-4 border-b text-right">
-                      ${dato.total_ventas.toLocaleString(undefined, {minimumFractionDigits: 2})}
-                    </td>
-                    <td className="py-2 px-4 border-b text-right">
-                      ${dato.promedio_ventas_por_dia.toLocaleString(undefined, {minimumFractionDigits: 2})}
-                    </td>
-                    <td className="py-2 px-4 border-b text-right">
-                      ${dato.ventas_alimentos.toLocaleString(undefined, {minimumFractionDigits: 2})}
-                    </td>
-                    <td className="py-2 px-4 border-b text-right">
-                      ${dato.ventas_bebidas.toLocaleString(undefined, {minimumFractionDigits: 2})}
-                    </td>
-                    <td className="py-2 px-4 border-b text-right">
-                      {(dato.ventas_alimentos / dato.ventas_bebidas).toFixed(2)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          
-          <div className="mt-8 p-4 bg-blue-50 rounded-lg">
-            <h3 className="text-lg font-medium mb-2">Insights</h3>
-            <ul className="list-disc pl-6">
-              {correlacionClimaVentas.data.length > 0 && (
-                <>
-                  <li className="mb-2">
-                    El clima con mayores ventas totales es <strong>{correlacionClimaVentas.data[0].clima}</strong> con ${correlacionClimaVentas.data[0].total_ventas.toLocaleString()} en ventas.
-                  </li>
-                  
-                  {correlacionClimaVentas.data
-                    .sort((a, b) => b.promedio_ventas_por_dia - a.promedio_ventas_por_dia)[0] && (
-                    <li className="mb-2">
-                      El clima con mayor promedio de ventas diarias es <strong>
-                        {correlacionClimaVentas.data.sort((a, b) => b.promedio_ventas_por_dia - a.promedio_ventas_por_dia)[0].clima}
-                      </strong> con ${correlacionClimaVentas.data.sort((a, b) => b.promedio_ventas_por_dia - a.promedio_ventas_por_dia)[0].promedio_ventas_por_dia.toLocaleString()} por día.
-                    </li>
-                  )}
-                  
-                  {correlacionClimaVentas.data
-                    .sort((a, b) => (b.ventas_alimentos / b.ventas_bebidas) - (a.ventas_alimentos / a.ventas_bebidas))[0] && (
-                    <li className="mb-2">
-                      El clima donde se venden proporcionalmente más alimentos que bebidas es <strong>
-                        {correlacionClimaVentas.data.sort((a, b) => (b.ventas_alimentos / b.ventas_bebidas) - (a.ventas_alimentos / a.ventas_bebidas))[0].clima}
-                      </strong>.
-                    </li>
-                  )}
-                </>
-              )}
-              <li className="mb-2">
-                Esta información puede ser útil para planificar el inventario y el personal según las previsiones meteorológicas.
-              </li>
-            </ul>
-          </div>
-        </div>
-      )}
     </div>
+  )}
+</div>
   );
 };
 
