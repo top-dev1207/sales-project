@@ -55,14 +55,14 @@ const SalesProjection = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth() + 1);
-  
+
   // Function to format currency
   const formatCurrency = (value: number): string => {
-    return new Intl.NumberFormat('es-AR', { 
-      style: 'currency', 
+    return new Intl.NumberFormat('es-AR', {
+      style: 'currency',
       currency: 'ARS',
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2 
+      maximumFractionDigits: 2
     }).format(value);
   };
 
@@ -169,7 +169,7 @@ const SalesProjection = () => {
       {/* Header - Filter Controls */}
       <div className="mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Panel de Proyecciones de Ventas</h1>
-        
+
         <div className="flex flex-wrap gap-2">
           <div className="flex items-center">
             <label htmlFor="year-select" className="mr-2 text-sm font-medium text-gray-700 dark:text-gray-300">Año:</label>
@@ -184,7 +184,7 @@ const SalesProjection = () => {
               ))}
             </select>
           </div>
-          
+
           <div className="flex items-center">
             <label htmlFor="month-select" className="mr-2 text-sm font-medium text-gray-700 dark:text-gray-300">Mes:</label>
             <select
@@ -286,7 +286,7 @@ const SalesProjection = () => {
               <Target className="w-5 h-5 text-primary dark:text-primary" />
             </div>
           </div>
-          
+
           <div className="mb-4">
             <div className="flex justify-between mb-1">
               <span className="text-sm font-medium text-foreground dark:text-foreground">
@@ -297,8 +297,8 @@ const SalesProjection = () => {
               </span>
             </div>
             <div className="w-full bg-muted dark:bg-muted rounded-full h-2.5">
-              <div 
-                className={`h-2.5 rounded-full ${getProgressBarColor(monthly_projection.objective_progress)}`} 
+              <div
+                className={`h-2.5 rounded-full ${getProgressBarColor(monthly_projection.objective_progress)}`}
                 style={{ width: `${Math.min(monthly_projection.objective_progress, 100)}%` }}
               ></div>
             </div>
@@ -310,13 +310,13 @@ const SalesProjection = () => {
               <span>{monthly_projection.month_name} {monthly_projection.year}</span>
             </div>
             <div className={`flex items-center ${monthly_projection.objective_progress >= 100 ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400'}`}>
-              {monthly_projection.objective_progress >= 100 ? 
-                <ArrowUp className="w-4 h-4 mr-1" /> : 
+              {monthly_projection.objective_progress >= 100 ?
+                <ArrowUp className="w-4 h-4 mr-1" /> :
                 <ArrowDown className="w-4 h-4 mr-1" />
               }
               <span>
-                {monthly_projection.objective_progress >= 100 
-                  ? "Objetivo alcanzado" 
+                {monthly_projection.objective_progress >= 100
+                  ? "Objetivo alcanzado"
                   : `Faltan ${formatCurrency(monthly_projection.objective - monthly_projection.sales_to_date)}`}
               </span>
             </div>
@@ -331,7 +331,7 @@ const SalesProjection = () => {
               <Target className="w-5 h-5 text-accent dark:text-accent" />
             </div>
           </div>
-          
+
           <div className="mb-4">
             <div className="flex justify-between mb-1">
               <span className="text-sm font-medium text-foreground dark:text-foreground">
@@ -342,8 +342,8 @@ const SalesProjection = () => {
               </span>
             </div>
             <div className="w-full bg-muted dark:bg-muted rounded-full h-2.5">
-              <div 
-                className={`h-2.5 rounded-full ${getProgressBarColor(annual_projection.objective_progress)}`} 
+              <div
+                className={`h-2.5 rounded-full ${getProgressBarColor(annual_projection.objective_progress)}`}
                 style={{ width: `${Math.min(annual_projection.objective_progress, 100)}%` }}
               ></div>
             </div>
@@ -355,13 +355,13 @@ const SalesProjection = () => {
               <span>{annual_projection.year}</span>
             </div>
             <div className={`flex items-center ${annual_projection.objective_progress >= 100 ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400'}`}>
-              {annual_projection.objective_progress >= 100 ? 
-                <ArrowUp className="w-4 h-4 mr-1" /> : 
+              {annual_projection.objective_progress >= 100 ?
+                <ArrowUp className="w-4 h-4 mr-1" /> :
                 <ArrowDown className="w-4 h-4 mr-1" />
               }
               <span>
-                {annual_projection.objective_progress >= 100 
-                  ? "Objetivo alcanzado" 
+                {annual_projection.objective_progress >= 100
+                  ? "Objetivo alcanzado"
                   : `Faltan ${formatCurrency(annual_projection.annual_objective - annual_projection.sales_to_date)}`}
               </span>
             </div>
@@ -371,101 +371,145 @@ const SalesProjection = () => {
 
       {/* Charts Section */}
       {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6"> */}
-        {/* Monthly Progress Bar Chart */}
-       <div className="bg-white dark:bg-card rounded-lg shadow p-5 border dark:border-border">
-  <h3 className="text-lg font-semibold text-gray-800 dark:text-foreground mb-4">Progreso Mensual del Año {annual_projection.year}</h3>
-  <div className="h-80">
-    <ResponsiveContainer width="100%" height="100%">
-      <BarChart
-        data={monthlyBreakdownData}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-      >
-        <CartesianGrid 
-          strokeDasharray="3 3" 
-          stroke="currentColor" 
-          className="text-border dark:text-border opacity-30" 
-        />
-        <XAxis 
-          dataKey="name" 
-          tick={{ fill: 'currentColor' }}
-          axisLine={{ stroke: 'currentColor' }}
-          tickLine={{ stroke: 'currentColor' }}
-          className="text-muted-foreground"
-        />
-        <YAxis 
-          tick={{ fill: 'currentColor' }}
-          axisLine={{ stroke: 'currentColor' }}
-          tickLine={{ stroke: 'currentColor' }}
-          className="text-muted-foreground"
-        />
-        <Tooltip
-          formatter={(value, name) => {
-            if (name === "sales") return [formatCurrency(Number(value)), "Ventas"];
-            if (name === "objective") return [formatCurrency(Number(value)), "Objetivo"];
-            if (name === "progressPercentage") return [formatPercentage(Number(value)), "Progreso"];
-            return [value, name];
-          }}
-          contentStyle={{ 
-            backgroundColor: 'hsl(var(--background))',
-            border: '1px solid hsl(var(--border))',
-            borderRadius: '6px',
-            color: 'hsl(var(--foreground))',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-          }}
-          labelStyle={{ color: 'hsl(var(--foreground))' }}
-        />
-        <Legend 
-          wrapperStyle={{ color: 'hsl(var(--foreground))' }}
-        />
-        <Bar dataKey="sales" name="Ventas" fill="#3B82F6" radius={[2, 2, 0, 0]} />
-        <Bar dataKey="objective" name="Objetivo" fill="#22C55E" radius={[2, 2, 0, 0]} />
-      </BarChart>
-    </ResponsiveContainer>
-  </div>
-</div>
-        {/* Trends Line Chart */}
-        <div className="bg-card dark:bg-card border border-border dark:border-border rounded-lg shadow p-5">
-          <h3 className="text-lg font-semibold text-foreground dark:text-foreground mb-4">Tendencia de Ventas vs Objetivos</h3>
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={monthlyBreakdownData}
-                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis 
-                  dataKey="name" 
-                  tick={{ fill: 'hsl(var(--foreground))' }}
-                  axisLine={{ stroke: 'hsl(var(--border))' }}
-                />
-                <YAxis 
-                  tick={{ fill: 'hsl(var(--foreground))' }}
-                  axisLine={{ stroke: 'hsl(var(--border))' }}
-                />
-                <Tooltip
-                  formatter={(value, name) => {
-                    if (name === "sales") return [formatCurrency(Number(value)), "Ventas"];
-                    if (name === "objective") return [formatCurrency(Number(value)), "Objetivo"];
-                    if (name === "progressPercentage") return [formatPercentage(Number(value)), "Progreso"];
-                    return [value, name];
-                  }}
-                  contentStyle={{
-                    backgroundColor: 'hsl(var(--popover))',
-                    border: '1px solid hsl(var(--border))',
-                    borderRadius: '8px',
-                    color: 'hsl(var(--foreground))'
-                  }}
-                />
-                <Legend 
-                  wrapperStyle={{ color: 'hsl(var(--foreground))' }}
-                />
-                <Line type="monotone" dataKey="sales" name="Ventas" stroke="hsl(var(--primary))" strokeWidth={2} />
-                <Line type="monotone" dataKey="objective" name="Objetivo" stroke="hsl(var(--accent))" strokeWidth={2} />
-                <Line type="monotone" dataKey="progressPercentage" name="Progreso %" stroke="hsl(var(--destructive))" strokeWidth={2} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+      {/* Monthly Progress Bar Chart */}
+      <div className="bg-white dark:bg-card rounded-lg shadow p-5 border dark:border-border">
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-foreground mb-4">Progreso Mensual del Año {annual_projection.year}</h3>
+        <div className="h-80">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={monthlyBreakdownData}
+              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+              className="[&_.recharts-active-bar]:dark:fill-gray-800 [&_.recharts-tooltip-cursor]:dark:fill-gray-800 [&_.recharts-active-shape]:dark:fill-gray-700"
+            >
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="currentColor"
+                className="text-border dark:text-border opacity-30 dark:opacity-50"
+              />
+              <XAxis
+                dataKey="name"
+                tick={{ fill: 'currentColor' }}
+                axisLine={{ stroke: 'currentColor' }}
+                tickLine={{ stroke: 'currentColor' }}
+                className="text-muted-foreground dark:text-muted-foreground"
+              />
+              <YAxis
+                tick={{ fill: 'currentColor' }}
+                axisLine={{ stroke: 'currentColor' }}
+                tickLine={{ stroke: 'currentColor' }}
+                className="text-muted-foreground dark:text-muted-foreground"
+              />
+              <Tooltip
+                formatter={(value, name) => {
+                  if (name === "sales") return [formatCurrency(Number(value)), "Ventas"];
+                  if (name === "objective") return [formatCurrency(Number(value)), "Objetivo"];
+                  if (name === "progressPercentage") return [formatPercentage(Number(value)), "Progreso"];
+                  return [value, name];
+                }}
+                content={({ active, payload, label }) => {
+                  if (active && payload && payload.length) {
+                    const isDark = document.documentElement.classList.contains('dark');
+
+                    return (
+                      <div
+                        className="bg-popover dark:bg-popover border border-border dark:border-border rounded-lg p-3 shadow-lg dark:shadow-2xl"
+                        style={{
+                          backgroundColor: isDark ? 'hsl(var(--popover))' : 'hsl(var(--popover))',
+                          borderColor: isDark ? 'hsl(var(--border))' : 'hsl(var(--border))',
+                          color: isDark ? 'hsl(var(--popover-foreground))' : 'hsl(var(--popover-foreground))'
+                        }}
+                      >
+                        <p className="font-semibold mb-2 text-foreground dark:text-foreground">
+                          {label}
+                        </p>
+                        {payload.map((entry, index) => (
+                          <p key={index} className="text-sm my-1 text-muted-foreground dark:text-muted-foreground">
+                            <span
+                              className="inline-block w-3 h-3 rounded-sm mr-2"
+                              style={{ backgroundColor: entry.color }}
+                            />
+                            {entry.name === "sales" && `Ventas: ${formatCurrency(Number(entry.value))}`}
+                            {entry.name === "objective" && `Objetivo: ${formatCurrency(Number(entry.value))}`}
+                            {entry.name === "progressPercentage" && `Progreso: ${formatPercentage(Number(entry.value))}`}
+                            {!["sales", "objective", "progressPercentage"].includes(entry.name as string) &&
+                              `${entry.name}: ${entry.value}`
+                            }
+                          </p>
+                        ))}
+                      </div>
+                    );
+                  }
+                  return null;
+                }}
+                contentStyle={{
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  borderRadius: '8px'
+                }}
+              />
+              <Legend
+                wrapperStyle={{ color: 'hsl(var(--foreground))' }}
+                className="text-foreground dark:text-foreground"
+              />
+              <Bar
+                dataKey="sales"
+                name="Ventas"
+                fill="#3B82F6"
+                radius={[2, 2, 0, 0]}
+              />
+              <Bar
+                dataKey="objective"
+                name="Objetivo"
+                fill="#22C55E"
+                radius={[2, 2, 0, 0]}
+              />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
+      </div>
+      {/* Trends Line Chart */}
+      <div className="bg-card dark:bg-card border border-border dark:border-border rounded-lg shadow p-5">
+        <h3 className="text-lg font-semibold text-foreground dark:text-foreground mb-4">Tendencia de Ventas vs Objetivos</h3>
+        <div className="h-80">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              data={monthlyBreakdownData}
+              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+              <XAxis
+                dataKey="name"
+                tick={{ fill: 'hsl(var(--foreground))' }}
+                axisLine={{ stroke: 'hsl(var(--border))' }}
+              />
+              <YAxis
+                tick={{ fill: 'hsl(var(--foreground))' }}
+                axisLine={{ stroke: 'hsl(var(--border))' }}
+              />
+              <Tooltip
+                formatter={(value, name) => {
+                  if (name === "sales") return [formatCurrency(Number(value)), "Ventas"];
+                  if (name === "objective") return [formatCurrency(Number(value)), "Objetivo"];
+                  if (name === "progressPercentage") return [formatPercentage(Number(value)), "Progreso"];
+                  return [value, name];
+                }}
+                contentStyle={{
+                  backgroundColor: 'hsl(var(--popover))',
+                  border: '1px solid hsl(var(--border))',
+                  borderRadius: '8px',
+                  color: 'hsl(var(--foreground))'
+                }}
+              />
+              <Legend
+                wrapperStyle={{ color: 'hsl(var(--foreground))' }}
+              />
+              <Line type="monotone" dataKey="sales" name="Ventas" stroke="hsl(var(--primary))" strokeWidth={2} />
+              <Line type="monotone" dataKey="objective" name="Objetivo" stroke="hsl(var(--accent))" strokeWidth={2} />
+              <Line type="monotone" dataKey="progressPercentage" name="Progreso %" stroke="hsl(var(--destructive))" strokeWidth={2} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
       {/* </div> */}
 
       {/* Projection Formulas Information */}

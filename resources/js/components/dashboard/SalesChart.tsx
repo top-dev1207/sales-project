@@ -80,7 +80,7 @@ const SalesChart = () => {
                 left: 5,
                 bottom: 5,
               }}
-              className="animate-fade-in"
+               className="animate-fade-in [&_.recharts-active-bar]:dark:fill-gray-800 [&_.recharts-tooltip-cursor]:dark:fill-gray-800 [&_.recharts-active-shape]:dark:fill-gray-700"
             >
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
               <XAxis 

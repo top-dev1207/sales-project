@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-
+import DateInput from '@/components/ui/DateInput';
 // Tipos para los datos
 type PeriodData = {
   period: string;
@@ -108,8 +108,8 @@ const MetricCard: React.FC<{
       {subvalue && <div className="text-sm text-gray-600 dark:text-muted-foreground">{subvalue}</div>}
       {trend !== undefined && (
         <div className={`text-sm mt-2 flex items-center ${trend >= 0
-            ? 'text-green-500 dark:text-green-400'
-            : 'text-red-500 dark:text-red-400'
+          ? 'text-green-500 dark:text-green-400'
+          : 'text-red-500 dark:text-red-400'
           }`}>
           {trend >= 0 ? '↑' : '↓'} {Math.abs(trend)}%
         </div>
@@ -125,8 +125,8 @@ const ProgressBar: React.FC<{ progress: number }> = ({ progress }) => {
     <div className="w-full bg-gray-200 dark:bg-muted rounded-full h-4 mt-2 border dark:border-border">
       <div
         className={`h-4 rounded-full transition-all duration-300 ${width < 70
-            ? 'bg-yellow-500 dark:bg-yellow-400'
-            : 'bg-green-500 dark:bg-green-400'
+          ? 'bg-yellow-500 dark:bg-yellow-400'
+          : 'bg-green-500 dark:bg-green-400'
           }`}
         style={{ width: `${width}%` }}
       ></div>
@@ -266,8 +266,8 @@ const PanelVentas: React.FC = () => {
         <button
           onClick={() => handleViewChange('dashboard')}
           className={`px-4 py-2 rounded transition-colors ${view === 'dashboard'
-              ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground'
-              : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'
+            ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground'
+            : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'
             }`}
         >
           Dashboard
@@ -275,8 +275,8 @@ const PanelVentas: React.FC = () => {
         <button
           onClick={() => handleViewChange('sales')}
           className={`px-4 py-2 rounded transition-colors ${view === 'sales'
-              ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground'
-              : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'
+            ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground'
+            : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'
             }`}
         >
           Ventas por Período
@@ -284,8 +284,8 @@ const PanelVentas: React.FC = () => {
         <button
           onClick={() => handleViewChange('categories')}
           className={`px-4 py-2 rounded transition-colors ${view === 'categories'
-              ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground'
-              : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'
+            ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground'
+            : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'
             }`}
         >
           Ventas por Categoría
@@ -293,8 +293,8 @@ const PanelVentas: React.FC = () => {
         <button
           onClick={() => handleViewChange('targets')}
           className={`px-4 py-2 rounded transition-colors ${view === 'targets'
-              ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground'
-              : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'
+            ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground'
+            : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'
             }`}
         >
           Objetivos de Ventas
@@ -302,8 +302,8 @@ const PanelVentas: React.FC = () => {
         <button
           onClick={() => handleViewChange('comparison')}
           className={`px-4 py-2 rounded transition-colors ${view === 'comparison'
-              ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground'
-              : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'
+            ? 'bg-blue-600 dark:bg-primary text-white dark:text-primary-foreground'
+            : 'bg-gray-700 dark:bg-muted text-white dark:text-muted-foreground hover:bg-gray-600 dark:hover:bg-muted/80'
             }`}
         >
           Comparativa
@@ -319,20 +319,18 @@ const PanelVentas: React.FC = () => {
           <>
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1">Desde</label>
-              <input
-                type="date"
-                className="p-2 border dark:border-border rounded bg-white dark:bg-card text-foreground dark:text-card-foreground focus:ring-2 focus:ring-primary dark:focus:ring-primary focus:border-transparent"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
+              <DateInput
+              // className="p-2 border dark:border-border rounded bg-white dark:bg-card text-foreground dark:text-card-foreground focus:ring-2 focus:ring-primary dark:focus:ring-primary focus:border-transparent"
+              value={startDate}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStartDate(e.target.value)}
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-muted-foreground mb-1">Hasta</label>
-              <input
-                type="date"
-                className="p-2 border dark:border-border rounded bg-white dark:bg-card text-foreground dark:text-card-foreground focus:ring-2 focus:ring-primary dark:focus:ring-primary focus:border-transparent"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
+              <DateInput
+              // className="p-2 border dark:border-border rounded bg-white dark:bg-card text-foreground dark:text-card-foreground focus:ring-2 focus:ring-primary dark:focus:ring-primary focus:border-transparent"
+              value={endDate}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEndDate(e.target.value)}
               />
             </div>
           </>
@@ -595,6 +593,7 @@ const PanelVentas: React.FC = () => {
               <BarChart
                 data={combinedData}
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                className='[&_.recharts-active-bar]:dark:fill-gray-800 [&_.recharts-tooltip-cursor]:dark:fill-gray-800 [&_.recharts-active-shape]:dark:fill-gray-700'
               >
                 <CartesianGrid
                   strokeDasharray="3 3"
@@ -642,6 +641,7 @@ const PanelVentas: React.FC = () => {
               <BarChart
                 data={targetsData}
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                className='[&_.recharts-active-bar]:dark:fill-gray-800 [&_.recharts-tooltip-cursor]:dark:fill-gray-800 [&_.recharts-active-shape]:dark:fill-gray-700'
               >
                 <CartesianGrid
                   strokeDasharray="3 3"
@@ -694,16 +694,16 @@ const PanelVentas: React.FC = () => {
                   <td className="p-2 text-right text-foreground dark:text-card-foreground">{formatCurrency(target.target)}</td>
                   <td className="p-2 text-right text-foreground dark:text-card-foreground">{formatCurrency(target.actual)}</td>
                   <td className={`p-2 text-right ${target.difference >= 0
-                      ? 'text-green-600 dark:text-green-400'
-                      : 'text-red-600 dark:text-red-400'
+                    ? 'text-green-600 dark:text-green-400'
+                    : 'text-red-600 dark:text-red-400'
                     }`}>
                     {formatCurrency(target.difference)}
                   </td>
                   <td className={`p-2 text-right ${target.achievement_percentage >= 100
-                      ? 'text-green-600 dark:text-green-400'
-                      : target.achievement_percentage >= 90
-                        ? 'text-yellow-600 dark:text-yellow-400'
-                        : 'text-red-600 dark:text-red-400'
+                    ? 'text-green-600 dark:text-green-400'
+                    : target.achievement_percentage >= 90
+                      ? 'text-yellow-600 dark:text-yellow-400'
+                      : 'text-red-600 dark:text-red-400'
                     }`}>
                     {target.achievement_percentage.toFixed(1)}%
                   </td>

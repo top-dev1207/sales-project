@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
+import DateInput from '@/components/ui/DateInput';
 
 // Types
 type PeriodType = 'daily' | 'weekly' | 'monthly';
@@ -278,20 +279,18 @@ const Gastos: React.FC = () => {
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-card-foreground mb-1 theme-transition">Start Date</label>
-                            <input
-                                type="date"
-                                className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
+                            <DateInput
+                                // className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
                                 value={dateRange.startDate}
-                                onChange={(e) => setDateRange({ ...dateRange, startDate: e.target.value })}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDateRange({ ...dateRange, startDate: e.target.value })}
                             />
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-card-foreground mb-1 theme-transition">End Date</label>
-                            <input
-                                type="date"
-                                className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
+                            <DateInput
+                                // className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
                                 value={dateRange.endDate}
-                                onChange={(e) => setDateRange({ ...dateRange, endDate: e.target.value })}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDateRange({ ...dateRange, endDate: e.target.value })}
                             />
                         </div>
                         <div>
@@ -380,7 +379,16 @@ const Gastos: React.FC = () => {
                                                     ))}
                                                 </Pie>
                                                 <Tooltip
-                                                    formatter={(value: number) => `${value.toFixed(1)}%`}
+                                                    formatter={(value: any) => [`${value.toFixed(2)}%`, 'Porcentaje']}
+                                                    labelFormatter={(name) => `Rubro: ${name}`}
+                                                    contentStyle={{
+                                                        backgroundColor: 'hsl(var(--card))',
+                                                        border: '1px solid hsl(var(--border))',
+                                                        borderRadius: '6px',
+                                                        color: 'hsl(var(--foreground))'
+                                                    }}
+                                                    itemStyle={{ color: 'hsl(var(--foreground))' }}
+                                                    labelStyle={{ color: 'hsl(var(--foreground))' }}
                                                 />
                                             </PieChart>
                                         </ResponsiveContainer>
@@ -433,20 +441,18 @@ const Gastos: React.FC = () => {
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-card-foreground mb-1 theme-transition">Start Date</label>
-                                    <input
-                                        type="date"
-                                        className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
+                                    <DateInput
+                                        // className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
                                         value={period1.startDate}
-                                        onChange={(e) => setPeriod1({ ...period1, startDate: e.target.value })}
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPeriod1({ ...period1, startDate: e.target.value })}
                                     />
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-card-foreground mb-1 theme-transition">End Date</label>
-                                    <input
-                                        type="date"
-                                        className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
+                                    <DateInput
+                                        // className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
                                         value={period1.endDate}
-                                        onChange={(e) => setPeriod1({ ...period1, endDate: e.target.value })}
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPeriod1({ ...period1, endDate: e.target.value })}
                                     />
                                 </div>
                             </div>
@@ -456,20 +462,18 @@ const Gastos: React.FC = () => {
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-card-foreground mb-1 theme-transition">Start Date</label>
-                                    <input
-                                        type="date"
-                                        className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
+                                    <DateInput
+                                        // className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
                                         value={period2.startDate}
-                                        onChange={(e) => setPeriod2({ ...period2, startDate: e.target.value })}
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPeriod2({ ...period2, startDate: e.target.value })}
                                     />
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-card-foreground mb-1 theme-transition">End Date</label>
-                                    <input
-                                        type="date"
-                                        className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
+                                    <DateInput
+                                        // className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground theme-transition"
                                         value={period2.endDate}
-                                        onChange={(e) => setPeriod2({ ...period2, endDate: e.target.value })}
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPeriod2({ ...period2, endDate: e.target.value })}
                                     />
                                 </div>
                             </div>
@@ -546,6 +550,7 @@ const Gastos: React.FC = () => {
                                                 { name: period2Label, valor: periodTotals.period2 }
                                             ]}
                                             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                                            className='[&_.recharts-active-bar]:dark:fill-gray-800 [&_.recharts-tooltip-cursor]:dark:fill-gray-800 [&_.recharts-active-shape]:dark:fill-gray-700'
                                         >
                                             <XAxis dataKey="name" />
                                             <YAxis />
@@ -566,6 +571,7 @@ const Gastos: React.FC = () => {
                                         <BarChart
                                             data={comparisonData.slice(0, 10)}
                                             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                                            className='[&_.recharts-active-bar]:dark:fill-gray-800 [&_.recharts-tooltip-cursor]:dark:fill-gray-800 [&_.recharts-active-shape]:dark:fill-gray-700'
                                         >
                                             <XAxis dataKey="group_name" />
                                             <YAxis />
@@ -646,8 +652,8 @@ const Gastos: React.FC = () => {
                         <nav className="-mb-px flex">
                             <button
                                 className={`py-4 px-6 font-medium text-sm theme-transition ${activeTab === 'incidence'
-                                        ? 'border-b-2 border-primary text-primary'
-                                        : 'text-muted-foreground hover:text-foreground hover:border-muted-foreground'
+                                    ? 'border-b-2 border-primary text-primary'
+                                    : 'text-muted-foreground hover:text-foreground hover:border-muted-foreground'
                                     }`}
                                 onClick={() => handleTabChange('incidence')}
                             >
@@ -655,8 +661,8 @@ const Gastos: React.FC = () => {
                             </button>
                             <button
                                 className={`py-4 px-6 font-medium text-sm theme-transition ${activeTab === 'comparison'
-                                        ? 'border-b-2 border-primary text-primary'
-                                        : 'text-muted-foreground hover:text-foreground hover:border-muted-foreground'
+                                    ? 'border-b-2 border-primary text-primary'
+                                    : 'text-muted-foreground hover:text-foreground hover:border-muted-foreground'
                                     }`}
                                 onClick={() => handleTabChange('comparison')}
                             >

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import DateInput from "@/components/ui/DateInput";
 
 // Tipos de datos
 type TipoPeriodo = "diario" | "semanal" | "mensual";
@@ -250,14 +251,12 @@ const PanelAnalisisVentas: React.FC = () => {
       <label className="block text-gray-700 dark:text-foreground text-sm font-bold mb-2" htmlFor="fechaInicio">
         Fecha Inicio
       </label>
-      <input
-        type="date"
+      <DateInput
         id="fechaInicio"
         name="fechaInicio"
         value={parametros.fechaInicio}
         onChange={handleInputChange}
-        className="shadow appearance-none border dark:border-border rounded w-full py-2 px-3 text-gray-700 dark:text-foreground dark:bg-input leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring"
-        required
+        // className="shadow appearance-none border dark:border-border rounded w-full py-2 px-3 text-gray-700 dark:text-foreground dark:bg-input leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring"
       />
     </div>
     
@@ -265,14 +264,12 @@ const PanelAnalisisVentas: React.FC = () => {
       <label className="block text-gray-700 dark:text-foreground text-sm font-bold mb-2" htmlFor="fechaFin">
         Fecha Fin
       </label>
-      <input
-        type="date"
+      <DateInput
         id="fechaFin"
         name="fechaFin"
         value={parametros.fechaFin}
         onChange={handleInputChange}
-        className="shadow appearance-none border dark:border-border rounded w-full py-2 px-3 text-gray-700 dark:text-foreground dark:bg-input leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring"
-        required
+        // className="shadow appearance-none border dark:border-border rounded w-full py-2 px-3 text-gray-700 dark:text-foreground dark:bg-input leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-ring"
       />
     </div>
     
@@ -379,13 +376,13 @@ const PanelAnalisisVentas: React.FC = () => {
       <div className="mb-4 p-4 bg-gray-50 dark:bg-muted rounded-lg">
         <h3 className="text-lg font-medium mb-2 text-foreground dark:text-foreground">Parámetros</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <div>
+          <div className="text-foreground dark:text-foreground">
             <span className="font-semibold text-foreground dark:text-foreground">Periodo:</span> {resultadoAnalisis.parametros.tipo_periodo}
           </div>
-          <div>
+          <div className="text-foreground dark:text-foreground">
             <span className="font-semibold text-foreground dark:text-foreground">Local:</span> {resultadoAnalisis.parametros.local}
           </div>
-          <div>
+          <div className="text-foreground dark:text-foreground"> 
             <span className="font-semibold text-foreground dark:text-foreground">Clima:</span> {resultadoAnalisis.parametros.clima}
           </div>
         </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { Calendar, ChevronDown, Filter, RefreshCw } from 'lucide-react';
+import DateInput from '@/components/ui/DateInput';
 
 // Define types for our data
 interface CostMetric {
@@ -162,22 +163,20 @@ const CostMetricsPanel: React.FC = () => {
               <div>
                 <label className="block text-sm font-medium text-muted-foreground dark:text-muted-foreground mb-1">Desde</label>
                 <div className="relative">
-                  <input
-                    type="date"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    className="block w-full px-3 py-2 border border-border dark:border-border rounded-md shadow-sm focus:ring-ring focus:border-ring dark:focus:ring-ring dark:focus:border-ring bg-background dark:bg-card text-foreground dark:text-foreground transition-colors duration-200"
+                  <DateInput
+                  value={startDate}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStartDate(e.target.value)}
+                  // className="block w-full px-3 py-2 border border-border dark:border-border rounded-md shadow-sm focus:ring-ring focus:border-ring dark:focus:ring-ring dark:focus:border-ring bg-background dark:bg-card text-foreground dark:text-foreground transition-colors duration-200"
                   />
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-muted-foreground dark:text-muted-foreground mb-1">Hasta</label>
                 <div className="relative">
-                  <input
-                    type="date"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                    className="block w-full px-3 py-2 border border-border dark:border-border rounded-md shadow-sm focus:ring-ring focus:border-ring dark:focus:ring-ring dark:focus:border-ring bg-background dark:bg-card text-foreground dark:text-foreground transition-colors duration-200"
+                  <DateInput
+                  value={endDate}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEndDate(e.target.value)}
+                  // className="block w-full px-3 py-2 border border-border dark:border-border rounded-md shadow-sm focus:ring-ring focus:border-ring dark:focus:ring-ring dark:focus:border-ring bg-background dark:bg-card text-foreground dark:text-foreground transition-colors duration-200"
                   />
                 </div>
               </div>
@@ -266,7 +265,7 @@ const CostMetricsPanel: React.FC = () => {
                       </div>
                       <div
                         className={`flex items-center px-2.5 py-0.5 rounded text-xs font-medium ${trend < 0
-                          ? 'bg-dashboard-green/10 dark:bg-dashboard-green/20 text-dashboard-green dark:text-dashboard-green'
+                          ? 'text-muted-foreground dark:text-muted-foreground'
                           : trend > 0
                             ? 'bg-dashboard-red/10 dark:bg-dashboard-red/20 text-dashboard-red dark:text-dashboard-red'
                             : 'bg-muted dark:bg-muted text-muted-foreground dark:text-muted-foreground'
@@ -356,6 +355,7 @@ const CostMetricsPanel: React.FC = () => {
                   <BarChart
                     data={detailedData}
                     margin={{ top: 5, right: 30, left: 20, bottom: 30 }}
+                    className='[&_.recharts-active-bar]:dark:fill-gray-800 [&_.recharts-tooltip-cursor]:dark:fill-gray-800 [&_.recharts-active-shape]:dark:fill-gray-700'
                   >
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                     <XAxis

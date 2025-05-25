@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
+import DateInput from '@/components/ui/DateInput';
 
 // Define TypeScript interfaces for the component's state
 interface TemporalParams {
@@ -173,6 +174,7 @@ const Pinta: React.FC = () => {
       ...prev,
       [name]: value
     }) as TemporalParams);
+    console.log(name, value);
   };
 
   // Función para actualizar los parámetros comparativos
@@ -230,21 +232,19 @@ const Pinta: React.FC = () => {
         {/* Pestañas */}
         <div className="flex border-b border-border mb-6">
           <button
-            className={`mr-4 py-2 px-4 font-medium transition-colors duration-200 ${
-              activeTab === 'temporal' 
-                ? 'text-primary border-b-2 border-primary' 
-                : 'text-muted-foreground hover:text-foreground'
-            }`}
+            className={`mr-4 py-2 px-4 font-medium transition-colors duration-200 ${activeTab === 'temporal'
+              ? 'text-primary border-b-2 border-primary'
+              : 'text-muted-foreground hover:text-foreground'
+              }`}
             onClick={() => setActiveTab('temporal')}
           >
             Evolución Temporal
           </button>
           <button
-            className={`mr-4 py-2 px-4 font-medium transition-colors duration-200 ${
-              activeTab === 'comparativo' 
-                ? 'text-primary border-b-2 border-primary' 
-                : 'text-muted-foreground hover:text-foreground'
-            }`}
+            className={`mr-4 py-2 px-4 font-medium transition-colors duration-200 ${activeTab === 'comparativo'
+              ? 'text-primary border-b-2 border-primary'
+              : 'text-muted-foreground hover:text-foreground'
+              }`}
             onClick={() => setActiveTab('comparativo')}
           >
             Comparativo
@@ -261,22 +261,20 @@ const Pinta: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 bg-muted/50 p-4 rounded-md border border-border">
             <div>
               <label className="block text-sm font-medium text-foreground mb-1">Fecha Inicio</label>
-              <input
-                type="date"
+              <DateInput
                 name="fecha_inicio"
                 value={temporalParams.fecha_inicio}
                 onChange={handleTemporalParamChange}
-                className="w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
+                // className="w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-foreground mb-1">Fecha Fin</label>
-              <input
-                type="date"
+              <DateInput
                 name="fecha_fin"
                 value={temporalParams.fecha_fin}
                 onChange={handleTemporalParamChange}
-                className="w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
+                // className="w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
               />
             </div>
             <div>
@@ -303,22 +301,20 @@ const Pinta: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-1">Fecha Inicio</label>
-                  <input
-                    type="date"
+                  <DateInput
                     name="periodo1_inicio"
                     value={comparativoParams.periodo1_inicio}
                     onChange={handleComparativoParamChange}
-                    className="w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
+                    // className="w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-1">Fecha Fin</label>
-                  <input
-                    type="date"
+                  <DateInput
                     name="periodo1_fin"
                     value={comparativoParams.periodo1_fin}
                     onChange={handleComparativoParamChange}
-                    className="w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
+                    // className="w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
                   />
                 </div>
               </div>
@@ -328,22 +324,20 @@ const Pinta: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-1">Fecha Inicio</label>
-                  <input
-                    type="date"
+                  <DateInput
                     name="periodo2_inicio"
                     value={comparativoParams.periodo2_inicio}
                     onChange={handleComparativoParamChange}
-                    className="w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
+                    // className="w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-1">Fecha Fin</label>
-                  <input
-                    type="date"
+                  <DateInput
                     name="periodo2_fin"
                     value={comparativoParams.periodo2_fin}
                     onChange={handleComparativoParamChange}
-                    className="w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
+                    // className="w-full rounded-md border border-input bg-background text-foreground shadow-sm p-2 focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200"
                   />
                 </div>
               </div>
@@ -388,17 +382,17 @@ const Pinta: React.FC = () => {
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis 
-                  dataKey="fecha" 
+                <XAxis
+                  dataKey="fecha"
                   stroke="hsl(var(--muted-foreground))"
                   fontSize={12}
                 />
-                <YAxis 
+                <YAxis
                   stroke="hsl(var(--muted-foreground))"
                   fontSize={12}
                 />
-                <Tooltip 
-                  contentStyle={{ 
+                <Tooltip
+                  contentStyle={{
                     backgroundColor: 'hsl(var(--card))',
                     border: '1px solid hsl(var(--border))',
                     borderRadius: '6px',
@@ -482,21 +476,19 @@ const Pinta: React.FC = () => {
               <h3 className="text-lg font-semibold mb-4 text-foreground">Variación entre períodos</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex items-center">
-                  <div className={`text-3xl font-bold mr-2 ${
-                    comparativoData.comparacion.variacion_total >= 0 
-                      ? 'text-dashboard-green' 
-                      : 'text-dashboard-red'
-                  }`}>
+                  <div className={`text-3xl font-bold mr-2 ${comparativoData.comparacion.variacion_total >= 0
+                    ? 'text-dashboard-green'
+                    : 'text-dashboard-red'
+                    }`}>
                     {comparativoData.comparacion.variacion_total >= 0 ? '+' : ''}{comparativoData.comparacion.variacion_total}%
                   </div>
                   <div className="text-muted-foreground">Variación total</div>
                 </div>
                 <div className="flex items-center">
-                  <div className={`text-3xl font-bold mr-2 ${
-                    comparativoData.comparacion.variacion_promedio >= 0 
-                      ? 'text-dashboard-green' 
-                      : 'text-dashboard-red'
-                  }`}>
+                  <div className={`text-3xl font-bold mr-2 ${comparativoData.comparacion.variacion_promedio >= 0
+                    ? 'text-dashboard-green'
+                    : 'text-dashboard-red'
+                    }`}>
                     {comparativoData.comparacion.variacion_promedio >= 0 ? '+' : ''}{comparativoData.comparacion.variacion_promedio}%
                   </div>
                   <div className="text-muted-foreground">Variación promedio</div>
@@ -510,19 +502,20 @@ const Pinta: React.FC = () => {
                 <BarChart
                   data={comparativeChartData}
                   margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                  className='[&_.recharts-active-bar]:dark:fill-gray-800 [&_.recharts-tooltip-cursor]:dark:fill-gray-800 [&_.recharts-active-shape]:dark:fill-gray-700'
                 >
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis 
-                    dataKey="metrica" 
+                  <XAxis
+                    dataKey="metrica"
                     stroke="hsl(var(--muted-foreground))"
                     fontSize={12}
                   />
-                  <YAxis 
+                  <YAxis
                     stroke="hsl(var(--muted-foreground))"
                     fontSize={12}
                   />
-                  <Tooltip 
-                    contentStyle={{ 
+                  <Tooltip
+                    contentStyle={{
                       backgroundColor: 'hsl(var(--card))',
                       border: '1px solid hsl(var(--border))',
                       borderRadius: '6px',
@@ -532,11 +525,11 @@ const Pinta: React.FC = () => {
                   <Legend />
                   <Bar
                     dataKey={comparativoData.grafico.datasets[0].label}
-                    fill="hsl(var(--dashboard-blue))"
+                    fill="#3B82F6"
                   />
                   <Bar
                     dataKey={comparativoData.grafico.datasets[1].label}
-                    fill="hsl(var(--dashboard-green))"
+                    fill="#22C55E"
                   />
                 </BarChart>
               </ResponsiveContainer>

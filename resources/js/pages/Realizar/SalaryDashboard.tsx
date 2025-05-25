@@ -49,23 +49,23 @@ const SalaryDashboard: React.FC = () => {
   // Data for period chart
   const periodData: PeriodData[] = selectedPeriod === 'todos'
     ? ['Q1', 'Q2', 'Q3', 'Q4'].map(period => {
-        return {
-          name: period,
-          ...selectedCategories.reduce<Record<string, number>>((acc, cat) => {
-            const value = salaryData.find(d => d.categoria === cat && d.periodo === period)?.salario || 0;
-            acc[cat] = value;
-            return acc;
-          }, {})
-        };
-      })
-    : [{
-        name: selectedPeriod,
+      return {
+        name: period,
         ...selectedCategories.reduce<Record<string, number>>((acc, cat) => {
-          const value = salaryData.find(d => d.categoria === cat && d.periodo === selectedPeriod)?.salario || 0;
+          const value = salaryData.find(d => d.categoria === cat && d.periodo === period)?.salario || 0;
           acc[cat] = value;
           return acc;
         }, {})
-      }];
+      };
+    })
+    : [{
+      name: selectedPeriod,
+      ...selectedCategories.reduce<Record<string, number>>((acc, cat) => {
+        const value = salaryData.find(d => d.categoria === cat && d.periodo === selectedPeriod)?.salario || 0;
+        acc[cat] = value;
+        return acc;
+      }, {})
+    }];
 
   // Data for category distribution chart
   const categoryDistData: CategoryDistData[] = selectedCategories.map(cat => {
@@ -128,11 +128,10 @@ const SalaryDashboard: React.FC = () => {
             {['A', 'B', 'C'].map((cat) => (
               <button
                 key={cat}
-                className={`px-3 py-1 rounded ${
-                  selectedCategories.includes(cat)
+                className={`px-3 py-1 rounded ${selectedCategories.includes(cat)
                     ? 'bg-blue-600 text-white'
                     : 'bg-gray-200 text-gray-700'
-                }`}
+                  }`}
                 onClick={() => handleCategoryChange(cat)}
               >
                 Categoría {cat}
@@ -146,7 +145,10 @@ const SalaryDashboard: React.FC = () => {
         <div className="p-4 rounded-lg shadow">
           <h2 className="text-lg font-semibold mb-4">Salarios por Periodo y Categoría</h2>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={periodData}>
+            <BarChart
+              data={periodData}
+              className='[&_.recharts-active-bar]:dark:fill-gray-800 [&_.recharts-tooltip-cursor]:dark:fill-gray-800 [&_.recharts-active-shape]:dark:fill-gray-700'
+            >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
@@ -171,7 +173,7 @@ const SalaryDashboard: React.FC = () => {
                 outerRadius={100}
                 fill="#8884d8"
                 dataKey="value"
-                label={({name, percent}) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
               >
                 {categoryDistData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

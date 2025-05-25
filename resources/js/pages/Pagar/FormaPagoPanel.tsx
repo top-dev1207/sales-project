@@ -31,28 +31,12 @@ const FormaPagoPanel: React.FC = () => {
   const [cargando, setCargando] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [exito, setExito] = useState<string | null>(null);
-  const [darkMode, setDarkMode] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<FormValues>({
     tipo: '',
     estado: 1,
     fiscal: 0,
     opciones: 0
   });
-  // Initialize dark mode from localStorage or system preference
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
-      setDarkMode(true);
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
-
-  // Save theme preference
-  useEffect(() => {
-    localStorage.setItem('theme', darkMode ? 'dark' : 'light');
-  }, [darkMode]);
 
   // Obtener formas de pago al cargar el componente
   useEffect(() => {
@@ -63,16 +47,16 @@ const FormaPagoPanel: React.FC = () => {
   const obtenerFormasPago = async (): Promise<void> => {
     setCargando(true);
     setError(null);
-    
+
     try {
       const response = await fetch('/api/formas-pago');
-      
+
       if (!response.ok) {
         throw new Error('Error al cargar las formas de pago');
       }
-      
+
       const data = await response.json();
-      
+
       if (data.status === 'success') {
         setFormasPago(data.data);
       } else {
@@ -90,14 +74,14 @@ const FormaPagoPanel: React.FC = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
-    
+
     // Convertir valores numéricos si es necesario
-    const finalValue = type === 'checkbox' 
-      ? checked ? 1 : 0 
-      : (name === 'estado' || name === 'fiscal' || name === 'opciones') 
-        ? parseInt(value, 10) 
+    const finalValue = type === 'checkbox'
+      ? checked ? 1 : 0
+      : (name === 'estado' || name === 'fiscal' || name === 'opciones')
+        ? parseInt(value, 10)
         : value;
-    
+
     setFormValues({
       ...formValues,
       [name]: finalValue
@@ -139,17 +123,17 @@ const FormaPagoPanel: React.FC = () => {
     e.preventDefault();
     setError(null);
     setExito(null);
-    
+
     try {
-      const url = formaPagoSeleccionada 
-        ? `/api/formas-pago/${formaPagoSeleccionada.id}` 
+      const url = formaPagoSeleccionada
+        ? `/api/formas-pago/${formaPagoSeleccionada.id}`
         : '/api/formas-pago';
-      
+
       const method = formaPagoSeleccionada ? 'PUT' : 'POST';
-      
+
       const csrfElement = document.querySelector('meta[name="csrf-token"]');
       const csrfToken = csrfElement ? csrfElement.getAttribute('content') : '';
-      
+
       const response = await fetch(url, {
         method,
         headers: {
@@ -158,14 +142,14 @@ const FormaPagoPanel: React.FC = () => {
         },
         body: JSON.stringify(formValues)
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Error al guardar la forma de pago');
       }
-      
+
       const data = await response.json();
-      
+
       if (data.status === 'success') {
         setExito(data.message || 'Forma de pago guardada correctamente');
         obtenerFormasPago();
@@ -184,28 +168,28 @@ const FormaPagoPanel: React.FC = () => {
     if (!confirm('¿Está seguro que desea desactivar esta forma de pago?')) {
       return;
     }
-    
+
     setError(null);
     setExito(null);
-    
+
     try {
       const csrfElement = document.querySelector('meta[name="csrf-token"]');
       const csrfToken = csrfElement ? csrfElement.getAttribute('content') : '';
-      
+
       const response = await fetch(`/api/formas-pago/${id}`, {
         method: 'DELETE',
         headers: {
           'X-CSRF-TOKEN': csrfToken || ''
         }
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Error al desactivar la forma de pago');
       }
-      
+
       const data = await response.json();
-      
+
       if (data.status === 'success') {
         setExito(data.message || 'Forma de pago desactivada correctamente');
         obtenerFormasPago();
@@ -227,19 +211,19 @@ const FormaPagoPanel: React.FC = () => {
   // Renderizado de opciones como texto legible
   const renderizarOpciones = (opciones: number): string => {
     const caracteristicas: string[] = [];
-    
+
     if (opciones & 1) {
       caracteristicas.push('Impacta en caja');
     } else {
       caracteristicas.push('No impacta en caja');
     }
-    
+
     if (opciones & 2) {
       caracteristicas.push('Medio electrónico');
     } else {
       caracteristicas.push('Medio no electrónico');
     }
-    
+
     return caracteristicas.join(', ');
   };
 
@@ -253,18 +237,18 @@ const FormaPagoPanel: React.FC = () => {
             <span>{error}</span>
           </div>
         )}
-        
+
         {exito && (
           <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 px-4 py-3 rounded-lg mb-4 flex items-center">
             <CheckCircle className="w-5 h-5 mr-2" />
             <span>{exito}</span>
           </div>
         )}
-        
+
         {/* Botón para agregar nueva forma de pago */}
         {!modoEdicion && (
-          <button 
-            onClick={iniciarNueva} 
+          <button
+            onClick={iniciarNueva}
             className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg flex items-center mb-4 transition-colors duration-200"
           >
             <PlusCircle className="w-5 h-5 mr-2" />
@@ -298,20 +282,18 @@ const FormaPagoPanel: React.FC = () => {
                         <td className="py-3 px-4 text-sm">{formaPago.id}</td>
                         <td className="py-3 px-4 text-sm font-medium">{formaPago.tipo}</td>
                         <td className="py-3 px-4">
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            formaPago.estado 
-                              ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-400' 
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${formaPago.estado
+                              ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-400'
                               : 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400'
-                          }`}>
+                            }`}>
                             {formaPago.estado ? 'Activo' : 'Inactivo'}
                           </span>
                         </td>
                         <td className="py-3 px-4">
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            formaPago.fiscal 
-                              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400' 
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${formaPago.fiscal
+                              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400'
                               : 'bg-amber-100 text-amber-800 dark:bg-amber-900/20 dark:text-amber-400'
-                          }`}>
+                            }`}>
                             {formaPago.fiscal ? 'Fiscal' : 'No Fiscal'}
                           </span>
                         </td>

@@ -13,6 +13,7 @@ use App\Http\Controllers\ResumenVer\SalesAnalyticsController;
 use App\Http\Controllers\ResumenVer\FormaPagoController;
 use App\Http\Controllers\ResumenVer\FinancialMetricsController;
 use App\Http\Controllers\ResumenVer\IndicePintaController;
+use App\Http\Controllers\ResumenVer\UserLoginAnalyticsController;
 //      * Almacena una nueva forma de pago
 
 /*
@@ -28,9 +29,9 @@ use App\Http\Controllers\ResumenVer\IndicePintaController;
 
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-   return response()->json([
-            'success' => true
-            ]);
+    return response()->json([
+        'success' => true
+    ]);
 });
 
 Route::prefix('gastos-analisis')->group(function () {
@@ -75,20 +76,23 @@ Route::prefix('ventas-analisis')->group(function () {
     Route::get('/correlacion-clima-ventas', [VentasAnalisisController::class, 'getCorrelacionClimaVentas']);
 });
 
-// Route::middleware('auth:sanctum')->group(function () {
-// Rutas para registrar login/logout
-Route::post('/login-time', [UserLoginTimeController::class, 'recordLogin']);
-Route::post('/logout-time', [UserLoginTimeController::class, 'recordLogout']);
+Route::prefix('user-login-analytics')->group(function () {
+    Route::get('/getAllUsers', [UserLoginAnalyticsController::class, 'getAllUsers']);
+    // Daily login time analytics
+    Route::get('/daily', [UserLoginAnalyticsController::class, 'getDailyLoginTime']);
 
-// Rutas para obtener estadísticas
-Route::get('/user-login-time/{userId?}', [UserLoginTimeController::class, 'getUserLoginTime']);
-Route::get('/login-stats/daily', [UserLoginTimeController::class, 'getDailyLoginStats']);
-Route::get('/login-stats/weekly', [UserLoginTimeController::class, 'getWeeklyLoginStats']);
-Route::get('/login-stats/monthly', [UserLoginTimeController::class, 'getMonthlyLoginStats']);
+    // Weekly login time analytics
+    Route::get('/weekly', [UserLoginAnalyticsController::class, 'getWeeklyLoginTime']);
 
-// Ruta para informes personalizados
-Route::get('/login-report', [UserLoginTimeController::class, 'getLoginReport']);
-// });
+    // Monthly login time analytics
+    Route::get('/monthly', [UserLoginAnalyticsController::class, 'getMonthlyLoginTime']);
+
+    // Comprehensive analytics dashboard
+    Route::get('/dashboard', [UserLoginAnalyticsController::class, 'getAnalyticsDashboard']);
+
+    // Compare multiple users
+    Route::get('/compare', [UserLoginAnalyticsController::class, 'compareUsers']);
+});
 
 Route::prefix('expenses-analysis')->group(function () {
     Route::get('/by-incidence', [ExpensesAnalysisController::class, 'getExpensesByIncidence']);

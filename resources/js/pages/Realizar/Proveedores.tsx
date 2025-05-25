@@ -336,6 +336,7 @@ const Proveedores: React.FC = () => {
             <BarChart
               data={datos}
               margin={{ top: 5, right: 30, left: 20, bottom: 50 }}
+              className="[&_.recharts-active-bar]:dark:fill-gray-800 [&_.recharts-tooltip-cursor]:dark:fill-gray-800 [&_.recharts-active-shape]:dark:fill-gray-700"
             >
               <CartesianGrid
                 strokeDasharray="3 3"
@@ -482,6 +483,7 @@ const Proveedores: React.FC = () => {
               <BarChart
                 data={datosHistoricos.tendencia_pagos}
                 margin={{ top: 5, right: 30, left: 20, bottom: 50 }}
+                className="[&_.recharts-active-bar]:dark:fill-gray-800 [&_.recharts-tooltip-cursor]:dark:fill-gray-800 [&_.recharts-active-shape]:dark:fill-gray-700"
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-border dark:text-border" />
                 <XAxis
@@ -559,6 +561,8 @@ const Proveedores: React.FC = () => {
                     borderRadius: '6px',
                     color: 'hsl(var(--foreground))'
                   }}
+                  labelStyle={{ color: 'hsl(var(--foreground))' }}
+                  itemStyle={{ color: 'hsl(var(--foreground))' }}
                 />
               </PieChart>
             </ResponsiveContainer>

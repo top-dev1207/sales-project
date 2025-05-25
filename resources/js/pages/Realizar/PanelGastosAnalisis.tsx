@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { AlertCircle, Calendar, RefreshCw, DollarSign, BarChart2, PieChart as PieChartIcon } from 'lucide-react';
+import DateInput from '@/components/ui/DateInput';
 
 // Interfaces para los datos
 interface Periodo {
@@ -130,6 +131,7 @@ const PanelGastosAnalisis: React.FC = () => {
               data={data}
               layout="vertical"
               margin={{ top: 20, right: 30, left: 150, bottom: 5 }}
+              className='[&_.recharts-active-bar]:dark:fill-gray-800 [&_.recharts-tooltip-cursor]:dark:fill-gray-800 [&_.recharts-active-shape]:dark:fill-gray-700'
             >
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis
@@ -259,6 +261,7 @@ const PanelGastosAnalisis: React.FC = () => {
                 data={data.slice(0, 8)} // Mostramos solo los 8 más relevantes
                 layout="vertical"
                 margin={{ top: 20, right: 30, left: 150, bottom: 5 }}
+                className='[&_.recharts-active-bar]:dark:fill-gray-800 [&_.recharts-tooltip-cursor]:dark:fill-gray-800 [&_.recharts-active-shape]:dark:fill-gray-700'
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                 <XAxis
@@ -338,6 +341,7 @@ const PanelGastosAnalisis: React.FC = () => {
             <BarChart
               data={data}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              className='[&_.recharts-active-bar]:dark:fill-gray-800 [&_.recharts-tooltip-cursor]:dark:fill-gray-800 [&_.recharts-active-shape]:dark:fill-gray-700'
             >
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis
@@ -472,6 +476,7 @@ const PanelGastosAnalisis: React.FC = () => {
                   data={topGastosSobreVentas}
                   layout="vertical"
                   margin={{ top: 5, right: 30, left: 100, bottom: 5 }}
+                  className='[&_.recharts-active-bar]:dark:fill-gray-800 [&_.recharts-tooltip-cursor]:dark:fill-gray-800 [&_.recharts-active-shape]:dark:fill-gray-700'
                 >
                   <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-border dark:text-border opacity-30" />
                   <XAxis type="number" unit="%" stroke="currentColor" className="text-muted-foreground dark:text-muted-foreground" />
@@ -528,6 +533,8 @@ const PanelGastosAnalisis: React.FC = () => {
                       borderRadius: '6px',
                       color: 'hsl(var(--foreground))'
                     }}
+                    itemStyle={{ color: 'hsl(var(--foreground))' }}
+                    labelStyle={{ color: 'hsl(var(--foreground))' }}
                   />
                 </PieChart>
               </ResponsiveContainer>
@@ -606,13 +613,11 @@ const PanelGastosAnalisis: React.FC = () => {
               Fecha Inicio
             </label>
             <div className="relative">
-              <input
-                type="date"
-                id="fechaInicio"
-                value={fechaInicio}
-                onChange={(e) => setFechaInicio(e.target.value)}
-                className="pl-9 w-full p-2 border border-gray-300 dark:border-border rounded-md bg-white dark:bg-input text-foreground dark:text-foreground"
-                required
+              <DateInput
+              id="fechaInicio"
+              value={fechaInicio}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFechaInicio(e.target.value)}
+              // className="pl-9 w-full p-2 border border-gray-300 dark:border-border rounded-md bg-white dark:bg-input text-foreground dark:text-foreground"
               />
             </div>
           </div>
@@ -622,13 +627,11 @@ const PanelGastosAnalisis: React.FC = () => {
               Fecha Fin
             </label>
             <div className="relative">
-              <input
-                type="date"
-                id="fechaFin"
-                value={fechaFin}
-                onChange={(e) => setFechaFin(e.target.value)}
-                className="pl-9 w-full p-2 border border-gray-300 dark:border-border rounded-md bg-white dark:bg-input text-foreground dark:text-foreground"
-                required
+              <DateInput
+              id="fechaFin"
+              value={fechaFin}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFechaFin(e.target.value)}
+              // className="pl-9 w-full p-2 border border-gray-300 dark:border-border rounded-md bg-white dark:bg-input text-foreground dark:text-foreground"
               />
             </div>
           </div>

@@ -467,6 +467,7 @@ const FinancialDashboard: React.FC = () => {
                                 <BarChart
                                     data={flowsData}
                                     margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                                    className='[&_.recharts-active-bar]:dark:fill-gray-800 [&_.recharts-tooltip-cursor]:dark:fill-gray-800 [&_.recharts-active-shape]:dark:fill-gray-700'
                                 >
                                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                                     <XAxis stroke="hsl(var(--muted-foreground))" dataKey="name" />
